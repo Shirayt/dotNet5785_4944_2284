@@ -8,7 +8,7 @@ public enum Role
 
 public enum DistanceType
 {
-    Air,
+    Air, 
     Walk,
     Drive
 }

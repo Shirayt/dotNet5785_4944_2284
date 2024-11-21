@@ -1,10 +1,9 @@
 ﻿namespace DO;
 
- public record Config
+public record Config
 {
- int NextCallId;
- int NextAssignmentId;
- DateTime Clock;
- TimeSpan RiskRange;
+    public int NextCallId { get; set; }
+    public int NextAssignmentId { get; set; }
+    public DateTime Clock { get; set; }
+    public TimeSpan RiskRange { get; set; }
 }
-

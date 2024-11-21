@@ -1,14 +1,19 @@
 ﻿namespace DO;
 
-public record Assignment(int TaskId, string TaskName, DateTime DueDate, bool IsCompleted = false)
+public enum AssignmentStatus
 {
-    bool IsCompleted = false;
-
-    // Constructor and methods
-
-    public void CompleteTask()
-    {
-        IsCompleted = true;
-    }
-
+    Completed,
+    Cancelled,
+    InProgress
 }
+
+public record Assignment
+{
+    public int Id { get; set; }
+    public int CalledId { get; set; }
+    public int VolunteerId { get; set; }
+    public DateTime StartTime { get; set; }
+    public DateTime EndTime { get; set; }
+    public AssignmentStatus Status { get; set; }
+}
+

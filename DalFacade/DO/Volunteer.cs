@@ -8,7 +8,7 @@ public enum Role
 
 public enum DistanceType
 {
-    Air, 
+    Air,
     Walk,
     Drive
 }
@@ -27,5 +27,5 @@ public record Volunteer
     public double? MaxDistanceForCall { get; set; } // מרחק מרבי לקבלת קריאה
     public DistanceType DistanceType { get; set; } = DistanceType.Air; // סוג המרחק, ברירת מחדל אווירי
 
-   
+
 }

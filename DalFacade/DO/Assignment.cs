@@ -13,7 +13,7 @@ public record Assignment
     public int CalledId { get; set; }
     public int VolunteerId { get; set; }
     public DateTime StartTime { get; set; }
-    public DateTime EndTime { get; set; }
-    public AssignmentStatus Status { get; set; }
+    public DateTime? EndTime { get; set; }
+    public AssignmentStatus? Status { get; set; }
 }
 

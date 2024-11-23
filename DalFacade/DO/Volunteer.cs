@@ -14,7 +14,7 @@ public enum DistanceType
 }
 public record Volunteer
 {
-    int Id { get; set; } // ת.ז מתנדב
+    public int Id { get; set; } // ת.ז מתנדב
     string FullName { get; set; } // שם מלא (פרטי ומשפחה)
     string PhoneNumber { get; set; } // טלפון סלולרי
     string Email { get; set; } // אימייל

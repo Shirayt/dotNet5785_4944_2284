@@ -8,8 +8,8 @@ public enum AssignmentStatus
 }
 
 public record Assignment
-{   
-    int Id { get; set; }
+{
+    public int Id { get; set; } = 0;
     int CalledId { get; set; }
     int VolunteerId { get; set; }
     DateTime StartTime { get; set; }

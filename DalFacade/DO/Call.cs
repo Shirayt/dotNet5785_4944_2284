@@ -9,7 +9,7 @@ public enum CallType
 }
 public record Call
 {
-    int Id { get; set; }
+    public int Id { get; set; } = 0;
     CallType CallType { get; set; }
     string? Description { get; set; }
     string FullAddress { get; set; }

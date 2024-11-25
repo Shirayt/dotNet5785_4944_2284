@@ -13,7 +13,7 @@ internal static class Config
     private static int AssignmentId = initialAssignmentId;
     internal static int NextCallId { get => CallId++; }
     internal static int NextAssignmentId { get => AssignmentId++; }
-    static DateTime Clock { get; set; }
+    public static DateTime Clock { get; set; }
     static TimeSpan RiskRange { get; set; }
 
     internal static void Reset()

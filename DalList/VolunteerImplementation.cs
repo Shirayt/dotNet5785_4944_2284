@@ -20,12 +20,19 @@ public class VolunteerImplementation : IVolunteer
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        // מציאת האינדקס של האובייקט ברשימה עם המזהה המתאים
+        int index = DataSource.Volunteers.FindIndex(volunteer => volunteer?.Id == id);
+
+        if (index == -1)
+            throw new KeyNotFoundException($"Volunteer with ID {id} does not exist.");
+
+        // הסרת האובייקט מהרשימה
+        DataSource.Volunteers.RemoveAt(index);
     }
 
     public void DeleteAll()
     {
-        throw new NotImplementedException();
+        DataSource.Volunteers.Clear();
     }
 
     public Volunteer? Read(int id)
@@ -51,6 +58,17 @@ public class VolunteerImplementation : IVolunteer
     }
     public void Update(Volunteer item)
     {
-        throw new NotImplementedException();
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
+
+        // מציאת האינדקס של האובייקט הקיים עם אותו ID
+        int index = DataSource.Volunteers.FindIndex(volunteer => volunteer?.Id == item.Id);
+
+        if (index == -1)
+            throw new KeyNotFoundException($"Volunteer with ID {item.Id} does not exist.");
+
+        // החלפת האובייקט הקיים באובייקט החדש
+        DataSource.Volunteers[index] = item;
     }
+
 }

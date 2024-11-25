@@ -27,12 +27,20 @@ public class AssignmentImplementation : IAssignment
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        // מציאת האינדקס של האובייקט ברשימה עם המזהה המתאים
+        int index = DataSource.Assignments.FindIndex(assignment => assignment?.Id == id);
+
+        if (index == -1)
+            throw new KeyNotFoundException($"Assignment with ID {id} does not exist.");
+
+        // הסרת האובייקט מהרשימה
+        DataSource.Assignments.RemoveAt(index);
     }
+
 
     public void DeleteAll()
     {
-        throw new NotImplementedException();
+        DataSource.Assignments.Clear();
     }
 
     public Assignment? Read(int id)
@@ -51,7 +59,7 @@ public class AssignmentImplementation : IAssignment
     {
         if (DataSource.Assignments.Count == 0)
         {
-            return null; 
+            return null;
         }
 
         return new List<Assignment>(DataSource.Assignments);
@@ -59,8 +67,19 @@ public class AssignmentImplementation : IAssignment
 
     public void Update(Assignment item)
     {
-        throw new NotImplementedException();
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
+
+        // מציאת האינדקס של האובייקט הקיים עם אותו ID
+        int index = DataSource.Assignments.FindIndex(assignment => assignment?.Id == item.Id);
+
+        if (index == -1)
+            throw new KeyNotFoundException($"Assignment with ID {item.Id} does not exist.");
+
+        // החלפת האובייקט הקיים באובייקט החדש
+        DataSource.Assignments[index] = item;
     }
+
 
 
 }

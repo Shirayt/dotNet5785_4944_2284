@@ -26,12 +26,20 @@ public class CallImplementation : ICall
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        // מציאת האינדקס של האובייקט ברשימה עם המזהה המתאים
+        int index = DataSource.Calls.FindIndex(call => call?.Id == id);
+
+        if (index == -1)
+            throw new KeyNotFoundException($"Call with ID {id} does not exist.");
+
+        // הסרת האובייקט מהרשימה
+        DataSource.Calls.RemoveAt(index);
     }
+
 
     public void DeleteAll()
     {
-        throw new NotImplementedException();
+        DataSource.Calls.Clear();
     }
 
     public Call? Read(int id)
@@ -57,6 +65,17 @@ public class CallImplementation : ICall
 
     public void Update(Call item)
     {
-        throw new NotImplementedException();
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
+
+        // מציאת האינדקס של האובייקט הקיים עם אותו ID
+        int index = DataSource.Calls.FindIndex(call => call?.Id == item.Id);
+
+        if (index == -1)
+            throw new KeyNotFoundException($"Call with ID {item.Id} does not exist.");
+
+        // החלפת האובייקט הקיים באובייקט החדש
+        DataSource.Calls[index] = item;
     }
+
 }

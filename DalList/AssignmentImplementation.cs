@@ -17,7 +17,7 @@ public class AssignmentImplementation : IAssignment
         {
             if (DataSource.Assignments.Any(assignment => assignment?.Id == item.Id))
             {
-                throw new InvalidOperationException("אובייקט עם מזהה זה כבר קיים.");
+                throw new Exception($"Assignment with ID={item.Id} already exist");
             }
 
             DataSource.Assignments.Add(item);
@@ -31,7 +31,7 @@ public class AssignmentImplementation : IAssignment
         int index = DataSource.Assignments.FindIndex(assignment => assignment?.Id == id);
 
         if (index == -1)
-            throw new KeyNotFoundException($"Assignment with ID {id} does not exist.");
+            throw new Exception($"Assignment with ID {id} does not exist.");
 
         // הסרת האובייקט מהרשימה
         DataSource.Assignments.RemoveAt(index);
@@ -67,14 +67,11 @@ public class AssignmentImplementation : IAssignment
 
     public void Update(Assignment item)
     {
-        if (item == null)
-            throw new ArgumentNullException(nameof(item));
-
         // מציאת האינדקס של האובייקט הקיים עם אותו ID
         int index = DataSource.Assignments.FindIndex(assignment => assignment?.Id == item.Id);
 
         if (index == -1)
-            throw new KeyNotFoundException($"Assignment with ID {item.Id} does not exist.");
+            throw new Exception($"Assignment with ID {item.Id} does not exist.");
 
         // החלפת האובייקט הקיים באובייקט החדש
         DataSource.Assignments[index] = item;

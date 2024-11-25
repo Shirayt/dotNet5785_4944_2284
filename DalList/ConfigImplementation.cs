@@ -12,7 +12,6 @@ internal class ConfigImplementation : IConfig
     }
     public void Reset()
     {
-
         Config.Reset();
     }
 }

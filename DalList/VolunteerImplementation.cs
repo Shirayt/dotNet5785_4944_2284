@@ -8,14 +8,14 @@ public class VolunteerImplementation : IVolunteer
 {
     public void Create(Volunteer item)
     {
-     
-            if (DataSource.Volunteers.Any(volunteer => volunteer?.Id == item.Id))
-            {
-                throw new InvalidOperationException("אובייקט עם מזהה זה כבר קיים.");
-            }
 
-            DataSource.Volunteers.Add(item);
-       
+        if (DataSource.Volunteers.Any(volunteer => volunteer?.Id == item.Id))
+        {
+            throw new Exception($"Volunteer with ID={item.Id} already exist");
+        }
+
+        DataSource.Volunteers.Add(item);
+
     }
 
     public void Delete(int id)
@@ -24,7 +24,7 @@ public class VolunteerImplementation : IVolunteer
         int index = DataSource.Volunteers.FindIndex(volunteer => volunteer?.Id == id);
 
         if (index == -1)
-            throw new KeyNotFoundException($"Volunteer with ID {id} does not exist.");
+            throw new Exception($"Volunteer with ID {id} does not exist.");
 
         // הסרת האובייקט מהרשימה
         DataSource.Volunteers.RemoveAt(index);
@@ -39,12 +39,12 @@ public class VolunteerImplementation : IVolunteer
     {
         Volunteer? existingItem = DataSource.Volunteers.FirstOrDefault(volunteer => volunteer?.Id == id);
 
-            if (existingItem != null)
-            {
-                return existingItem;
-            }
+        if (existingItem != null)
+        {
+            return existingItem;
+        }
 
-            return null;
+        return null;
     }
 
     public List<Volunteer>? ReadAll()
@@ -58,14 +58,11 @@ public class VolunteerImplementation : IVolunteer
     }
     public void Update(Volunteer item)
     {
-        if (item == null)
-            throw new ArgumentNullException(nameof(item));
-
-        // מציאת האינדקס של האובייקט הקיים עם אותו ID
+       // מציאת האינדקס של האובייקט הקיים עם אותו ID
         int index = DataSource.Volunteers.FindIndex(volunteer => volunteer?.Id == item.Id);
 
         if (index == -1)
-            throw new KeyNotFoundException($"Volunteer with ID {item.Id} does not exist.");
+            throw new Exception($"Volunteer with ID {item.Id} does not exist.");
 
         // החלפת האובייקט הקיים באובייקט החדש
         DataSource.Volunteers[index] = item;

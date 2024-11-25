@@ -17,7 +17,7 @@ public class CallImplementation : ICall
         {
             if (DataSource.Calls.Any(call => call?.Id == item.Id))
             {
-                throw new InvalidOperationException("אובייקט עם מזהה זה כבר קיים.");
+                throw new Exception($"Call with ID={item.Id} already exist");
             }
 
             DataSource.Calls.Add(item);
@@ -30,7 +30,7 @@ public class CallImplementation : ICall
         int index = DataSource.Calls.FindIndex(call => call?.Id == id);
 
         if (index == -1)
-            throw new KeyNotFoundException($"Call with ID {id} does not exist.");
+            throw new Exception($"Call with ID {id} does not exist.");
 
         // הסרת האובייקט מהרשימה
         DataSource.Calls.RemoveAt(index);
@@ -65,14 +65,11 @@ public class CallImplementation : ICall
 
     public void Update(Call item)
     {
-        if (item == null)
-            throw new ArgumentNullException(nameof(item));
-
         // מציאת האינדקס של האובייקט הקיים עם אותו ID
         int index = DataSource.Calls.FindIndex(call => call?.Id == item.Id);
 
         if (index == -1)
-            throw new KeyNotFoundException($"Call with ID {item.Id} does not exist.");
+            throw new Exception($"Call with ID {item.Id} does not exist.");
 
         // החלפת האובייקט הקיים באובייקט החדש
         DataSource.Calls[index] = item;

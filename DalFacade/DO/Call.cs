@@ -10,13 +10,13 @@ public enum CallType
 public record Call
 {
     public int Id { get; set; } = 0;
-    CallType CallType { get; set; }
-    string? Description { get; set; }
-    string FullAddress { get; set; }
-    double Latitude { get; set; }
-    double Longitude { get; set; }
-    DateTime OpenTime { get; set; }
-    DateTime? MaxEndTime { get; set; }
+    public CallType CallType { get; set; }
+    public string? Description { get; set; }
+    public string FullAddress { get; set; }
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
+    public DateTime OpenTime { get; set; }
+    public DateTime? MaxEndTime { get; set; }
 
     public Call() { }
 }

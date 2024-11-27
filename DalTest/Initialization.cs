@@ -254,11 +254,11 @@ public static class Initialization
         s_dalConfig.Reset(); //stage 1
         s_dalVolunteer.DeleteAll(); //stage 1
         Console.WriteLine("Initializing Calls list ...");
-        CreateCalls();
+        createCall();
         Console.WriteLine("Initializing Volunteers list ...");
-        CreateVolunteers();
+        createVolunteer();
         Console.WriteLine("Initializing Assignments list ...");
-        CreateAssignments();
+        createAssignment();
     }
 }
 

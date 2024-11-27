@@ -18,7 +18,18 @@ public record Call
     public DateTime OpenTime { get; set; }
     public DateTime? MaxEndTime { get; set; }
 
-    public Call() { }
+    public Call( CallType callType, string description, string fullAddress,
+             double latitude, double longitude, DateTime openTime, DateTime? maxEndTime)
+    {
+        CallType = callType;
+        Description = description;
+        FullAddress = fullAddress;
+        Latitude = latitude;
+        Longitude = longitude;
+        OpenTime = openTime;
+        MaxEndTime = maxEndTime;
+    }
+
 }
 
 

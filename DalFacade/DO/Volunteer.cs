@@ -28,6 +28,20 @@ public record Volunteer
     public DistanceType DistanceType { get; set; } = DistanceType.Air; // סוג המרחק, ברירת מחדל אווירי
 
 
-    public Volunteer() { }
+    public Volunteer(int id, string fullName, string phoneNumber, string email, string? currentFullAddress, double? latitude, double? longitude, Role role, bool isActive, double? maxDistanceForCall, DistanceType distanceType = DistanceType.Air, string? password = null)
+    {
+        Id = id;
+        FullName = fullName;
+        PhoneNumber = phoneNumber;
+        Email = email;
+        Password = password;
+        CurrentFullAddress = currentFullAddress;
+        Latitude = latitude;
+        Longitude = longitude;
+        Role = role;
+        IsActive = isActive;
+        MaxDistanceForCall = maxDistanceForCall;
+        DistanceType = distanceType;
+    }
 
 }

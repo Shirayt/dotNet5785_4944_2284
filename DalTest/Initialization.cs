@@ -179,7 +179,8 @@ public static class Initialization
         }
     }
     private static void createAssignment()
-    {   var calls = s_dalCall!.ReadAll();
+    {
+        var calls = s_dalCall!.ReadAll();
         var volunteers = s_dalVolunteer!.ReadAll();
         var callsToAllocate = calls.Skip((int)(calls.Count * 0.2)).ToList(); // 80% מהקריאות
         var unassignedCalls = calls.Take((int)(calls.Count * 0.2)).ToList(); // 20% מהקריאות שלא טופלו
@@ -228,16 +229,37 @@ public static class Initialization
 
         // הוספת קריאות שלא טופלו
         foreach (Call call in unassignedCalls)
-        {     
-          s_dalAssignment!.Create(new Assignment(
-          call.Id,
-          -1, // אין מתנדב שמטפל בה
-          DateTime.MinValue, // לא תהיה תאריך התחלה
-          null, // לא יהיה זמן סיום
-          null));// לא יהיה סטטוס
+        {
+            s_dalAssignment!.Create(new Assignment(
+            call.Id,
+            -1, // אין מתנדב שמטפל בה
+            DateTime.MinValue, // לא תהיה תאריך התחלה
+            null, // לא יהיה זמן סיום
+            null));// לא יהיה סטטוס
         }
     }
-
+    public static void Do(ICall? dalCall, IAssignment? dalAssignment, IVolunteer? dalVolunteer, IConfig? dalConfig) //stage 1
+    {
+        s_dalCall = dalCall ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalAssignment = dalAssignment ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalVolunteer = dalVolunteer ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalConfig = dalConfig ?? throw new NullReferenceException("DAL can not be null!");
+        Console.WriteLine("Reset Configuration values and List values...");
+        s_dalConfig.Reset(); //stage 1
+        s_dalCall.DeleteAll(); //stage 1
+        Console.WriteLine("Reset Configuration values and List values...");
+        s_dalConfig.Reset(); //stage 1
+        s_dalAssignment.DeleteAll(); //stage 
+        Console.WriteLine("Reset Configuration values and List values...");
+        s_dalConfig.Reset(); //stage 1
+        s_dalVolunteer.DeleteAll(); //stage 1
+        Console.WriteLine("Initializing Calls list ...");
+        CreateCalls();
+        Console.WriteLine("Initializing Volunteers list ...");
+        CreateVolunteers();
+        Console.WriteLine("Initializing Assignments list ...");
+        CreateAssignments();
+    }
 }
 
 

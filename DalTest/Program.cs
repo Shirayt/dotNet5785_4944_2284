@@ -6,7 +6,7 @@ using System;
 
 namespace DalTest;
 /// <summary>
-/// The test program, for to check that all the classes are defined well.
+/// The test program, to make sure that all classes are defined well.
 /// </summary>
 internal class Program
 {
@@ -326,10 +326,10 @@ internal class Program
         Console.Write("Enter Volunteer ID: ");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new FormatException("ID is invalid!");
-        Console.Write("Enter Cellphone Number: ");
+        Console.Write("Enter phone Number: ");
         string phoneNumber = Console.ReadLine()!;
         if (string.IsNullOrEmpty(phoneNumber) || phoneNumber.Length < 10)
-            throw new FormatException("Cellphone number is invalid!");
+            throw new FormatException("phone number is invalid!");
         Console.Write("Enter Full Name: ");
         string fullName = Console.ReadLine()!;
         if (string.IsNullOrEmpty(fullName))
@@ -405,7 +405,7 @@ internal class Program
         var volunteer = s_dalVolunteer?.Read(id);
         if (volunteer != null)
         {
-            Console.WriteLine($"Volunteer ID: {volunteer.Id}, Full Name: {volunteer.FullName}, Cellphone: {volunteer.PhoneNumber}, Email: {volunteer.Email}, " +
+            Console.WriteLine($"Volunteer ID: {volunteer.Id}, Full Name: {volunteer.FullName}, phone: {volunteer.PhoneNumber}, Email: {volunteer.Email}, " +
                 $"Full Address: {volunteer.CurrentFullAddress}, Latitude: {volunteer.Latitude}, Longitude: {volunteer.Longitude}, " +
                 $"Role: {volunteer.Role}, Active: {volunteer.IsActive}, Distance Type: {volunteer.DistanceType}, " +
                 $"Max Distance: {volunteer.MaxDistanceForCall}, Password: {volunteer.Password}");
@@ -422,7 +422,7 @@ internal class Program
             foreach (var volunteer in volunteers)
             {
                 Console.WriteLine($"volunteer{i++}");
-                Console.WriteLine($"Volunteer ID: {volunteer.Id}, Full Name: {volunteer.FullName}, Cellphone: {volunteer.PhoneNumber}, Email: {volunteer.Email}, " +
+                Console.WriteLine($"Volunteer ID: {volunteer.Id}, Full Name: {volunteer.FullName}, phone: {volunteer.PhoneNumber}, Email: {volunteer.Email}, " +
                $"Full Address: {volunteer.CurrentFullAddress}, Latitude: {volunteer.Latitude}, Longitude: {volunteer.Longitude}, " +
                $"Role: {volunteer.Role}, Active: {volunteer.IsActive}, Distance Type: {volunteer.DistanceType}, " +
                $"Max Distance: {volunteer.MaxDistanceForCall}, Password: {volunteer.Password}");
@@ -566,7 +566,7 @@ internal class Program
         string startTimeInput = Console.ReadLine()!;
         if (!DateTime.TryParse(startTimeInput, out DateTime startTime) || (s_dalCall.Read(callId) == null))
             throw new FormatException("start time is invalid!");
-       
+
         Assignment newAssignment = new Assignment(callId, volunteerId, startTime);
         s_dalAssignment!.Create(newAssignment);
         Console.WriteLine("An Assignment was successfully created.");
@@ -621,7 +621,7 @@ internal class Program
             Console.Write("Enter end time (dd/mm/yy hh:mm:ss): ");
             string endTimeInput = Console.ReadLine()!;
             DateTime? endTime = string.IsNullOrEmpty(endTimeInput) || !DateTime.TryParse(endTimeInput, out DateTime end) ? assignment.EndTime : end;
-            Console.Write("Enter end type(was_treated, self_cancellation, manager_cancellation, expired): ");
+            Console.Write("Enter end type( Completed,SelfCancelled, ManagerCancelled,Expired ): ");
             string endTypeInput = Console.ReadLine()!;
             DO.AssignmentStatus? endType = string.IsNullOrEmpty(endTypeInput) || !Enum.TryParse(endTypeInput, out DO.AssignmentStatus eType) ? assignment.Status : eType;
             Assignment newAssignment = new Assignment(

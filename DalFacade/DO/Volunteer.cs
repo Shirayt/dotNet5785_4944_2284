@@ -1,17 +1,5 @@
 ﻿
 namespace DO;
-public enum Role
-{
-    Manager,
-    Volunteer
-}
-
-public enum DistanceType
-{
-    Air,
-    Walk,
-    Drive
-}
 public record Volunteer
 {
     public int Id { get; set; } // ת.ז מתנדב

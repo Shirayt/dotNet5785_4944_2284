@@ -1,13 +1,4 @@
 ﻿namespace DO;
-
-public enum AssignmentStatus
-{
-    Completed,        // הקריאה טופלה בזמן
-    SelfCancelled,    // ביטול עצמי (המתנדב ביטל את הטיפול)
-    ManagerCancelled, // ביטול מנהל (המנהל ביטל את ההקצאה)
-    Expired           //פג תוקף
-}
-
 public record Assignment
 {
     public int Id { get; set; } = 0;

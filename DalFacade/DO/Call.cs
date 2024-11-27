@@ -1,12 +1,5 @@
 ﻿namespace DO;
 
-public enum CallType
-{
-    Emergency,
-    Equipment,
-    Doctor,
-    Training
-}
 public record Call
 {
     public int Id { get; set; } = 0;

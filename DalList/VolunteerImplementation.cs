@@ -4,7 +4,7 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 
-public class VolunteerImplementation : IVolunteer
+internal class VolunteerImplementation : IVolunteer
 {
     public void Create(Volunteer item)
     {
@@ -47,15 +47,32 @@ public class VolunteerImplementation : IVolunteer
         return null;
     }
 
-    public List<Volunteer>? ReadAll()
+    public Volunteer? Read(Func<Volunteer, bool> filter)
+    {
+        if (filter == null)
+            throw new ArgumentNullException(nameof(filter));
+
+        Volunteer? existingItem = DataSource.Volunteers.FirstOrDefault(volunteer => filter(volunteer));
+
+        if (existingItem != null)
+        {
+            return existingItem;
+        }
+
+        return null;
+    }
+
+    public IEnumerable<Volunteer>? ReadAll(Func<Volunteer, bool>? filter = null)
     {
         if (DataSource.Volunteers.Count == 0)
         {
             return null;
         }
-
-        return new List<Volunteer>(DataSource.Volunteers);
+        return filter == null
+            ? DataSource.Volunteers.Select(item => item)
+            : DataSource.Volunteers.Where(filter);
     }
+
     public void Update(Volunteer item)
     {
        // מציאת האינדקס של האובייקט הקיים עם אותו ID

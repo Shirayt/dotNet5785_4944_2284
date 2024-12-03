@@ -2,8 +2,8 @@
 using DalApi;
 using DO;
 using System.Collections.Generic;
-
-public class AssignmentImplementation : IAssignment
+using System.Linq;
+internal class AssignmentImplementation : IAssignment
 {
     public void Create(Assignment item)
     {
@@ -37,12 +37,10 @@ public class AssignmentImplementation : IAssignment
         DataSource.Assignments.RemoveAt(index);
     }
 
-
     public void DeleteAll()
     {
         DataSource.Assignments.Clear();
     }
-
     public Assignment? Read(int id)
     {
         Assignment? existingItem = DataSource.Assignments.FirstOrDefault(assignment => assignment?.Id == id);
@@ -54,16 +52,17 @@ public class AssignmentImplementation : IAssignment
 
         return null;
     }
-
-    public List<Assignment>? ReadAll()
+    public IEnumerable<Assignment>? ReadAll(Func<Assignment, bool>? filter = null)
     {
         if (DataSource.Assignments.Count == 0)
         {
             return null;
         }
-
-        return new List<Assignment>(DataSource.Assignments);
+        return filter == null
+            ? DataSource.Assignments.Select(item => item)
+            : DataSource.Assignments.Where(filter);
     }
+
 
     public void Update(Assignment item)
     {

@@ -2,23 +2,19 @@
 namespace DalTest;
 using DalApi;
 using DO;
-using System;
+using System.Linq;
 
 public static class Initialization
 {
-    private static ICall? s_dalCall;
-    private static IAssignment? s_dalAssignment;
-    private static IVolunteer? s_dalVolunteer;
-    private static IConfig? s_dalConfig;
-
+    private static IDal? s_dal;
     private static readonly Random s_rand = new();
 
-    public static void Initialize(ICall dalCall, IAssignment dalAssignment, IVolunteer dalVolunteer, IConfig dalConfig)
+    public static void Do(IDal dal) //stage 2
     {
-        s_dalCall = dalCall;
-        s_dalAssignment = dalAssignment;
-        s_dalVolunteer = dalVolunteer;
-        s_dalConfig = dalConfig;
+        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); // stage 2
+
+        Console.WriteLine("Reset Configuration values and List values...");
+        s_dal.ResetDB();//stage 2
 
         createVolunteer();
         createCall();
@@ -39,10 +35,11 @@ public static class Initialization
             do
             {
                 id = s_rand.Next(200000000, 400000000);
-            } while (s_dalVolunteer!.Read(id) != null);
+            //} while (s_dalVolunteer!.Read(id) != null);//stage 1
+        } while (s_dal!.Volunteer.Read(id) != null) ;//stage 2
 
-            // הגרלת המרחק המרבי לקבלת קריאה בטווח של 5 עד 100
-            double maxDistanceForCall = s_rand.Next(5, 101);
+        // הגרלת המרחק המרבי לקבלת קריאה בטווח של 5 עד 100
+        double maxDistanceForCall = s_rand.Next(5, 101);
 
             // יצירת המתנדב
             Volunteer volunteer = new Volunteer(
@@ -60,13 +57,9 @@ public static class Initialization
             );
 
             // הוספת המתנדב למערכת
-            s_dalVolunteer!.Create(volunteer);
+            s_dal!.Volunteer.Create(volunteer);
         }
     }
-
-
-
-
     private static void createCall()
     {
         // יצירת לפחות 50 קריאות
@@ -175,23 +168,23 @@ public static class Initialization
              openTime,                        // openTime
              closeTime);                      // maxEndTime (עבר את הזמן הנוכחי)
 
-            s_dalCall!.Create(call);
+            s_dal!.Call.Create(call);
         }
     }
     private static void createAssignment()
     {
-        var calls = s_dalCall!.ReadAll();
-        var volunteers = s_dalVolunteer!.ReadAll();
-        var callsToAllocate = calls.Skip((int)(calls.Count * 0.2)).ToList(); // 80% מהקריאות
-        var unassignedCalls = calls.Take((int)(calls.Count * 0.2)).ToList(); // 20% מהקריאות שלא טופלו
+        var calls = s_dal!.Call.ReadAll();
+        var volunteers = s_dal!.Volunteer.ReadAll();
+        var callsToAllocate = calls.Skip((int)(calls.Count() * 0.2)).ToList(); // 80% מהקריאות
+        var unassignedCalls = calls.Take((int)(calls.Count()* 0.2)).ToList(); // 20% מהקריאות שלא טופלו
 
         foreach (Call call in callsToAllocate)
         {
             Volunteer randomVolunteer;
 
             // מגרילים מתנדב באופן אקראי
-            if (volunteers.Count > 0)
-                randomVolunteer = volunteers[s_rand.Next(volunteers.Count)];
+            if (volunteers.Count() > 0)
+                randomVolunteer = volunteers.ElementAt(s_rand.Next(volunteers.Count()));
             else
                 throw new Exception("No volunteers available");
 
@@ -218,7 +211,7 @@ public static class Initialization
                 status = (AssignmentStatus)s_rand.Next(Enum.GetValues(typeof(AssignmentStatus)).Length - 1);
             }
 
-            s_dalAssignment!.Create(new Assignment(
+            s_dal!.Assignment.Create(new Assignment(
                 call.Id,
                 randomVolunteer.Id,
                 randomStartTime,
@@ -230,7 +223,7 @@ public static class Initialization
         // הוספת קריאות שלא טופלו
         foreach (Call call in unassignedCalls)
         {
-            s_dalAssignment!.Create(new Assignment(
+            s_dal!.Assignment.Create(new Assignment(
             call.Id,
             -1, // אין מתנדב שמטפל בה
             DateTime.MinValue, // לא תהיה תאריך התחלה
@@ -238,28 +231,7 @@ public static class Initialization
             null));// לא יהיה סטטוס
         }
     }
-    public static void Do(ICall? dalCall, IAssignment? dalAssignment, IVolunteer? dalVolunteer, IConfig? dalConfig) //stage 1
-    {
-        s_dalCall = dalCall ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalAssignment = dalAssignment ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalVolunteer = dalVolunteer ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalConfig = dalConfig ?? throw new NullReferenceException("DAL can not be null!");
-        Console.WriteLine("Reset Configuration values and List values...");
-        s_dalConfig.Reset(); //stage 1
-        s_dalCall.DeleteAll(); //stage 1
-        Console.WriteLine("Reset Configuration values and List values...");
-        s_dalConfig.Reset(); //stage 1
-        s_dalAssignment.DeleteAll(); //stage 
-        Console.WriteLine("Reset Configuration values and List values...");
-        s_dalConfig.Reset(); //stage 1
-        s_dalVolunteer.DeleteAll(); //stage 1
-        Console.WriteLine("Initializing Calls list ...");
-        createCall();
-        Console.WriteLine("Initializing Volunteers list ...");
-        createVolunteer();
-        Console.WriteLine("Initializing Assignments list ...");
-        createAssignment();
-    }
+
 }
 
 

@@ -7,23 +7,9 @@ internal class AssignmentImplementation : IAssignment
 {
     public void Create(Assignment item)
     {
-        if (item.Id == 0)
-        {
-            Assignment newItem = item with { Id = Config.NextAssignmentId };
-
-            DataSource.Assignments.Add(newItem);
-        }
-        else
-        {
-            if (DataSource.Assignments.Any(assignment => assignment?.Id == item.Id))
-            {
-                throw new Exception($"Assignment with ID={item.Id} already exist");
-            }
-
-            DataSource.Assignments.Add(item);
-        }
+        Assignment newItem = item with { Id = Config.NextAssignmentId };
+        DataSource.Assignments.Add(newItem);
     }
-
 
     public void Delete(int id)
     {
@@ -31,7 +17,7 @@ internal class AssignmentImplementation : IAssignment
         int index = DataSource.Assignments.FindIndex(assignment => assignment?.Id == id);
 
         if (index == -1)
-            throw new Exception($"Assignment with ID {id} does not exist.");
+            throw new DalDoesNotExistException($"Assignment with ID {id} does not exist.");
 
         // הסרת האובייקט מהרשימה
         DataSource.Assignments.RemoveAt(index);
@@ -50,13 +36,10 @@ internal class AssignmentImplementation : IAssignment
             return existingItem;
         }
 
-        return null;
+        throw new DalDoesNotExistException($"Assignment with ID {id} does not exist.");
     }
     public Assignment? Read(Func<Assignment, bool> filter)
     {
-        if (filter == null)
-            throw new ArgumentNullException(nameof(filter));
-
         Assignment? existingItem = DataSource.Assignments.FirstOrDefault(assignment => filter(assignment));
 
         if (existingItem != null)
@@ -84,7 +67,7 @@ internal class AssignmentImplementation : IAssignment
         int index = DataSource.Assignments.FindIndex(assignment => assignment?.Id == item.Id);
 
         if (index == -1)
-            throw new Exception($"Assignment with ID {item.Id} does not exist.");
+            throw new DalDoesNotExistException($"Assignment with ID {item.Id} does not exist.");
 
         // החלפת האובייקט הקיים באובייקט החדש
         DataSource.Assignments[index] = item;

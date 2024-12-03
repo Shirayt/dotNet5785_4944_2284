@@ -11,7 +11,7 @@ internal class VolunteerImplementation : IVolunteer
 
         if (DataSource.Volunteers.Any(volunteer => volunteer?.Id == item.Id))
         {
-            throw new Exception($"Volunteer with ID={item.Id} already exist");
+            throw new DalAlreadyExistsException($"Volunteer with ID={item.Id} already exist");
         }
 
         DataSource.Volunteers.Add(item);
@@ -24,7 +24,7 @@ internal class VolunteerImplementation : IVolunteer
         int index = DataSource.Volunteers.FindIndex(volunteer => volunteer?.Id == id);
 
         if (index == -1)
-            throw new Exception($"Volunteer with ID {id} does not exist.");
+            throw new DalDoesNotExistException($"Volunteer with ID {id} does not exist.");
 
         // הסרת האובייקט מהרשימה
         DataSource.Volunteers.RemoveAt(index);
@@ -44,14 +44,11 @@ internal class VolunteerImplementation : IVolunteer
             return existingItem;
         }
 
-        return null;
+        throw new DalDoesNotExistException($"Volunteer with ID {id} does not exist.");
     }
 
     public Volunteer? Read(Func<Volunteer, bool> filter)
     {
-        if (filter == null)
-            throw new ArgumentNullException(nameof(filter));
-
         Volunteer? existingItem = DataSource.Volunteers.FirstOrDefault(volunteer => filter(volunteer));
 
         if (existingItem != null)
@@ -79,7 +76,7 @@ internal class VolunteerImplementation : IVolunteer
         int index = DataSource.Volunteers.FindIndex(volunteer => volunteer?.Id == item.Id);
 
         if (index == -1)
-            throw new Exception($"Volunteer with ID {item.Id} does not exist.");
+            throw new DalDoesNotExistException($"Volunteer with ID {item.Id} does not exist.");
 
         // החלפת האובייקט הקיים באובייקט החדש
         DataSource.Volunteers[index] = item;

@@ -6,15 +6,22 @@ using System.Linq;
 
 public static class Initialization
 {
-    private static IDal? s_dal; 
+    private static IDal? s_dal;
     private static readonly Random s_rand = new();
 
     public static void Do(IDal dal) //stage 2
     {
-        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); // stage 2
+        try
+        {
+            s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); // stage 2
+        }
+        catch (NullReferenceException ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
 
         Console.WriteLine("Reset Configuration values and List values...");
-        s_dal.ResetDB();//stage 2
+        s_dal!.ResetDB();//stage 2
 
         createVolunteer();
         createCall();
@@ -28,36 +35,41 @@ public static class Initialization
         string[] addresses = { "29 Chinggis Avenue, Ulaanbaatar, Mongolia", "2 Tindall Street, Nelson, New Zealand", "Via Lago di Bracciano 32, 00069 Trevignano Romano, Italy", "145 Kulusuk, Greenland", "Vorshikhinskaya Street 11, Yakutsk, Russia", "Calle de los Reyes Católicos, 23, Fuerteventura, Spain", "9 Ngong Road, Nairobi, Kenya", "Bramber, West Sussex, England, United Kingdom", "Station Road, Tindivanam, Tamil Nadu, India", "Boko Haram Village, Borno State, Nigeria", "Lima Norte, Lima, Peru", "Pico de Orizaba, Veracruz, Mexico", "Desolation Sound, British Columbia, Canada", "Toraja, Sulawesi, Indonesia", "Mount Roraima, Venezuela, Brazil, Guyana" };
         double[] latitudes = { 47.8862, -40.5170, 42.1350, 65.6233, 62.0360, 28.4320, -1.2864, 50.8610, 12.2069, 12.1776, -12.0450, 19.0299, 57.3000, 2.4769, 6.7350 };
         double[] longitudes = { 106.9057, 173.2885, 12.2715, -37.4594, 129.7327, -13.8597, 36.8250, -0.3865, -0.2976, 13.4918, -77.2749, -97.2071, -60.8103, -60.6933, -60.7371 };
-
-        for (int i = 0; i < volunteerNames.Length; i++)
+        try
         {
-            int id;
-            do
+            for (int i = 0; i < volunteerNames.Length; i++)
             {
-                id = s_rand.Next(200000000, 400000000);
-            //} while (s_dalVolunteer!.Read(id) != null);//stage 1
-        } while (s_dal!.Volunteer.Read(id) != null) ;//stage 2
+                int id;
 
-        // הגרלת המרחק המרבי לקבלת קריאה בטווח של 5 עד 100
-        double maxDistanceForCall = s_rand.Next(5, 101);
+                do
+                {
+                    id = s_rand.Next(200000000, 400000000);
+                    //} while (s_dalVolunteer!.Read(id) != null);//stage 1
+                } while (s_dal!.Volunteer.Read(id) != null);//stage 2
 
-            // יצירת המתנדב
-            Volunteer volunteer = new Volunteer(
-                id,                                // ערך עבור Id
-                volunteerNames[i],                 // ערך עבור FullName
-                phones[i],                         // ערך עבור PhoneNumber
-                emails[i],                         // ערך עבור Email
-                addresses[i],                      // ערך עבור CurrentFullAddress
-                latitudes[i],                      // ערך עבור Latitude
-                longitudes[i],                     // ערך עבור Longitude
-                Role.Volunteer,                    // ערך עבור Role
-                true,                              // ערך עבור IsActive
-                maxDistanceForCall,                // ערך עבור MaxDistanceForCall
-                DistanceType.Air                   // ערך עבור DistanceType
-            );
+                // הגרלת המרחק המרבי לקבלת קריאה בטווח של 5 עד 100
+                double maxDistanceForCall = s_rand.Next(5, 101);
 
-            // הוספת המתנדב למערכת
-            s_dal!.Volunteer.Create(volunteer);
+                // יצירת המתנדב
+                Volunteer volunteer = new Volunteer(
+                    id,                                // ערך עבור Id
+                    volunteerNames[i],                 // ערך עבור FullName
+                    phones[i],                         // ערך עבור PhoneNumber
+                    emails[i],                         // ערך עבור Email
+                    addresses[i],                      // ערך עבור CurrentFullAddress
+                    latitudes[i],                      // ערך עבור Latitude
+                    longitudes[i],                     // ערך עבור Longitude
+                    Role.Volunteer,                    // ערך עבור Role
+                    true,                              // ערך עבור IsActive
+                    maxDistanceForCall,                // ערך עבור MaxDistanceForCall
+                    DistanceType.Air                   // ערך עבור DistanceType
+                );
+                // הוספת המתנדב למערכת
+                s_dal!.Volunteer.Create(volunteer);
+            }
+        }
+        catch (DalAlreadyExistsException ex) {
+            Console.WriteLine($"Error: {ex.Message}");
         }
     }
     private static void createCall()
@@ -176,18 +188,13 @@ public static class Initialization
         var calls = s_dal!.Call.ReadAll();
         var volunteers = s_dal!.Volunteer.ReadAll();
         var callsToAllocate = calls.Skip((int)(calls.Count() * 0.2)).ToList(); // 80% מהקריאות
-        var unassignedCalls = calls.Take((int)(calls.Count()* 0.2)).ToList(); // 20% מהקריאות שלא טופלו
+        var unassignedCalls = calls.Take((int)(calls.Count() * 0.2)).ToList(); // 20% מהקריאות שלא טופלו
 
         foreach (Call call in callsToAllocate)
         {
-            Volunteer randomVolunteer;
-
-            // מגרילים מתנדב באופן אקראי
-            if (volunteers.Count() > 0)
+            Volunteer randomVolunteer;  // מגרילים מתנדב באופן אקראי
                 randomVolunteer = volunteers.ElementAt(s_rand.Next(volunteers.Count()));
-            else
-                throw new Exception("No volunteers available");
-
+          
             TimeSpan assignmentSpan;
             if (call.MaxEndTime.HasValue)
                 assignmentSpan = call.MaxEndTime.Value - call.OpenTime;

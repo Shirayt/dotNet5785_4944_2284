@@ -7,21 +7,9 @@ internal class CallImplementation : ICall
 {
     public void Create(Call item)
     {
-        if (item.Id == 0)
-        {
-            Call newItem = item with { Id = Config.NextCallId };
+        Call newItem = item with { Id = Config.NextCallId };
 
-            DataSource.Calls.Add(newItem);
-        }
-        else
-        {
-            if (DataSource.Calls.Any(call => call?.Id == item.Id))
-            {
-                throw new Exception($"Call with ID={item.Id} already exist");
-            }
-
-            DataSource.Calls.Add(item);
-        }
+        DataSource.Calls.Add(newItem);
     }
 
     public void Delete(int id)
@@ -30,7 +18,7 @@ internal class CallImplementation : ICall
         int index = DataSource.Calls.FindIndex(call => call?.Id == id);
 
         if (index == -1)
-            throw new Exception($"Call with ID {id} does not exist.");
+            throw new DalDoesNotExistException($"Call with ID {id} does not exist.");
 
         // הסרת האובייקט מהרשימה
         DataSource.Calls.RemoveAt(index);
@@ -51,14 +39,11 @@ internal class CallImplementation : ICall
             return existingItem;
         }
 
-        return null;
+        throw new DalDoesNotExistException($"Call with ID {id} does not exist.");
     }
 
     public Call? Read(Func<Call, bool> filter)
     {
-        if (filter == null)
-            throw new ArgumentNullException(nameof(filter));
-
         Call? existingItem = DataSource.Calls.FirstOrDefault(call => filter(call));
 
         if (existingItem != null)
@@ -86,7 +71,7 @@ internal class CallImplementation : ICall
         int index = DataSource.Calls.FindIndex(call => call?.Id == item.Id);
 
         if (index == -1)
-            throw new Exception($"Call with ID {item.Id} does not exist.");
+            throw new DalDoesNotExistException($"Call with ID {item.Id} does not exist.");
 
         // החלפת האובייקט הקיים באובייקט החדש
         DataSource.Calls[index] = item;

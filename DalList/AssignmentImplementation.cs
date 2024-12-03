@@ -52,6 +52,20 @@ internal class AssignmentImplementation : IAssignment
 
         return null;
     }
+    public Assignment? Read(Func<Assignment, bool> filter)
+    {
+        if (filter == null)
+            throw new ArgumentNullException(nameof(filter));
+
+        Assignment? existingItem = DataSource.Assignments.FirstOrDefault(assignment => filter(assignment));
+
+        if (existingItem != null)
+        {
+            return existingItem;
+        }
+
+        return null;
+    }
     public IEnumerable<Assignment>? ReadAll(Func<Assignment, bool>? filter = null)
     {
         if (DataSource.Assignments.Count == 0)

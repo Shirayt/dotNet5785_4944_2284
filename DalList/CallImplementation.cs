@@ -53,6 +53,21 @@ internal class CallImplementation : ICall
 
         return null;
     }
+
+    public Call? Read(Func<Call, bool> filter)
+    {
+        if (filter == null)
+            throw new ArgumentNullException(nameof(filter));
+
+        Call? existingItem = DataSource.Calls.FirstOrDefault(call => filter(call));
+
+        if (existingItem != null)
+        {
+            return existingItem;
+        }
+
+        return null;
+    }
     public IEnumerable<Call>? ReadAll(Func<Call, bool>? filter = null)
     {
         if (DataSource.Calls.Count == 0)

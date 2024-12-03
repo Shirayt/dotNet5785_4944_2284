@@ -6,7 +6,7 @@ using System.Linq;
 
 public static class Initialization
 {
-    private static IDal? s_dal;
+    private static IDal? s_dal; 
     private static readonly Random s_rand = new();
 
     public static void Do(IDal dal) //stage 2

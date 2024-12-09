@@ -7,9 +7,8 @@ using DO;
 /// The test program, to make sure that all classes are defined well.
 /// </summary>
 internal class Program
-{
-    static readonly IDal s_dal = new DalList(); //stage 2
-
+{ static readonly IDal s_dal = new DalList(); //stage 2
+   
     static void Main(string[] args)
     {
         bool exit = false;
@@ -148,7 +147,7 @@ internal class Program
         while (!inputValid) // הלולאה תמשיך עד שהקלט יהיה תקין
             try
             {
-                Console.Write("Enter Call Type (transportation, car_accident, vehicle_breakdown, search_and_rescue): ");
+                Console.Write("Enter Call Type (Emergency,Equipment,Doctor,Training): ");
                 if (!Enum.TryParse(Console.ReadLine()!, out CallType call_type))
                     throw new FormatException("Call Type is invalid!");
                 Console.Write("Enter Call Description: ");
@@ -229,7 +228,7 @@ internal class Program
                 Console.WriteLine(call!);
                 if (call != null)
                 {
-                    Console.Write("Enter Call Type to Update (transportation, car_accident, vehicle_breakdown, search_and_rescue): ");
+                    Console.Write("Enter Call Type to Update (Emergency,Equipment,Doctor,Training): ");
                     string callTypeInput = Console.ReadLine()!;
                     CallType call_type = string.IsNullOrEmpty(callTypeInput) || !Enum.TryParse(callTypeInput, out CallType cType) ? call.CallType : cType;
                     Console.Write("Enter Call Description to Update: ");
@@ -240,10 +239,10 @@ internal class Program
                     string fullAddress = string.IsNullOrEmpty(fullAddressInput) ? call.FullAddress : fullAddressInput;
                     Console.WriteLine("Enter Latitude to update: ");
                     string LatitudeInput = Console.ReadLine()!;
-                    double latitude = string.IsNullOrEmpty(LatitudeInput) || !double.TryParse(LatitudeInput, out double lat) ? call.Latitude : lat;
+                    double latitude = string.IsNullOrEmpty(LatitudeInput) || !double.TryParse(LatitudeInput, out double latit) ? call.Latitude : latit;
                     Console.WriteLine("Enter Longitude to update: ");
-                    string longitudeInput = Console.ReadLine()!;
-                    double longitude = string.IsNullOrEmpty(longitudeInput) || !double.TryParse(longitudeInput, out double longit) ? call.Longitude : longit;
+                    string LongitudeInput = Console.ReadLine()!;
+                    double longitude = string.IsNullOrEmpty(LongitudeInput) || !double.TryParse(LongitudeInput, out double longit) ? call.Longitude : longit;
                     Console.Write("Enter full open time(dd/MM/yy HH:mm:ss): ");
                     string openTimeInput = Console.ReadLine()!;
                     DateTime openTime = DateTime.ParseExact(openTimeInput, "dd/MM/yy HH:mm:ss", null);
@@ -361,13 +360,13 @@ internal class Program
                 Console.Write("Enter Longitude: ");
                 if (!double.TryParse(Console.ReadLine(), out double longitude))
                     throw new FormatException("Longitude is invalid!");
-                Console.Write("Enter Role (manager/volunteer): ");
+                Console.Write("Enter Role (Manager/Volunteer): ");
                 if (!Enum.TryParse(Console.ReadLine(), out Role role))
                     throw new FormatException("Role is invalid!");
-                Console.Write("Enter ifIs Active (true/false): ");
+                Console.Write("Enter if Is Active (true/false): ");
                 if (!bool.TryParse(Console.ReadLine(), out bool isActive))
                     throw new FormatException("IsActive is invalid!");
-                Console.Write("Enter Distance Type (aerial_distance,walking_distance,  driving_distance): ");
+                Console.Write("Enter Distance Type (Air,Walk,Drive): ");
                 if (!Enum.TryParse(Console.ReadLine()!, true, out DistanceType distanceType))
                     throw new FormatException("DistanceType is invalid!");
                 Console.Write("Enter Max Distance (km): ");
@@ -470,10 +469,10 @@ internal class Program
                 {
                     Console.WriteLine("Enter Volunteer Full name to update: ");
                     string fullName = Console.ReadLine()!;
-                    Console.WriteLine("Enter Distance Type(aerial_distance,walking_distance,driving_distance) to update: ");
+                    Console.WriteLine("Enter Distance Type(Air,Walk,Drive) to update: ");
                     string distanceTypeInput = Console.ReadLine()!;
                     DistanceType distanceTypes = string.IsNullOrEmpty(distanceTypeInput) || !Enum.TryParse(distanceTypeInput, out DistanceType dType) ? volunteer.DistanceType : dType;
-                    Console.WriteLine("Enter Volunteer Role(manager/Volunteer) to update: ");
+                    Console.WriteLine("Enter Volunteer Role(Manager/Volunteer) to update: ");
                     string roleInput = Console.ReadLine()!;
                     Role role = string.IsNullOrEmpty(roleInput) || !Enum.TryParse(roleInput, out Role rType) ? volunteer.Role : rType;
                     Console.WriteLine("Enter phone number to update: ");

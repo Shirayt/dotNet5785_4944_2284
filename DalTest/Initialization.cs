@@ -68,7 +68,8 @@ public static class Initialization
                 s_dal!.Volunteer.Create(volunteer);
             }
         }
-        catch (DalAlreadyExistsException ex) {
+        catch (DalAlreadyExistsException ex)
+        {
             Console.WriteLine($"Error: {ex.Message}");
         }
     }
@@ -193,8 +194,8 @@ public static class Initialization
         foreach (Call call in callsToAllocate)
         {
             Volunteer randomVolunteer;  // מגרילים מתנדב באופן אקראי
-                randomVolunteer = volunteers.ElementAt(s_rand.Next(volunteers.Count()));
-          
+            randomVolunteer = volunteers.ElementAt(s_rand.Next(volunteers.Count()));
+
             TimeSpan assignmentSpan;
             if (call.MaxEndTime.HasValue)
                 assignmentSpan = call.MaxEndTime.Value - call.OpenTime;

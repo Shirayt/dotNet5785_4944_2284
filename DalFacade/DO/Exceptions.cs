@@ -23,3 +23,10 @@ public class NullReferenceException : Exception
 {
     public NullReferenceException(string? message) : base(message) { }
 }
+
+[Serializable]
+public class DalXMLFileLoadCreateException : Exception
+{
+    public DalXMLFileLoadCreateException(string? message) : base(message) { }
+}
+

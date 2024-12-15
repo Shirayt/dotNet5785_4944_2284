@@ -1,8 +1,8 @@
-﻿namespace Dal;
-using DalApi;
-using DO;
+﻿using DalApi;
+namespace Dal;
 
-sealed public class DalList : IDal
+//stage 3
+sealed public class DalXml : IDal
 {
     public IAssignment Assignment { get; } = new AssignmentImplementation();
     public ICall Call { get; } = new CallImplementation();
@@ -15,7 +15,7 @@ sealed public class DalList : IDal
         Call.DeleteAll();
 
         Volunteer.DeleteAll();
-  
+
         Config.Reset();
     }
 }

@@ -7,7 +7,14 @@ public record Assignment
     public DateTime StartTime { get; set; }
     public DateTime? EndTime { get; set; }
     public AssignmentStatus? Status { get; set; }
-
+    public Assignment() : this(
+    0,                  // callId
+    0,                  // volunteerId 
+    DateTime.Now,       // startTime 
+    null,               // endTime 
+    null                // status
+)
+    { }
     public Assignment(int callId, int volunteerId, DateTime startTime, DateTime? endTime = null, AssignmentStatus? status = null)
     {   CallId = callId;
         VolunteerId = volunteerId;

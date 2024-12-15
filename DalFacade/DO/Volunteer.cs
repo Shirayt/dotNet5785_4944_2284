@@ -15,7 +15,20 @@ public record Volunteer
     public double? MaxDistanceForCall { get; set; } // מרחק מרבי לקבלת קריאה
     public DistanceType DistanceType { get; set; } = DistanceType.Air; // סוג המרחק, ברירת מחדל אווירי
 
-
+    public Volunteer() : this(
+    0,                // id
+    "",     // fullName
+    "",     // phoneNumber
+    "",     // email
+    null,             // currentFullAddress
+    null,             // latitude
+    null,             // longitude
+    Role.Volunteer,   // role
+    false,            // isActive
+    null,             // maxDistanceForCall
+    DistanceType.Air, // distanceType
+    null)             // password
+    { }
     public Volunteer(int id, string fullName, string phoneNumber, string email, string? currentFullAddress, double? latitude, double? longitude, Role role, bool isActive, double? maxDistanceForCall, DistanceType distanceType = DistanceType.Air, string? password = null)
     {
         Id = id;

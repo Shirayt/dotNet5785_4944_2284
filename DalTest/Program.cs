@@ -7,8 +7,9 @@ using DO;
 /// The test program, to make sure that all classes are defined well.
 /// </summary>
 internal class Program
-{ static readonly IDal s_dal = new DalList(); //stage 2
-   
+{
+    //static readonly IDal s_dal = new DalList(); //stage 2
+    static readonly IDal s_dal = new DalXml(); //stage 3
     static void Main(string[] args)
     {
         bool exit = false;

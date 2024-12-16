@@ -67,11 +67,8 @@ static class XMLTools
 
         try
         {
-            Console.WriteLine(xmlFilePath);
             if (File.Exists(xmlFilePath))
-            {
                 return XElement.Load(xmlFilePath);
-            }
             XElement rootElem = new(xmlFileName);
             rootElem.Save(xmlFilePath);
             return rootElem;
@@ -80,74 +77,18 @@ static class XMLTools
         {
             throw new DalXMLFileLoadCreateException($"fail to load xml file: {s_xmlDir + xmlFilePath}, {ex.Message}");
         }
-
-        //try
-        //{
-        //    if (File.Exists(xmlFilePath))
-        //    {
-        //        Console.WriteLine("File found, loading...");
-        //        return XElement.Load(xmlFilePath);
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("File not found, creating...");
-        //        XElement rootElem = new XElement(xmlFileName);
-        //        rootElem.Save(xmlFilePath);
-        //        return rootElem;
-        //    }
-        //}
-        //catch (UnauthorizedAccessException ex)
-        //{
-        //    Console.WriteLine($"Access error: {ex.Message}");
-        //    throw;
-        //}
-        //catch (Exception ex)
-        //{
-        //    Console.WriteLine($"General error: {ex.Message}");
-        //    throw;
-        //}
-
     }
     #endregion
-
 
     #region XmlConfig
     public static int GetAndIncreaseConfigIntVal(string xmlFileName, string elemName)
     {
         XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
-        Console.WriteLine(root);
         int nextId = root.ToIntNullable(elemName) ?? throw new FormatException($"can't convert:  {xmlFileName}, {elemName}");
         root.Element(elemName)?.SetValue((nextId + 1).ToString());
         XMLTools.SaveListToXMLElement(root, xmlFileName);
         return nextId;
     }
-    //public static int GetAndIncreaseConfigIntVal(string xmlFileName, string elemName)
-    //{
-    //    XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
-
-    //    // בודק אם האלמנט קיים
-    //    var element = root.Element(elemName);
-    //    if (element == null)
-    //    {
-    //        throw new FormatException($"Element '{elemName}' not found in {xmlFileName}");
-    //    }
-
-    //    // הדפסת הערך לקריאה למעקב
-    //    Console.WriteLine($"Element {elemName} value: {element.Value}");
-
-    //    // אם הערך לא ניתנים להמרה בצורה נכונה, יש להוציא חריגה
-    //    if (!int.TryParse(element.Value, out int nextId))
-    //    {
-    //        throw new FormatException($"Can't convert value '{element.Value}' to int in {xmlFileName}, {elemName}");
-    //    }
-
-    //    // עדכון הערך ב-XML
-    //    element.SetValue((nextId + 1).ToString());
-    //    XMLTools.SaveListToXMLElement(root, xmlFileName);
-
-    //    return nextId;
-    //}
-
     public static int GetConfigIntVal(string xmlFileName, string elemName)
     {
         XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);

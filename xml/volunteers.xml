@@ -1,19 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfVolunteer>
-  <Volunteer>
-    <Volunteer>
-      <Id>1</Id>
-      <FullName>3</FullName>
-      <PhoneNumber>1234567890</PhoneNumber>
-      <Email>3</Email>
-      <Password></Password>
-      <CurrentFullAddress>3</CurrentFullAddress>
-      <Latitude>3</Latitude>
-      <Longitude>3</Longitude>
-      <Role>Manager</Role>
-      <IsActive>True</IsActive>
-      <MaxDistanceForCall>1</MaxDistanceForCall>
-      <DistanceType>Air</DistanceType>
-    </Volunteer>
-  </Volunteer>
-</ArrayOfVolunteer>
+<ArrayOfVolunteer />

@@ -179,7 +179,7 @@ internal class Program
                 s_dal?.Call.Create(newCall);
                 Console.WriteLine("Call created successfully.");
 
-                inputValid = true; // יציאה מהלולאה כי הקלט היה תקין
+                inputValid = true; 
             }
             catch (FormatException ex)
             {
@@ -250,8 +250,7 @@ internal class Program
                     Console.Write("Enter full maximum end time(dd/MM/yy HH:mm:ss): ");
                     string endTimeInput = Console.ReadLine()!;
                     DateTime endTime = DateTime.ParseExact(endTimeInput, "dd/MM/yy HH:mm:ss", null);
-
-
+                    inputValid = true;
 
                     Call newCall = new Call(
                       call_type,
@@ -262,7 +261,7 @@ internal class Program
                       openTime,
                       endTime
                       );
-
+                    newCall.Id = id;
                     s_dal?.Call.Update(newCall);
                     Console.WriteLine("Call updated successfully.");
                     Console.WriteLine(newCall);
@@ -599,10 +598,10 @@ internal class Program
                 string startTimeInput = Console.ReadLine()!;
                 if (!DateTime.TryParse(startTimeInput, out DateTime startTime) || (s_dal.Call.Read(callId) == null))
                     throw new FormatException("start time is invalid!");
-
                 Assignment newAssignment = new Assignment(callId, volunteerId, startTime);
                 s_dal!.Assignment.Create(newAssignment);
                 Console.WriteLine("An Assignment was successfully created.");
+                inputValid = true;
             }
             catch (FormatException ex)
             {
@@ -667,6 +666,8 @@ internal class Program
                     Console.Write("Enter end type( Completed,SelfCancelled, ManagerCancelled,Expired ): ");
                     string endTypeInput = Console.ReadLine()!;
                     AssignmentStatus? endType = string.IsNullOrEmpty(endTypeInput) || !Enum.TryParse(endTypeInput, out AssignmentStatus eType) ? assignment.Status : eType;
+                    inputValid = true;
+
                     Assignment newAssignment = new Assignment(
                      callId,
                      volunteerId,
@@ -674,6 +675,7 @@ internal class Program
                      endTime ?? assignment.EndTime,
                      (endType != AssignmentStatus.Expired) && (endType != AssignmentStatus.ManagerCancelled) && (endType != AssignmentStatus.SelfCancelled) && (endType != AssignmentStatus.Completed) ? assignment.Status : endType
         );
+                    newAssignment.Id = id;
                     s_dal?.Assignment.Update(newAssignment);
                     Console.WriteLine("Assignment updated successfully.");
                     Console.WriteLine(newAssignment);

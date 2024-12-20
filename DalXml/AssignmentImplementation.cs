@@ -52,7 +52,7 @@ internal class AssignmentImplementation : IAssignment
     }
     public void Update(Assignment item)
     {
-        List<Assignment> Assignments = XMLTools.LoadListFromXMLSerializer<Assignment>(Config.s_assignments_xml);
+       List<Assignment> Assignments = XMLTools.LoadListFromXMLSerializer<Assignment>(Config.s_assignments_xml);
         if (Assignments.RemoveAll(it => it.Id == item.Id) == 0)
             throw new DalDoesNotExistException($"Assignment with ID={item.Id} does Not exist");
         Assignments.Add(item);
@@ -69,5 +69,4 @@ internal class AssignmentImplementation : IAssignment
     {
         XMLTools.SaveListToXMLSerializer(new List<Assignment>(), Config.s_assignments_xml);
     }
-
 }

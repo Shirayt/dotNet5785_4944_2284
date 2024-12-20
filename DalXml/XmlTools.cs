@@ -1,5 +1,4 @@
 ﻿namespace Dal;
-
 using DO;
 using System.Xml;
 using System.Xml.Linq;
@@ -101,6 +100,15 @@ static class XMLTools
         DateTime dt = root.ToDateTimeNullable(elemName) ?? throw new FormatException($"can't convert:  {xmlFileName}, {elemName}");
         return dt;
     }
+    public static TimeSpan GetConfigTimeSpanVal(string xmlFileName, string elemName)
+    {
+        XElement root = LoadListFromXMLElement(xmlFileName);
+        string value = root.Element(elemName)?.Value;
+        if (string.IsNullOrEmpty(value))
+            throw new FormatException($"can't convert: {xmlFileName}, {elemName}");
+
+        return TimeSpan.Parse(value);
+    }
     public static void SetConfigIntVal(string xmlFileName, string elemName, int elemVal)
     {
         XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
@@ -112,6 +120,12 @@ static class XMLTools
         XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
         root.Element(elemName)?.SetValue((elemVal).ToString());
         XMLTools.SaveListToXMLElement(root, xmlFileName);
+    }
+    public static void SetConfigTimeSpanVal(string xmlFileName, string elemName, TimeSpan elemVal)
+    {
+        XElement root = LoadListFromXMLElement(xmlFileName);
+        root.Element(elemName)?.SetValue(elemVal.ToString());
+        SaveListToXMLElement(root, xmlFileName);
     }
     #endregion
 

@@ -5,7 +5,7 @@
 /// </summary>
 public record Call
 {
-    public int Id { get; set; } = 0;
+    public int Id { get; set; } 
     public CallType CallType { get; set; }//Emergency,Equipment,Doctor,Trainin
     public string? Description { get; set; }
     public string FullAddress { get; set; }

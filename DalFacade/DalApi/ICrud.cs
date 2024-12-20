@@ -1,5 +1,8 @@
 ﻿namespace DalApi;
-using DO;
+
+/// <summary>
+/// The CRUD functions definition on any entity for inheritance by the specific entity.
+/// </summary>
 public interface ICrud<T> where T : class
 {
     void Create(T item); //Creates new entity object in DAL

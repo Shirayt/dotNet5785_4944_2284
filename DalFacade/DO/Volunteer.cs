@@ -1,25 +1,29 @@
-﻿
-namespace DO;
+﻿namespace DO;
+
+/// <summary>
+///  Volunteer entity definition
+/// </summary>
 public record Volunteer
 {
-    public int Id { get; set; } // ת.ז מתנדב
-    public string FullName { get; set; } // שם מלא (פרטי ומשפחה)
-    public string PhoneNumber { get; set; } // טלפון סלולרי
-    public string Email { get; set; } // אימייל
-    public string? Password { get; set; } // סיסמה
-    public string? CurrentFullAddress { get; set; } // כתובת מלאה נוכחית
-    public double? Latitude { get; set; } // קו רוחב
-    public double? Longitude { get; set; } // קו אורך
-    public Role Role { get; set; } // תפקיד (מנהל או מתנדב)
-    public bool IsActive { get; set; } // האם המתנדב פעיל
-    public double? MaxDistanceForCall { get; set; } // מרחק מרבי לקבלת קריאה
-    public DistanceType DistanceType { get; set; } = DistanceType.Air; // סוג המרחק, ברירת מחדל אווירי
+    public int Id { get; set; }
+    public string FullName { get; set; }
+    public string PhoneNumber { get; set; }
+    public string Email { get; set; }
+    public string? Password { get; set; }
+    public string? CurrentFullAddress { get; set; }
+    public double? Latitude { get; set; }
+    public double? Longitude { get; set; }
+    public Role Role { get; set; } //Manager,Volunteer 
+    public bool IsActive { get; set; }
+    public double? MaxDistanceForCall { get; set; }
+    public DistanceType DistanceType { get; set; } = DistanceType.Air; //  Air,Walk,Drive
 
+    /// Initializes a new Volunteer with default values by calling the parameterized constructor.
     public Volunteer() : this(
     0,                // id
-    "",     // fullName
-    "",     // phoneNumber
-    "",     // email
+    "",               // fullName
+    "",               // phoneNumber
+    "",               // email
     null,             // currentFullAddress
     null,             // latitude
     null,             // longitude
@@ -29,6 +33,8 @@ public record Volunteer
     DistanceType.Air, // distanceType
     null)             // password
     { }
+
+    /// Initializes a new Volunteer with parameters.
     public Volunteer(int id, string fullName, string phoneNumber, string email, string? currentFullAddress, double? latitude, double? longitude, Role role, bool isActive, double? maxDistanceForCall, DistanceType distanceType = DistanceType.Air, string? password = null)
     {
         Id = id;

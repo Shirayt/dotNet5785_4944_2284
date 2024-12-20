@@ -1,5 +1,8 @@
 ﻿namespace Dal;
 
+/// <summary>
+/// Configuration entity definition for managing system settings 
+/// </summary>
 internal static class Config
 {
     internal const int initialCallId = 0;
@@ -24,5 +27,4 @@ internal static class Config
 
         RiskRange= TimeSpan.Zero;
     }
-
 }

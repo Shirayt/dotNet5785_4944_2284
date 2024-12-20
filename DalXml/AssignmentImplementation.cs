@@ -2,6 +2,9 @@
 using DalApi;
 using DO;
 
+/// <summary>
+/// Implementing the CRUD functions on the Assignment entity from XML data list
+/// </summary>
 internal class AssignmentImplementation : IAssignment
 {
     public void Create(Assignment item)
@@ -24,7 +27,6 @@ internal class AssignmentImplementation : IAssignment
 
         throw new DalDoesNotExistException($"Assignment with ID {id} does not exist.");
     }
-
     public Assignment? Read(Func<Assignment, bool> filter)
     {
         List<Assignment> Assignments = XMLTools.LoadListFromXMLSerializer<Assignment>(Config.s_assignments_xml);
@@ -37,7 +39,6 @@ internal class AssignmentImplementation : IAssignment
 
         return null;
     }
-
     public IEnumerable<Assignment> ReadAll(Func<Assignment, bool>? filter = null)
     {
         List<Assignment> Assignments = XMLTools.LoadListFromXMLSerializer<Assignment>(Config.s_assignments_xml);
@@ -57,7 +58,6 @@ internal class AssignmentImplementation : IAssignment
         Assignments.Add(item);
         XMLTools.SaveListToXMLSerializer(Assignments, Config.s_assignments_xml);
     }
-
     public void Delete(int id)
     {
         List<Assignment> Assignments = XMLTools.LoadListFromXMLSerializer<Assignment>(Config.s_assignments_xml);

@@ -1,5 +1,9 @@
 ﻿namespace Dal;
 using DalApi;
+
+/// <summary>
+/// Implementing functions of the Config entity
+/// </summary>
 internal class ConfigImplementation : IConfig
 {
     public DateTime Clock
@@ -10,10 +14,8 @@ internal class ConfigImplementation : IConfig
 
     }
     public TimeSpan RiskRange { get; set; }
-
     public void Reset()
     {
         Config.Reset();
     }
-
 }

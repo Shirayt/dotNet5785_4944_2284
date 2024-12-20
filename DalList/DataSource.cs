@@ -1,7 +1,7 @@
-﻿
-using DO;
-
-namespace Dal;
+﻿namespace Dal;
+/// <summary>
+/// Initializes empty entity lists
+/// </summary>
 internal static class DataSource
 {
     internal static List<DO.Assignment?> Assignments { get; } = new();

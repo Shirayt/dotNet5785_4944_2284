@@ -1,6 +1,8 @@
 ﻿using DalApi;
 namespace Dal;
-
+/// <summary>
+/// Manages access to system XML data
+/// </summary>
 //stage 3
 sealed public class DalXml : IDal
 {

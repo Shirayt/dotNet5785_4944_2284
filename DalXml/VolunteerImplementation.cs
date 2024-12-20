@@ -4,11 +4,14 @@ using DO;
 using System.Data;
 using System.Xml.Linq;
 
+/// <summary>
+/// Implementing the CRUD functions on the Volunteer entity from XML data list
+/// </summary>
 internal class VolunteerImplementation : IVolunteer
 {
     static Volunteer getVolunteer(XElement v)//convert xelement to volunteer type
     {
-        return new DO.Volunteer()
+        return new Volunteer()
         {
             Id = v.ToIntNullable("Id") ?? throw new FormatException("can't convert id"),
             FullName = (string?)v.Element("FullName") ?? "",
@@ -23,7 +26,6 @@ internal class VolunteerImplementation : IVolunteer
             MaxDistanceForCall = (double?)v.Element("MaxDistanceForCall") ?? null,
             DistanceType = v.ToEnumNullable<DistanceType>("DistanceType") ?? DistanceType.Air
         };
-
     }
     private XElement createVolunteerElement(Volunteer item)//convert volunteer type to xelement
     {
@@ -70,6 +72,9 @@ internal class VolunteerImplementation : IVolunteer
     {
         XElement volunteersRootElement = XMLTools.LoadListFromXMLElement(Config.s_volunteers_xml);
 
+        if (!volunteersRootElement.Elements("Volunteer").Any())
+            return null;
+
         var volunteers = volunteersRootElement
             .Elements("Volunteer")
             .Select(v => getVolunteer(v)); // using getVolunteer function
@@ -107,8 +112,7 @@ internal class VolunteerImplementation : IVolunteer
     public void DeleteAll()
     {
         XElement volunteersRootElement = XMLTools.LoadListFromXMLElement(Config.s_volunteers_xml);
-        volunteersRootElement.RemoveAll();
+        volunteersRootElement.RemoveNodes();
         XMLTools.SaveListToXMLElement(volunteersRootElement, Config.s_volunteers_xml);
     }
-
 }

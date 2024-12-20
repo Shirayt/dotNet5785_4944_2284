@@ -3,6 +3,9 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 
+/// <summary>
+/// Implementing the CRUD functions on the Call entity
+/// </summary>
 internal class CallImplementation : ICall
 {
     public void Create(Call item)
@@ -11,25 +14,6 @@ internal class CallImplementation : ICall
 
         DataSource.Calls.Add(newItem);
     }
-
-    public void Delete(int id)
-    {
-        // מציאת האינדקס של האובייקט ברשימה עם המזהה המתאים
-        int index = DataSource.Calls.FindIndex(call => call?.Id == id);
-
-        if (index == -1)
-            throw new DalDoesNotExistException($"Call with ID {id} does not exist.");
-
-        // הסרת האובייקט מהרשימה
-        DataSource.Calls.RemoveAt(index);
-    }
-
-
-    public void DeleteAll()
-    {
-        DataSource.Calls.Clear();
-    }
-
     public Call? Read(int id)
     {
         Call? existingItem = DataSource.Calls.FirstOrDefault(call => call?.Id == id);
@@ -41,7 +25,6 @@ internal class CallImplementation : ICall
 
         throw new DalDoesNotExistException($"Call with ID {id} does not exist.");
     }
-
     public Call? Read(Func<Call, bool> filter)
     {
         Call? existingItem = DataSource.Calls.FirstOrDefault(call => filter(call));
@@ -63,18 +46,30 @@ internal class CallImplementation : ICall
             ? DataSource.Calls.Select(item => item)
             : DataSource.Calls.Where(filter);
     }
-
-
     public void Update(Call item)
     {
-        // מציאת האינדקס של האובייקט הקיים עם אותו ID
+        // Find the index of the object in the list with the matching ID
         int index = DataSource.Calls.FindIndex(call => call?.Id == item.Id);
 
         if (index == -1)
             throw new DalDoesNotExistException($"Call with ID {item.Id} does not exist.");
 
-        // החלפת האובייקט הקיים באובייקט החדש
+        // Replace the existing object with the new object
         DataSource.Calls[index] = item;
     }
+    public void Delete(int id)
+    {
+        // Find the index of the object in the list with the matching ID
+        int index = DataSource.Calls.FindIndex(call => call?.Id == id);
 
+        if (index == -1)
+            throw new DalDoesNotExistException($"Call with ID {id} does not exist.");
+
+        // Remove the object from the list
+        DataSource.Calls.RemoveAt(index);
+    }
+    public void DeleteAll()
+    {
+        DataSource.Calls.Clear();
+    }
 }

@@ -73,10 +73,10 @@ internal class Program
         Console.WriteLine("1. Call Menu");
         Console.WriteLine("2. Volunteer Menu");
         Console.WriteLine("3. Assignment Menu");
-        Console.WriteLine("4. Initializing the data");//
-        Console.WriteLine("5. Displaying all data in the database");//
+        Console.WriteLine("4. Initializing the data");
+        Console.WriteLine("5. Displaying all data in the database");
         Console.WriteLine("6. Configuration Menu");
-        Console.WriteLine("7. Database reset and configuration data reset");//
+        Console.WriteLine("7. Database reset and configuration data reset");
         Console.Write("Please choose an option: ");
     }
     private static int GetUserChoice()
@@ -378,6 +378,7 @@ internal class Program
                 maxDistance = parsedMaxDistance;
                 Console.Write("Enter Password (optional): ");
                 string? password = Console.ReadLine();
+                inputValid = true;
                 Volunteer newVolunteer;
 
                 if (password == "")
@@ -465,37 +466,38 @@ internal class Program
                 if (!int.TryParse(Console.ReadLine(), out int id))
                     throw new FormatException("Volunteer ID is invalid!");
                 var volunteer = s_dal?.Volunteer.Read(id);
-                Console.WriteLine(volunteer);
                 if (volunteer != null)
                 {
-                    Console.WriteLine("Enter Volunteer Full name to update: ");
-                    string fullName = Console.ReadLine()!;
-                    Console.WriteLine("Enter Distance Type(Air,Walk,Drive) to update: ");
-                    string distanceTypeInput = Console.ReadLine()!;
-                    DistanceType distanceTypes = string.IsNullOrEmpty(distanceTypeInput) || !Enum.TryParse(distanceTypeInput, out DistanceType dType) ? volunteer.DistanceType : dType;
-                    Console.WriteLine("Enter Volunteer Role(Manager/Volunteer) to update: ");
-                    string roleInput = Console.ReadLine()!;
-                    Role role = string.IsNullOrEmpty(roleInput) || !Enum.TryParse(roleInput, out Role rType) ? volunteer.Role : rType;
                     Console.WriteLine("Enter phone number to update: ");
                     string phoneNumber = Console.ReadLine()!;
+                    Console.WriteLine("Enter Volunteer Full name to update: ");
+                    string fullName = Console.ReadLine()!;
                     Console.WriteLine("Enter Volunteer Email to update: ");
                     string email = Console.ReadLine()!;
                     Console.WriteLine("Enter Volunteer FullAddress to update: ");
                     string fullAddress = Console.ReadLine()!;
-                    Console.WriteLine("Enter Volunteer Password to update: ");
-                    string password = Console.ReadLine()!;
                     Console.WriteLine("Enter Latitude to update: ");
                     string LatitudeInput = Console.ReadLine()!;
                     double? latitude = string.IsNullOrEmpty(LatitudeInput) || !double.TryParse(LatitudeInput, out double lat) ? volunteer.Latitude : lat;
                     Console.WriteLine("Enter Longitude to update: ");
                     string longitudeInput = Console.ReadLine()!;
-                    double? longitude = string.IsNullOrEmpty(longitudeInput) || !double.TryParse(longitudeInput, out double longit) ? volunteer.Longitude : longit; ;
+                    double? longitude = string.IsNullOrEmpty(longitudeInput) || !double.TryParse(longitudeInput, out double longit) ? volunteer.Longitude : longit;
+                    Console.WriteLine("Enter Volunteer Role(Manager/Volunteer) to update: ");
+                    string roleInput = Console.ReadLine()!;
+                    Role role = string.IsNullOrEmpty(roleInput) || !Enum.TryParse(roleInput, out Role rType) ? volunteer.Role : rType;
+                    Console.WriteLine("Enter Is Active to update: ");
+                    string isActiveInput = Console.ReadLine()!;
+                    bool isActive = string.IsNullOrEmpty(isActiveInput) || !bool.TryParse(isActiveInput, out bool isA) ? volunteer.IsActive : isA;
+                    Console.WriteLine("Enter Distance Type(Air,Walk,Drive) to update: ");
+                    string distanceTypeInput = Console.ReadLine()!;
+                    DistanceType distanceTypes = string.IsNullOrEmpty(distanceTypeInput) || !Enum.TryParse(distanceTypeInput, out DistanceType dType) ? volunteer.DistanceType : dType;
                     Console.WriteLine("Enter Max distance to update: ");
                     string maxDistanceInput = Console.ReadLine()!;
                     double? maxDistance = string.IsNullOrEmpty(maxDistanceInput) || !double.TryParse(maxDistanceInput, out double maxDis) ? volunteer.MaxDistanceForCall : maxDis;
-                    Console.WriteLine("Enter Active to update: ");
-                    string isActiveInput = Console.ReadLine()!;
-                    bool isActive = string.IsNullOrEmpty(isActiveInput) || !bool.TryParse(isActiveInput, out bool isA) ? volunteer.IsActive : isA;
+                    Console.WriteLine("Enter Volunteer Password to update: ");
+                    string password = Console.ReadLine()!;
+                    inputValid = true;
+
                     Volunteer newVolunteer = new Volunteer(
                          volunteer.Id,
                          string.IsNullOrEmpty(fullName) ? volunteer.FullName : fullName,
@@ -708,7 +710,7 @@ internal class Program
         Console.WriteLine("5. Show current system clock value");
         Console.WriteLine("6. Set a new value for any configuration variable");
         Console.WriteLine("7. Show current value for any configuration variable");
-        Console.WriteLine("8. Reset values ​​for all configuration variables");
+        Console.WriteLine("8. Reset values for all configuration variables");
         bool exit = false;
         int choice;
         while (!exit)
@@ -780,8 +782,10 @@ internal class Program
                         break;
                     default:
                         Console.WriteLine("Wrong choice!");
+                        inputValid = false;
                         break;
                 }
+                inputValid = true;
             }
             catch (FormatException ex)
             {
@@ -808,8 +812,10 @@ internal class Program
                         break;
                     default:
                         Console.WriteLine("Wrong choice!");
+                        inputValid = false;
                         break;
                 }
+                inputValid = true;
             }
             catch (FormatException ex)
             {

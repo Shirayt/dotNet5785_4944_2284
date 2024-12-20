@@ -1,16 +1,15 @@
-﻿
-namespace DalTest;
-
-using Dal;
+﻿namespace DalTest;
 using DalApi;
 using DO;
 using System.Linq;
 
+/// <summary>
+/// Initialize the data system by creating objects
+/// </summary>
 public static class Initialization
 {
     private static IDal? s_dal;
     private static readonly Random s_rand = new();
-
     public static void Do(IDal dal) //stage 2
     {
         try
@@ -46,7 +45,7 @@ public static class Initialization
                 do
                 {
                     id = s_rand.Next(200000000, 400000000);
-                    //} while (s_dalVolunteer!.Read(id) != null);//stage 1
+                 //} while (s_dalVolunteer!.Read(id) != null);//stage 1
                 } while (s_dal!.Volunteer.Read(id) != null);//stage 2
 
                 // הגרלת המרחק המרבי לקבלת קריאה בטווח של 5 עד 100
@@ -208,10 +207,10 @@ public static class Initialization
             DateTime randomStartTime = call.OpenTime.AddMinutes(randomMinutes);
             DateTime? randomEndTime = (s_rand.NextDouble() > 0.5) ? randomStartTime.AddMinutes(s_rand.Next((int)assignmentSpan.TotalMinutes)) : null;
 
-            // אם הזמן הסיום לא קיים, יהיה "ביטול עצמי"
+            // אם הזמן הסיום לא קיים, יהיה ביטול עצמי
             AssignmentStatus? status;
             if (randomEndTime == null)
-                status = AssignmentStatus.SelfCancelled; // שינוי לסטטוס של "ביטול עצמי"
+                status = AssignmentStatus.SelfCancelled; // שינוי לסטטוס של ביטול עצמי
             else if (call.MaxEndTime != null && randomEndTime > call.MaxEndTime)
             {
                 status = AssignmentStatus.Completed;
@@ -241,7 +240,6 @@ public static class Initialization
             null));// לא יהיה סטטוס
         }
     }
-
 }
 
 

@@ -1,4 +1,8 @@
 ﻿namespace Dal;
+
+/// <summary>
+/// Configuration entity definition for managing system settings for XML data 
+/// </summary>
 internal static class Config
 {
     internal const string s_data_config_xml = "data-config.xml";
@@ -21,7 +25,6 @@ internal static class Config
         set => XMLTools.SetConfigDateVal(s_data_config_xml, "Clock", value);
     }
     static TimeSpan RiskRange { get; set; }
-
     internal static void Reset()
     {
         NextAssignmentId = 0;
@@ -32,6 +35,4 @@ internal static class Config
 
         RiskRange = TimeSpan.Zero;
     }
-
-
 }

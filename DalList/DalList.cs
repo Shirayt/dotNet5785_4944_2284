@@ -1,7 +1,8 @@
 ﻿namespace Dal;
 using DalApi;
-using DO;
-
+/// <summary>
+/// Manages access to system data
+/// </summary>
 sealed public class DalList : IDal
 {
     public IAssignment Assignment { get; } = new AssignmentImplementation();

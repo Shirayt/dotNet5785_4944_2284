@@ -20,7 +20,7 @@ public interface IVolunteer
     /// <param name="isActive">Filter by active/inactive volunteers. Nullable.</param>
     /// <param name="sortBy">Sort by a specific field in VolunteerInList. Nullable.</param>
     /// <returns>A sorted and filtered collection of volunteers in list format.</returns>
-    IEnumerable<BO.VolunteerInList> GetVolunteersList(bool? isActive = null//,Enum ? sortBy = null);
+    IEnumerable<BO.VolunteerInList> GetVolunteersList(bool? isActive = null,Enum ? sortBy = null);
 
     /// <summary>
     /// Requests the details of a specific volunteer.

@@ -4,8 +4,10 @@ namespace Dal;
 /// Manages access to system XML data
 /// </summary>
 //stage 3
-sealed public class DalXml : IDal
+sealed internal class DalXml : IDal
 {
+    public static IDal Instance { get; } = new DalXml();
+    private DalXml() { }
     public IAssignment Assignment { get; } = new AssignmentImplementation();
     public ICall Call { get; } = new CallImplementation();
     public IVolunteer Volunteer { get; } = new VolunteerImplementation();

@@ -1,6 +1,4 @@
-﻿using DO;
-
-namespace BO;
+﻿namespace BO;
 public class VolunteerInList
 {
     public int Id { get; init; }

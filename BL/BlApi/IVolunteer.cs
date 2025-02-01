@@ -12,7 +12,7 @@ public interface IVolunteer
         /// <param name="password">The password of the user.</param>
         /// <returns>The role of the user.</returns>
         /// <exception cref="Exception">Thrown if the user does not exist or the password is incorrect.</exception>
-        string LoginVolunteerToSystem(string username, string password);
+        BO.Role LoginVolunteerToSystem(string username, string password);
 
     /// <summary>
     /// Requests a filtered and sorted list of volunteers.
@@ -20,8 +20,7 @@ public interface IVolunteer
     /// <param name="isActive">Filter by active/inactive volunteers. Nullable.</param>
     /// <param name="sortBy">Sort by a specific field in VolunteerInList. Nullable.</param>
     /// <returns>A sorted and filtered collection of volunteers in list format.</returns>
-    IEnumerable<BO.VolunteerInList> GetVolunteersList(bool? isActive = null,Enum ? sortBy = null);
-
+    IEnumerable<BO.VolunteerInList> GetVolunteersList(bool? isActive = null, BO.VolunteerSortOption? sortBy = null);
     /// <summary>
     /// Requests the details of a specific volunteer.
     /// </summary>

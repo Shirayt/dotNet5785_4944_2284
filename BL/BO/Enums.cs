@@ -43,8 +43,12 @@ public enum StatusCallInProgress
     InProcessingInRisk
 }
 
-
-
+public enum VolunteerSortOption
+{
+    ByName,
+    ByCompletedCalls,
+    MaxDistanceForCall
+}
 
 
 

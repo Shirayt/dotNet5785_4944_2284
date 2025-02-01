@@ -21,7 +21,8 @@ public class CallInProgress
 
     public double DistanceFromVolunteer { get; set; }
 
-    public CallStatus Status { get; set; }
+    public StatusCallInProgress Status { get; set; }
+
     //public override string ToString() => this.ToStringProperty();
 
 }

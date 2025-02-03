@@ -24,12 +24,62 @@ internal class CallImplementation : ICall
 
         return callCountsByStatus;
     }
-
-
-    public void AddCall(BO.Call call)
+    public IEnumerable<BO.CallInList> GetCallsList(BO.CallType? filterField, object? filterValue, BO.AssignmentStatus? sortField)
     {
-        _dal.Call.Create((DO.Call)call); // הוספת קריאה לרשימה
+        calls = _dal.Call.ReadAll();
+
+        IEnumerable<BO.CallInList> callsList = calls
+            .GroupBy(c => c.Id)
+            .Select(g => g.OrderByDescending(c => c.OpenTime).First()) // choose the last allocate
+            .Select(c => new BO.CallInList
+            {
+                Id = c.Id,
+                CallId = c.Id,
+                CallType = (BO.CallType)c.CallType,
+                OpenTime = c.OpenTime,
+                RestTimeForCall = Helpers.CallManager.CalculateRestTimeForCall(c),
+                LastVolunteerName = Helpers.CallManager.GetLastVolunteerName(c),
+                RestTimeForTreatment = Helpers.CallManager.CalculateRestTimeForTreatment(c),
+                Status = Helpers.CallManager.GetCallStatus(c),
+                AllocationsAmount = Helpers.CallManager.GetAllocationsAmount(c)
+            });
+
+        // If filterField is null - return the entire list without filtering.
+        if (filterField != null && filterValue != null)
+        {
+            var property = typeof(BO.CallInList).GetProperty(filterField.ToString());
+            if (property != null)
+            {
+                callsList = callsList.Where(c => property.GetValue(c)?.Equals(filterValue) == true);
+            }
+        }
+
+        // If sortField is null - sorting by call number by default.
+        if (sortField != null)
+        {
+            var property = typeof(BO.CallInList).GetProperty(sortField.ToString());
+            if (property != null)
+            {
+                callsList = callsList.OrderBy(c => property.GetValue(c));
+            }
+        }
+        else
+        {
+            callsList = callsList.OrderBy(c => c.CallId);
+        }
+
+        return callsList;
     }
+
+
+
+
+
+    /// /////////////////////////////////////////////
+
+
+
+
 
     public void CancelCallAssignment(int volunteerId, int assignmentId)
     {
@@ -70,31 +120,12 @@ internal class CallImplementation : ICall
         }
     }
 
-
-
-    public IEnumerable<BO.CallInList> GetCallsList(Enum? filterField, object? filterValue, Enum? sortField)
+    public void AddCall(BO.Call call)
     {
-        IEnumerable<BO.CallInList> callsList = _calls.Select(c => new BO.CallInList
-        {
-            Id = c.Id,
-            Status = c.Status,
-            VolunteerId = c.VolunteerId
-        });
-
-        // סינון אם יש צורך
-        if (filterField != null && filterValue != null)
-        {
-            callsList = callsList.Where(c => c.GetType().GetProperty(filterField.ToString()).GetValue(c).Equals(filterValue));
-        }
-
-        // מיון אם יש צורך
-        if (sortField != null)
-        {
-            callsList = callsList.OrderBy(c => c.GetType().GetProperty(sortField.ToString()).GetValue(c));
-        }
-
-        return callsList;
+        _dal.Call.Create((DO.Call)call); // הוספת קריאה לרשימה
     }
+
+
 
     public IEnumerable<BO.ClosedCallInList> GetClosedCallsByVolunteer(int volunteerId, Enum? filterType, Enum? sortField)
     {

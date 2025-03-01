@@ -9,7 +9,7 @@ public class CallInList
     public TimeSpan? RestTimeForCall { get; set; }
     public string? LastVolunteerName { get; set; }
     public TimeSpan? RestTimeForTreatment { get; set; }
-    public AssignmentStatus Status { get; set; }
+    public CallStatus Status { get; set; }
     public int AllocationsAmount { get; set; }
     //public override string ToString() => this.ToStringProperty();
 }

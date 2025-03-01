@@ -1,5 +1,6 @@
 ﻿namespace BlImplementation;
 using BlApi;
+using DalApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +25,15 @@ internal class CallImplementation : ICall
 
         return callCountsByStatus;
     }
-    public IEnumerable<BO.CallInList> GetCallsList(BO.CallType? filterField, object? filterValue, BO.AssignmentStatus? sortField)
-    {
-        calls = _dal.Call.ReadAll();
 
-        IEnumerable<BO.CallInList> callsList = calls
+    public IEnumerable<BO.CallInList> GetCallsList(BO.CallType? filterField, object? filterValue, string? sortField)
+    {
+        var calls = _dal.Call.ReadAll();
+
+        // Group by CallId and select the last allocation
+        var callsList = calls
             .GroupBy(c => c.Id)
-            .Select(g => g.OrderByDescending(c => c.OpenTime).First()) // choose the last allocate
+            .Select(g => g.OrderByDescending(c => c.OpenTime).First())
             .Select(c => new BO.CallInList
             {
                 Id = c.Id,
@@ -40,24 +43,20 @@ internal class CallImplementation : ICall
                 RestTimeForCall = Helpers.CallManager.CalculateRestTimeForCall(c),
                 LastVolunteerName = Helpers.CallManager.GetLastVolunteerName(c),
                 RestTimeForTreatment = Helpers.CallManager.CalculateRestTimeForTreatment(c),
-                Status = Helpers.CallManager.GetCallStatus(c),
-                AllocationsAmount = Helpers.CallManager.GetAllocationsAmount(c)
+                Status = Helpers.CallManager.GetCallStatus(c).Status,
+                AllocationsAmount = Helpers.CallManager.GetAllocationsAmount(c.Id)
             });
 
-        // If filterField is null - return the entire list without filtering.
-        if (filterField != null && filterValue != null)
+        // Apply filtering if filterField is provided
+        if (filterField.HasValue && filterValue != null)
         {
-            var property = typeof(BO.CallInList).GetProperty(filterField.ToString());
-            if (property != null)
-            {
-                callsList = callsList.Where(c => property.GetValue(c)?.Equals(filterValue) == true);
-            }
+            callsList = callsList.Where(c => c.CallType == filterField);
         }
 
-        // If sortField is null - sorting by call number by default.
-        if (sortField != null)
+        // Apply sorting if sortField is provided
+        if (!string.IsNullOrEmpty(sortField))
         {
-            var property = typeof(BO.CallInList).GetProperty(sortField.ToString());
+            var property = typeof(BO.CallInList).GetProperty(sortField);
             if (property != null)
             {
                 callsList = callsList.OrderBy(c => property.GetValue(c));
@@ -65,22 +64,59 @@ internal class CallImplementation : ICall
         }
         else
         {
-            callsList = callsList.OrderBy(c => c.CallId);
+            callsList = callsList.OrderBy(c => c.CallId); // Default sorting by CallId
         }
 
         return callsList;
     }
 
 
+    public BO.Call GetCallDetails(int callId)
+    {
+        try
+        {
+            var call = _dal.Call.Read(callId);
+            var assignments = _dal.Assignment.ReadAll();
 
+            if (call != null)
+            {
+                var BOCall = new BO.Call
+                {
+                    Id = call.Id,
+                    CallType = (BO.CallType)call.CallType,
+                    Description = call.Description,
+                    FullAddress = call.FullAddress,
+                    Latitude = call.Latitude,
+                    Longitude = call.Longitude,
+                    OpenTime = call.OpenTime,
+                    MaxEndTime = call.MaxEndTime,
+                    Status = Helpers.CallManager.GetCallStatus(call).Status,
+                    CallAssignInList = assignments
+                       .Where(assign => assign.CallId == callId)
+                       .Select(assign => new BO.CallAssignInList
+                       {
+                           VolunteerId = assign.VolunteerId,
+                           FullName = Helpers.CallManager.GetLastVolunteerName(call),
+                           StartTime = assign.StartTime,
+                           EndTime = assign.EndTime,
+                           Status = (BO.AssignmentStatus)assign.Status
+                       }).ToList() ?? null
+                };
 
-
-    /// /////////////////////////////////////////////
-
-
-
-
-
+                return BOCall;
+            }
+            else
+            {
+                // If the call is not found
+                throw new Exception("Call not found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("BO.Error while fetching call details.", ex);
+        }
+    }
+    ////////////////////////////////////////////////
     public void CancelCallAssignment(int volunteerId, int assignmentId)
     {
         var assignment = _assignments.FirstOrDefault(a => a.Id == assignmentId && a.VolunteerId == volunteerId);
@@ -100,19 +136,6 @@ internal class CallImplementation : ICall
         if (call != null)
         {
             _calls.Remove(call); // הסרת קריאה מהרשימה
-        }
-        else
-        {
-            throw new Exception("Call not found.");
-        }
-    }
-
-    public BO.Call GetCallDetails(int callId)
-    {
-        var call = _calls.FirstOrDefault(c => c.Id == callId);
-        if (call != null)
-        {
-            return call; // מחזיר את פרטי הקריאה
         }
         else
         {

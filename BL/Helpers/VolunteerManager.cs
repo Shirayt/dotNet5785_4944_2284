@@ -71,8 +71,6 @@ internal static class VolunteerManager
         {
             throw new ArgumentException("Invalid DistanceType value.");
         }
-
-
     }
     public static BO.CallInProgress? GetCallInProgress( int volunteerId)
     {

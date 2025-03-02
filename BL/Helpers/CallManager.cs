@@ -1,6 +1,8 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 using DalApi;
 using DO;
+using System.Text.RegularExpressions;
 namespace Helpers;
 
 /// <summary>
@@ -83,5 +85,66 @@ internal static class CallManager
         return assignments.Count(a => a.CallId == callId);
     }
 
+    public static void ValidateBOCallData(BO.Call call)
+    {
 
+        // Check if call object is null
+        if (call == null)
+        {
+            throw new ArgumentNullException(nameof(call), "Call object cannot be null.");
+        }
+
+        // Validate ID: must be positive, 9 digits, and pass the checksum validation
+        if (call.Id <= 0 || call.Id.ToString().Length != 9 ||
+            call.Id.ToString().Select((c, i) => (c - '0') * (i % 2 == 0 ? 1 : 2)).Sum() % 10 != 0)
+        {
+            throw new Exception("Invalid ID format.");
+        }
+
+        // Validate CallType is defined in the enum
+        if (!Enum.IsDefined(typeof(DO.CallType), call.CallType))
+        {
+            throw new Exception("Invalid call type.");
+        }
+
+        // Validate Description (optional field)
+        if (call.Description != null && call.Description.Length > 500)
+        {
+            throw new Exception("Description cannot exceed 500 characters.");
+        }
+
+        // Validate FullAddress (optional field)
+        if (call.FullAddress != null && string.IsNullOrWhiteSpace(call.FullAddress))
+        {
+            throw new Exception("Full address cannot be empty or whitespace if provided.");
+        }
+
+        // Validate address and coordinates: non-empty address and valid coordinate ranges
+        if (string.IsNullOrWhiteSpace(call.FullAddress) ||
+            call.Latitude < -90 || call.Latitude > 90 ||
+            call.Longitude < -180 || call.Longitude > 180)
+        {
+            throw new Exception("Invalid address or coordinates.");
+        }
+
+        // Validate OpenTime (cannot be in the future)
+        if (call.OpenTime > DateTime.Now)
+        {
+            throw new Exception("Open time cannot be in the future.");
+        }
+
+        // Validate MaxEndTime (must be after OpenTime if provided)
+        if (call.MaxEndTime.HasValue && call.MaxEndTime.Value <= call.OpenTime)
+        {
+            throw new Exception("Maximum end time must be after open time.");
+        }
+
+        // Validate Status is defined in the enum
+        if (!Enum.IsDefined(typeof(BO.CallStatus), call.Status))
+        {
+            throw new Exception("Invalid call status.");
+        }
+
+    }
 }
+

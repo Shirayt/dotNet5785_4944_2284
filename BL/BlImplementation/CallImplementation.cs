@@ -1,6 +1,8 @@
 ﻿namespace BlImplementation;
 using BlApi;
+using BO;
 using DalApi;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -116,6 +118,130 @@ internal class CallImplementation : ICall
             throw new Exception("BO.Error while fetching call details.", ex);
         }
     }
+
+
+    public void UpdateCallDetails(BO.Call call)
+    {
+        try
+        {
+            Helpers.CallManager.ValidateBOCallData(call);
+
+            var doCall = new DO.Call
+            {
+                Id = call.Id,
+                CallType = (DO.CallType)call.CallType,
+                Description = call.Description,
+                FullAddress = call.FullAddress,
+                Latitude = call.Latitude ?? 0,
+                Longitude = call.Longitude ?? 0,
+                OpenTime = call.OpenTime,
+                MaxEndTime = call.MaxEndTime
+            };
+
+            _dal.Call.Update(doCall);
+
+            ///לעדכן את הקאורדינטות של וולנטיר שקשור לקריאה הזו 
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error during call deletion process: " + ex.Message);
+        }
+    }
+    public void DeleteCall(int callId)
+    {
+        try
+        {
+            // Check if the call exists
+            var call = _dal.Call.Read(callId);
+            var assignments = _dal.Assignment.ReadAll();
+
+            var assignedCalls = assignments.Where(assign => assign.CallId == callId).ToList();
+
+            // Check if the call is open and has not been assigned to a volunteer
+            if ((Helpers.CallManager.GetCallStatus(call).Status) != BO.CallStatus.Open || !assignedCalls.Any())
+            {
+                // If the call is not open or has been assigned to a volunteer, it cannot be deleted
+                throw new InvalidOperationException("Cannot delete a call that is not 'Open' or has been assigned to a volunteer.");
+            }
+
+            // If everything is fine, proceed with deleting the call
+            _dal.Call.Delete(callId);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error during call deletion process: " + ex.Message);
+        }
+    }
+
+    public void AddCall(BO.Call call)
+    {
+        try
+        {
+            // Validate the data
+            Helpers.CallManager.ValidateBOCallData(call);
+
+            if (_dal.Call.Read(call.Id) != null)
+            {
+                throw new InvalidOperationException($"A call with ID {call.Id} already exists.");
+            }
+
+            // Create data object
+            var doCall = new DO.Call
+            {
+                Id = call.Id,
+                CallType = (DO.CallType)call.CallType,
+                Description = call.Description,
+                FullAddress = call.FullAddress,
+                Latitude = call.Latitude ?? 0,
+                Longitude = call.Longitude ?? 0,
+                OpenTime = call.OpenTime,
+                MaxEndTime = call.MaxEndTime
+            };
+
+            _dal.Call.Create(doCall);
+        }
+        catch (Exception ex) // Exception for existing ID
+        {
+            throw new Exception($"A call with ID {call.Id} already exists.", ex);
+        }
+
+    }
+    public IEnumerable<BO.ClosedCallInList> GetClosedCallsByVolunteer(int volunteerId, BO.CallType? filterType, BO.AssignmentStatus? sortField)
+    {
+        var calls = _dal.Call.ReadAll();
+
+        var closedCalls = calls
+            .Select(c => new { Call = c, StatusInfo = Helpers.CallManager.GetCallStatus(c) })
+            .Where(c => c.StatusInfo.Status == BO.CallStatus.Closed|| c.StatusInfo.Status == BO.CallStatus.Expired)
+            .Select(c => new BO.ClosedCallInList
+            {
+                 Id = c.Call.Id,
+                 CallType = (BO.CallType)c.Call.CallType, 
+                 FullAddress = c.Call.FullAddress,
+                 OpenTime = c.Call.OpenTime,
+                 EndTime = c.Call.MaxEndTime??DateTime.Now,
+                 TreatmentStartTime = ,
+                 Status = c.StatusInfo.Status
+            });
+
+        // filter by call type 
+        if (filterType != null)
+        {
+            closedCalls = closedCalls.Where(c => c.CallType == filterType);
+        }
+
+      
+        if (sortField != null)
+        {
+            closedCalls = closedCalls.OrderBy(c => c.GetType().GetProperty(sortField.ToString()).GetValue(c));
+        }
+        else
+        {
+            closedCalls = closedCalls.OrderBy(c => c.Id); //sort by call Id 
+        }
+
+        return closedCalls;
+    }
     ////////////////////////////////////////////////
     public void CancelCallAssignment(int volunteerId, int assignmentId)
     {
@@ -129,51 +255,6 @@ internal class CallImplementation : ICall
             throw new Exception("Assignment not found.");
         }
     }
-
-    public void DeleteCall(int callId)
-    {
-        var call = _calls.FirstOrDefault(c => c.Id == callId);
-        if (call != null)
-        {
-            _calls.Remove(call); // הסרת קריאה מהרשימה
-        }
-        else
-        {
-            throw new Exception("Call not found.");
-        }
-    }
-
-    public void AddCall(BO.Call call)
-    {
-        _dal.Call.Create((DO.Call)call); // הוספת קריאה לרשימה
-    }
-
-
-
-    public IEnumerable<BO.ClosedCallInList> GetClosedCallsByVolunteer(int volunteerId, Enum? filterType, Enum? sortField)
-    {
-        var closedCalls = _calls.Where(c => c.Status == BO.CallStatus.Closed && c.VolunteerId == volunteerId)
-                                .Select(c => new BO.ClosedCallInList
-                                {
-                                    Id = c.Id,
-                                    VolunteerId = c.VolunteerId,
-                                    Status = c.Status
-                                });
-
-        // סינון ומיון אם יש צורך
-        if (filterType != null)
-        {
-            closedCalls = closedCalls.Where(c => c.GetType().GetProperty(filterType.ToString()).GetValue(c) != null);
-        }
-
-        if (sortField != null)
-        {
-            closedCalls = closedCalls.OrderBy(c => c.GetType().GetProperty(sortField.ToString()).GetValue(c));
-        }
-
-        return closedCalls;
-    }
-
     public IEnumerable<BO.OpenCallInList> GetOpenCallsByVolunteer(int volunteerId, Enum? filterType, Enum? sortField)
     {
         var openCalls = _calls.Where(c => c.Status == BO.CallStatus.Open && c.VolunteerId == volunteerId)
@@ -232,22 +313,6 @@ internal class CallImplementation : ICall
         else
         {
             throw new Exception("Call is already in progress or closed.");
-        }
-    }
-
-    public void UpdateCallDetails(BO.Call call)
-    {
-        var existingCall = _calls.FirstOrDefault(c => c.Id == call.Id);
-        if (existingCall != null)
-        {
-            existingCall.Description = call.Description;
-            existingCall.Status = call.Status;
-            existingCall.VolunteerId = call.VolunteerId;
-            // עדכון פרטי הקריאה
-        }
-        else
-        {
-            throw new Exception("Call not found.");
         }
     }
 }

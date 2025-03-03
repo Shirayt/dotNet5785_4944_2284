@@ -49,6 +49,14 @@ public enum VolunteerSortOption
     ByCompletedCalls,
     MaxDistanceForCall
 }
+public enum TimeUnit
+{
+    Minute,
+    Hour,
+    Day,
+    Month,
+    Year
+}
 
 
 

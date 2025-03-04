@@ -7,7 +7,7 @@ public interface IAdmin
 {
     void InitializeDB();
     void ResetDB();
-    int GetRiskRange();
+    TimeSpan GetRiskRange();
     DateTime GetClock();
     void ForwardClock(BO.TimeUnit unit);
 }

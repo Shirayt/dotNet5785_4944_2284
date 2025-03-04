@@ -18,7 +18,7 @@ public interface ICall
     /// <param name="filterValue">Filter value. Nullable.</param>
     /// <param name="sortField">Sort by a specific field. Nullable.</param>
     /// <returns>A sorted and filtered collection of calls in list format.</returns>
-    IEnumerable<BO.CallInList> GetCallsList(Enum? filterField, object? filterValue, Enum? sortField);
+    IEnumerable<BO.CallInList> GetCallsList(BO.CallType? filterField, object? filterValue, string? sortField);
 
     /// <summary>
     /// Requests the details of a specific call.
@@ -56,7 +56,7 @@ public interface ICall
     /// <param name="filterType">Filter by a specific field. Nullable.</param>
     /// <param name="sortField">Sort by a specific field. Nullable.</param>
     /// <returns>A collection of closed calls handled by the volunteer.</returns>
-    IEnumerable<BO.ClosedCallInList> GetClosedCallsByVolunteer(int volunteerId, Enum? filterType, Enum? sortField);
+    IEnumerable<BO.ClosedCallInList> GetClosedCallsByVolunteer(int volunteerId, BO.CallType? filterType, BO.AssignmentStatus? sortField);
 
     /// <summary>
     /// Requests a list of open calls available for a specific volunteer to handle.
@@ -65,15 +65,15 @@ public interface ICall
     /// <param name="filterType">Filter by a specific field. Nullable.</param>
     /// <param name="sortField">Sort by a specific field. Nullable.</param>
     /// <returns>A collection of open calls available for the volunteer.</returns>
-    IEnumerable<BO.OpenCallInList> GetOpenCallsByVolunteer(int volunteerId, Enum? filterType, Enum? sortField);
+    IEnumerable<BO.OpenCallInList> GetOpenCallsByVolunteer(int volunteerId, BO.CallType? filterType, BO.CallType? sortField);
 
-    /// <summary>
-    /// Marks a call as completed by a volunteer.
-    /// </summary>
-    /// <param name="volunteerId">The ID of the volunteer completing the call.</param>
-    /// <param name="assignmentId">The ID of the call assignment.</param>
-    /// <exception cref="Exception">Thrown if the operation fails or the IDs are invalid.</exception>
-    void MarkCallAsCompleted(int volunteerId, int assignmentId);
+        /// <summary>
+        /// Marks a call as completed by a volunteer.
+        /// </summary>
+        /// <param name="volunteerId">The ID of the volunteer completing the call.</param>
+        /// <param name="assignmentId">The ID of the call assignment.</param>
+        /// <exception cref="Exception">Thrown if the operation fails or the IDs are invalid.</exception>
+        void MarkCallAsCompleted(int volunteerId, int assignmentId);
 
     /// <summary>
     /// Cancels a call assignment.

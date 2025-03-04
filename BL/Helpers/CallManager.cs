@@ -146,5 +146,64 @@ internal static class CallManager
         }
 
     }
+    public static DO.Assignment GetAssignmentForCall(IEnumerable<Assignment> volunteerassignments, int callId)
+    {
+        return volunteerassignments.FirstOrDefault(a => a.CallId == callId);
+    }
+
+    public static IEnumerable<T> ApplyFilterAndSort<T>(IQueryable<T> calls, BO.CallType? filterType, object? sortField)
+    {
+        // Filter by filterType if not null
+        if (filterType != null)
+        {
+            var propertyInfo = typeof(T).GetProperty(filterType.ToString());
+            if (propertyInfo != null)
+                calls = calls.Where(c => propertyInfo.GetValue(c) != null);
+
+        }
+
+        // Sort by sortField if not null
+        if (sortField != null)
+        {
+            var propertyInfo = typeof(T).GetProperty(sortField.ToString());
+            if (propertyInfo != null)
+                calls = calls.OrderBy(c => propertyInfo.GetValue(c));
+
+        }
+        else
+        {
+            // Default sort by Id
+            var propertyInfo = typeof(T).GetProperty("Id");
+            if (propertyInfo != null)
+                calls = calls.OrderBy(c => propertyInfo.GetValue(c));
+
+        }
+
+        return calls;
+    }
+    public static double GetDistanceFromVolunteer(int volunteerId, DO.Call call)
+    {
+        var volunteer = s_dal.Volunteer.Read(volunteerId);
+
+        if (volunteer.Latitude == null || volunteer.Longitude == null)
+            throw new InvalidOperationException("Volunteer location is not available");
+
+        const double EarthRadiusKm = 6371;
+        double volunteerLat = volunteer.Latitude.Value;
+        double volunteerLon = volunteer.Longitude.Value;
+        double callLat = call.Latitude;
+        double callLon = call.Longitude;
+
+        double dLat = (callLat - volunteerLat) * (Math.PI / 180);
+        double dLon = (callLon - volunteerLon) * (Math.PI / 180);
+
+        double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                   Math.Cos(volunteerLat * (Math.PI / 180)) * Math.Cos(callLat * (Math.PI / 180)) *
+                   Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+
+        double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+        return EarthRadiusKm * c;
+    }
+
 }
 

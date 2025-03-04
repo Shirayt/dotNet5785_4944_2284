@@ -19,42 +19,35 @@ internal class VolunteerImplementation : IVolunteer
 
     public IEnumerable<BO.VolunteerInList> GetVolunteersList(bool? isActive = null, BO.VolunteerSortOption? sortBy = null)
     {
-        var volunteers = _dal.Volunteer.ReadAll().AsEnumerable();
-        var assignments = _dal.Assignment.ReadAll();
-
-        if (isActive.HasValue)
-        {
-            volunteers = volunteers.Where(v => v.IsActive == isActive.Value);
-        }
-
-        var volunteerList = volunteers.Select(v => new BO.VolunteerInList
-        {
-            Id = v.Id,
-            FullName = v.FullName,
-            IsActive = v.IsActive,
-            AmountOfCompletedCalls = Helpers.VolunteerManager.GetCompletedCallsCount(v.Id),
-            AmountOfSelfCancelledCalls = Helpers.VolunteerManager.GetSelfCancelledCallsCount(v.Id),
-            CallInTreatmentId = Helpers.VolunteerManager.GetCallInTreatment(v.Id)
-        });
+        //using LINQ to object
+        var volunteerList = from v in _dal.Volunteer.ReadAll()
+                            let completedCalls = Helpers.VolunteerManager.GetCompletedCallsCount(v.Id)
+                            let selfCancelledCalls = Helpers.VolunteerManager.GetSelfCancelledCallsCount(v.Id)
+                            let callInTreatmentId = Helpers.VolunteerManager.GetCallInTreatment(v.Id)
+                            where !isActive.HasValue || v.IsActive == isActive.Value
+                            select new BO.VolunteerInList
+                            {
+                                Id = v.Id,
+                                FullName = v.FullName,
+                                IsActive = v.IsActive,
+                                AmountOfCompletedCalls = completedCalls,
+                                AmountOfSelfCancelledCalls = selfCancelledCalls,
+                                CallInTreatmentId = callInTreatmentId
+                            };
 
         if (sortBy != null)
         {
-            switch (sortBy)
+            volunteerList = sortBy switch
             {
-                case BO.VolunteerSortOption.ByName:
-                    volunteerList = volunteerList.OrderBy(v => v.FullName);
-                    break;
-                case BO.VolunteerSortOption.ByCompletedCalls:
-                    volunteerList = volunteerList.OrderByDescending(v => v.AmountOfCompletedCalls);
-                    break;
-                default:
-                    volunteerList = volunteerList.OrderBy(v => v.Id);
-                    break;
-            }
+                BO.VolunteerSortOption.ByName => from v in volunteerList orderby v.FullName select v,//using LINQ to object
+                BO.VolunteerSortOption.ByCompletedCalls => from v in volunteerList orderby v.AmountOfCompletedCalls descending select v,
+                _ => from v in volunteerList orderby v.Id select v
+            };
         }
 
         return volunteerList;
     }
+
 
     public BO.Volunteer GetVolunteerDetails(int volunteerId)
     {

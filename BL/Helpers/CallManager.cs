@@ -1,7 +1,7 @@
-﻿using BlApi;
-using BO;
+﻿using BO;
 using DalApi;
 using DO;
+using System;
 using System.Text.RegularExpressions;
 namespace Helpers;
 
@@ -35,7 +35,7 @@ internal static class CallManager
             latestAssignmentStatus == DO.AssignmentStatus.ManagerCancelled)
         {
             // Check if the call is at risk
-            if (call.MaxEndTime.HasValue && (call.MaxEndTime.Value - DateTime.Now).TotalHours <= 50)
+            if (call.MaxEndTime.HasValue && (call.MaxEndTime.Value - ClockManager.Now).TotalHours <= 50)
             {
                 return (call.Id, CallStatus.OpenAtRisk);
             }
@@ -60,7 +60,7 @@ internal static class CallManager
 
     public static TimeSpan? CalculateRestTimeForCall(DO.Call call)
     {
-        var currentTime = DateTime.Now;
+        var currentTime = ClockManager.Now;
         return currentTime > call.OpenTime ? currentTime - call.OpenTime : null;
     }
 
@@ -87,36 +87,35 @@ internal static class CallManager
 
     public static void ValidateBOCallData(BO.Call call)
     {
-
         // Check if call object is null
         if (call == null)
         {
-            throw new ArgumentNullException(nameof(call), "Call object cannot be null.");
+            throw new BlArgumentNullException( "BO Call object cannot be null.");
         }
 
         // Validate ID: must be positive, 9 digits, and pass the checksum validation
         if (call.Id <= 0 || call.Id.ToString().Length != 9 ||
             call.Id.ToString().Select((c, i) => (c - '0') * (i % 2 == 0 ? 1 : 2)).Sum() % 10 != 0)
         {
-            throw new Exception("Invalid ID format.");
+            throw new BlInvalidInputException("Invalid ID format.");
         }
 
         // Validate CallType is defined in the enum
         if (!Enum.IsDefined(typeof(DO.CallType), call.CallType))
         {
-            throw new Exception("Invalid call type.");
+            throw new BlInvalidInputException("Invalid call type.");
         }
 
         // Validate Description (optional field)
         if (call.Description != null && call.Description.Length > 500)
         {
-            throw new Exception("Description cannot exceed 500 characters.");
+            throw new BlInvalidInputException("Description cannot exceed 500 characters.");
         }
 
         // Validate FullAddress (optional field)
         if (call.FullAddress != null && string.IsNullOrWhiteSpace(call.FullAddress))
         {
-            throw new Exception("Full address cannot be empty or whitespace if provided.");
+            throw new BlArgumentNullException("Full address cannot be empty or whitespace if provided.");
         }
 
         // Validate address and coordinates: non-empty address and valid coordinate ranges
@@ -124,25 +123,25 @@ internal static class CallManager
             call.Latitude < -90 || call.Latitude > 90 ||
             call.Longitude < -180 || call.Longitude > 180)
         {
-            throw new Exception("Invalid address or coordinates.");
+            throw new BlInvalidInputException("Invalid address or coordinates.");
         }
 
         // Validate OpenTime (cannot be in the future)
-        if (call.OpenTime > DateTime.Now)
+        if (call.OpenTime > ClockManager.Now)
         {
-            throw new Exception("Open time cannot be in the future.");
+            throw new BlInvalidTimeException("Open time cannot be in the future.");
         }
 
         // Validate MaxEndTime (must be after OpenTime if provided)
         if (call.MaxEndTime.HasValue && call.MaxEndTime.Value <= call.OpenTime)
         {
-            throw new Exception("Maximum end time must be after open time.");
+            throw new BlInvalidTimeException("Maximum end time must be after open time.");
         }
 
         // Validate Status is defined in the enum
         if (!Enum.IsDefined(typeof(BO.CallStatus), call.Status))
         {
-            throw new Exception("Invalid call status.");
+            throw new BlInvalidInputException("Invalid call status.");
         }
 
     }
@@ -186,7 +185,7 @@ internal static class CallManager
         var volunteer = s_dal.Volunteer.Read(volunteerId);
 
         if (volunteer.Latitude == null || volunteer.Longitude == null)
-            throw new InvalidOperationException("Volunteer location is not available");
+            throw new BlInvalidOperationException("Volunteer location is not available");
 
         const double EarthRadiusKm = 6371;
         double volunteerLat = volunteer.Latitude.Value;

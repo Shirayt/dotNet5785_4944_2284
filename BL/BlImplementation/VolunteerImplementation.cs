@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 namespace BlImplementation;
 
 internal class VolunteerImplementation : IVolunteer
@@ -11,7 +12,7 @@ internal class VolunteerImplementation : IVolunteer
 
         if (volunteer == null || volunteer.Password != password)
         {
-            throw new Exception("Invalid email or password.");
+            throw new BlInvalidInputException("Invalid email or password in Login Volunteer To System.");
         }
 
         return (BO.Role)volunteer.Role;
@@ -55,11 +56,6 @@ internal class VolunteerImplementation : IVolunteer
         {
             var volunteer = _dal.Volunteer.Read(volunteerId);
 
-            if (volunteer == null)
-            {
-                throw new Exception($"Volunteer with ID {volunteerId} does not exist.");
-            }
-
             BO.CallInProgress? callInProgress = Helpers.VolunteerManager.GetCallInProgress(volunteerId);
 
             return new BO.Volunteer
@@ -82,9 +78,9 @@ internal class VolunteerImplementation : IVolunteer
                 callInProgress = callInProgress
             };
         }
-        catch (Exception ex)
+        catch (DO.DalDoesNotExistException ex)
         {
-            throw new Exception($"Error retrieving volunteer details: {ex.Message}");
+            throw new BO.BlDoesNotExistException($"Somthing went wrong during Get Volunteer Details in BL: ", ex);
         }
     }
     public void UpdateVolunteerDetails(int volunteerId, BO.Volunteer volunteer)
@@ -93,14 +89,9 @@ internal class VolunteerImplementation : IVolunteer
         {
             var existingVolunteer = _dal.Volunteer.Read(volunteerId);
 
-            if (existingVolunteer == null)
-            {
-                throw new Exception($"Volunteer with ID {volunteerId} does not exist.");
-            }
-
             if (existingVolunteer.Role != DO.Role.Manager && volunteerId != existingVolunteer.Id)
             {
-                throw new Exception("Only a manager or the volunteer themselves can update the details.");
+                throw new BlAuthorizationException("Only a manager or the volunteer themselves can update the details.");
             }
 
             Helpers.VolunteerManager.ValidateBOVolunteerData(volunteer);
@@ -122,9 +113,9 @@ internal class VolunteerImplementation : IVolunteer
             // Update volunteer data in the database
             _dal.Volunteer.Update(existingVolunteer);
         }
-        catch (Exception ex)//DO.DataException
+        catch (DO.DalDoesNotExistException ex)
         {
-            throw new Exception("Error updating volunteer details.", ex);//BO.Logic
+            throw new BO.BlDoesNotExistException($"Somthing went wrong during Update Volunteer Details in BL: ", ex);
         }
     }
 
@@ -134,22 +125,17 @@ internal class VolunteerImplementation : IVolunteer
         {
             var volunteer = _dal.Volunteer.Read(volunteerId);
 
-            if (volunteer == null)
-            {
-                throw new Exception($"Volunteer with ID {volunteerId} does not exist.");
-            }
-
             /// Checks if the volunteer is currently handling or has ever handled a call.
             if (Helpers.VolunteerManager.GetCallInTreatment(volunteer.Id) == null)
             {
-                throw new Exception($"Volunteer with ID {volunteerId} cannot be deleted as they have handled calls.");
+                throw new BlInvalidOperationException($"Volunteer with ID {volunteerId} cannot be deleted as they have handled calls.");
             }
 
             _dal.Volunteer.Delete(volunteerId);
         }
-        catch (Exception ex)//DO.DataException
+        catch (DO.DalDoesNotExistException ex)
         {
-            throw new Exception("Error updating volunteer details.", ex);//BO.Logic
+            throw new BO.BlDoesNotExistException($"Somthing went wrong during volunteer deletion in BL: ", ex);
         }
     }
 
@@ -158,11 +144,6 @@ internal class VolunteerImplementation : IVolunteer
         try
         {
             Helpers.VolunteerManager.ValidateBOVolunteerData(volunteer);
-
-            if (_dal.Volunteer.Read(volunteer.Id) != null)
-            {
-                throw new Exception($"A volunteer with ID {volunteer.Id} already exists.");
-            }
 
             var newVolunteer = new DO.Volunteer
             {
@@ -182,9 +163,9 @@ internal class VolunteerImplementation : IVolunteer
 
             _dal.Volunteer.Create(newVolunteer);
         }
-        catch (Exception ex)//DO.DataException
+        catch (DO.DalAlreadyExistsException ex)
         {
-            throw new Exception("Error updating volunteer details.", ex);//BO.Logic
+            throw new BO.BlAlreadyExistsException($"Somthing went wrong during volunteer addition in BL: ", ex);
         }
     }
 }

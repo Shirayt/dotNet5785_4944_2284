@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using BO;
+using DalApi;
 using DO;
 using System.Text.RegularExpressions;
 namespace Helpers;
@@ -42,20 +43,20 @@ internal static class VolunteerManager
         var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$"; // Simple email pattern
         if (!Regex.IsMatch(volunteer.Email, emailPattern))
         {
-            throw new Exception("Invalid email format.");
+            throw new BlFormatException("Invalid email format.");
         }
 
         // Validate phone number: must be numeric and at least 10 digits
         if (!volunteer.PhoneNumber.All(char.IsDigit) || volunteer.PhoneNumber.Length < 10)
         {
-            throw new Exception("Invalid phone number.");
+            throw new BlInvalidInputException("Invalid phone number.");
         }
 
         // Validate the ID: must be positive
         if (volunteer.Id <= 0 || volunteer.Id.ToString().Length != 9 ||
             volunteer.Id.ToString().Select((c, i) => (c - '0') * (i % 2 == 0 ? 1 : 2)).Sum() % 10 != 0)
         {
-            throw new Exception("Invalid ID.");
+            throw new BlInvalidInputException("Invalid ID.");
         }
 
         // Validate address and coordinates: non-empty address and valid coordinate ranges
@@ -63,13 +64,13 @@ internal static class VolunteerManager
             volunteer.Latitude < -90 || volunteer.Latitude > 90 ||
             volunteer.Longitude < -180 || volunteer.Longitude > 180)
         {
-            throw new Exception("Invalid address or coordinates.");
+            throw new BlInvalidInputException("Invalid address or coordinates.");
         }
 
         // Validates that the input value is a defined DistanceType.
         if (!Enum.IsDefined(typeof(DO.DistanceType), volunteer.DistanceType))
         {
-            throw new ArgumentException("Invalid DistanceType value.");
+            throw new BlInvalidInputException("Invalid DistanceType value.");
         }
     }
     public static BO.CallInProgress? GetCallInProgress( int volunteerId)

@@ -15,7 +15,7 @@ internal class AdminImplementation : IAdmin
             TimeUnit.Day => currentClock.AddDays(1),
             TimeUnit.Month => currentClock.AddMonths(1),
             TimeUnit.Year => currentClock.AddYears(1),
-            _ => throw new NotImplementedException($"Invalid time unit {nameof(unit)}")
+            _ => throw new BlNotImplementedException($"Invalid time unit {nameof(unit)}")
         };
 
         ClockManager.UpdateClock(newClock);

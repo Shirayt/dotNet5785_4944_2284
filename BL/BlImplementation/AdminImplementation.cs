@@ -5,6 +5,10 @@ namespace BlImplementation;
 internal class AdminImplementation : IAdmin
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
+    public DateTime GetClock()
+    {
+        return ClockManager.Now;
+    }
     public void ForwardClock(TimeUnit unit)
     {
         DateTime currentClock = ClockManager.Now;
@@ -20,31 +24,24 @@ internal class AdminImplementation : IAdmin
 
         ClockManager.UpdateClock(newClock);
     }
-    public DateTime GetClock()
-    {
-        return ClockManager.Now;
-    }
-
     public TimeSpan GetRiskRange()
     {
         return _dal.Config.RiskRange;
     }
-
     public void SetRiskRange(TimeSpan timeRange)
     {
         _dal.Config.RiskRange = timeRange;
+    }
+    public void ResetDB()
+    {
+        _dal.ResetDB();
+        _dal.Config.Reset();
+        ClockManager.UpdateClock(ClockManager.Now);
     }
     public void InitializeDB()
     {
         _dal.ResetDB();
         DalTest.Initialization.Do();
-        ClockManager.UpdateClock(ClockManager.Now);
-    }
-
-    public void ResetDB()
-    {
-        _dal.ResetDB();
-        _dal.Config.Reset();
         ClockManager.UpdateClock(ClockManager.Now);
     }
 }

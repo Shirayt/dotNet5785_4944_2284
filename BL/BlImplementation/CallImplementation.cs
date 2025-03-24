@@ -4,6 +4,8 @@ using Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Text.Json;
 
 internal class CallImplementation : ICall
 {
@@ -25,7 +27,7 @@ internal class CallImplementation : ICall
 
         return callCountsByStatus;
     }
-    public IEnumerable<BO.CallInList> GetCallsList(BO.CallType? filterField, object? filterValue, string? sortField)
+    public IEnumerable<BO.CallInList> GetCallsList(BO.CallInListFields? filterField, object? filterValue, BO.CallInListFields? sortField)
     {
         var calls = _dal.Call.ReadAll();
 
@@ -49,13 +51,14 @@ internal class CallImplementation : ICall
         // Apply filtering if filterField is provided
         if (filterField.HasValue && filterValue != null)
         {
-            callsList = callsList.Where(c => c.CallType == filterField);
+            var property = typeof(BO.CallInList).GetProperty(filterField.ToString());
+            callsList = callsList.Where(c => property.GetValue(c) == filterValue);
         }
 
         // Apply sorting if sortField is provided
-        if (!string.IsNullOrEmpty(sortField))
+        if (sortField != null)
         {
-            var property = typeof(BO.CallInList).GetProperty(sortField);
+            var property = typeof(BO.CallInList).GetProperty(sortField.ToString());
             if (property != null)
             {
                 callsList = callsList.OrderBy(c => property.GetValue(c));
@@ -167,11 +170,6 @@ internal class CallImplementation : ICall
             // Validate the data
             Helpers.CallManager.ValidateBOCallData(call);
 
-            if (_dal.Call.Read(call.Id) != null)
-            {
-                throw new InvalidOperationException($"A call with ID {call.Id} already exists.");
-            }
-
             // Create data object
             var doCall = new DO.Call
             {
@@ -192,7 +190,7 @@ internal class CallImplementation : ICall
             throw new BO.BlAlreadyExistsException($"Somthing went wrong during call addition in BL: ", ex);
         }
     }
-    public IEnumerable<BO.ClosedCallInList> GetClosedCallsByVolunteer(int volunteerId, BO.CallType? filterType, BO.AssignmentStatus? sortField)
+    public IEnumerable<BO.ClosedCallInList> GetClosedCallsByVolunteer(int volunteerId, BO.FilterAndSortByFields? filterType, BO.FilterAndSortByFields? sortField)
     {
         var calls = _dal.Call.ReadAll();
         var assignments = _dal.Assignment.ReadAll();
@@ -222,7 +220,7 @@ internal class CallImplementation : ICall
 
         return closedCalls;
     }
-    public IEnumerable<BO.OpenCallInList> GetOpenCallsByVolunteer(int volunteerId, BO.CallType? filterType, BO.CallType? sortField)
+    public IEnumerable<BO.OpenCallInList> GetOpenCallsByVolunteer(int volunteerId, BO.FilterAndSortByFields? filterType, BO.FilterAndSortByFields? sortField)
     {
 
         var calls = _dal.Call.ReadAll();
@@ -372,5 +370,30 @@ internal class CallImplementation : ICall
         {
             throw new BO.BlAlreadyExistsException($"Somthing went wrong during Select Call For Treatment in BL: ", ex);
         }
+    }
+
+    public static (double, double) GetCoordinatesFromAddress(string address)
+    {
+        string apiKey = "PK.83B935C225DF7E2F9B1ee90A6B46AD86";
+        using var client = new HttpClient();
+        string url = $"https://us1.locationiq.com/v1/search.php?key={apiKey}&q={Uri.EscapeDataString(address)}&format=json";
+
+        var response = client.GetAsync(url).GetAwaiter().GetResult();
+        if (!response.IsSuccessStatusCode)
+            throw new Exception("Invalid address or API error.");
+
+        var json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        using var doc = JsonDocument.Parse(json);
+
+        if (doc.RootElement.ValueKind != JsonValueKind.Array || doc.RootElement.GetArrayLength() == 0)
+            throw new Exception("Address not found.");
+
+        var root = doc.RootElement[0];
+
+        // convert values to double
+        double latitude = double.Parse(root.GetProperty("lat").GetString());
+        double longitude = double.Parse(root.GetProperty("lon").GetString());
+
+        return (latitude, longitude);
     }
 }

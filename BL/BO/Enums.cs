@@ -57,6 +57,21 @@ public enum TimeUnit
     Month,
     Year
 }
-
-
+public enum FilterAndSortByFields
+{
+    CallType,
+    OpenTime,
+    MaxEndTime,
+    Status
+}
+public enum CallInListFields
+{
+    CallId,
+    CallType,
+    OpenTime,
+    RestTimeForCall,
+    LastVolunteerName,
+    RestTimeForTreatment,
+    Status
+}
 

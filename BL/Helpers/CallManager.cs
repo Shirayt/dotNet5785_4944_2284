@@ -93,15 +93,8 @@ internal static class CallManager
             throw new BlArgumentNullException( "BO Call object cannot be null.");
         }
 
-        // Validate ID: must be positive, 9 digits, and pass the checksum validation
-        if (call.Id <= 0 || call.Id.ToString().Length != 9 ||
-            call.Id.ToString().Select((c, i) => (c - '0') * (i % 2 == 0 ? 1 : 2)).Sum() % 10 != 0)
-        {
-            throw new BlInvalidInputException("Invalid ID format.");
-        }
-
         // Validate CallType is defined in the enum
-        if (!Enum.IsDefined(typeof(DO.CallType), call.CallType))
+        if (!Enum.IsDefined(typeof(BO.CallType), call.CallType))
         {
             throw new BlInvalidInputException("Invalid call type.");
         }
@@ -150,7 +143,7 @@ internal static class CallManager
         return volunteerassignments.FirstOrDefault(a => a.CallId == callId);
     }
 
-    public static IEnumerable<T> ApplyFilterAndSort<T>(IQueryable<T> calls, BO.CallType? filterType, object? sortField)
+    public static IEnumerable<T> ApplyFilterAndSort<T>(IQueryable<T> calls, BO.FilterAndSortByFields? filterType, BO.FilterAndSortByFields? sortField)
     {
         // Filter by filterType if not null
         if (filterType != null)

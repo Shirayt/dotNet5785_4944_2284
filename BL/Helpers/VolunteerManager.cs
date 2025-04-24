@@ -15,16 +15,19 @@ internal static class VolunteerManager
     public static int GetCompletedCallsCount(int volunteerId)
     {
         var assignments = s_dal.Assignment.ReadAll();
+        if (assignments is null) return 0;
         return assignments.Count(a => a.VolunteerId == volunteerId && a.Status == DO.AssignmentStatus.Completed);
     }
     public static int GetSelfCancelledCallsCount(int volunteerId)
     {
         var assignments = s_dal.Assignment.ReadAll();
+        if (assignments is null) return 0;
         return assignments.Count(a => a.VolunteerId == volunteerId && a.Status == DO.AssignmentStatus.SelfCancelled);
     }
     public static int GetExpiredCallsCount(int volunteerId)
     {
         var assignments = s_dal.Assignment.ReadAll();
+        if (assignments is null) return 0;
         return assignments.Count(a => a.VolunteerId == volunteerId && a.Status == DO.AssignmentStatus.Expired);
     }
 
@@ -52,9 +55,13 @@ internal static class VolunteerManager
             throw new BlInvalidInputException("Invalid phone number.");
         }
 
-        // Validate the ID: must be positive
-        if (volunteer.Id <= 0 || volunteer.Id.ToString().Length != 9 ||
-            volunteer.Id.ToString().Select((c, i) => (c - '0') * (i % 2 == 0 ? 1 : 2)).Sum() % 10 != 0)
+        if (volunteer.Id <= 0 || volunteer.Id.ToString().PadLeft(9, '0').Length != 9 ||
+    volunteer.Id.ToString().PadLeft(9, '0').Reverse().Select((c, i) =>
+    {
+        int digit = c - '0';
+        int multiplied = digit * (i % 2 == 0 ? 1 : 2);
+        return multiplied > 9 ? multiplied - 9 : multiplied;
+    }).Sum() % 10 != 0)
         {
             throw new BlInvalidInputException("Invalid ID.");
         }
@@ -68,15 +75,16 @@ internal static class VolunteerManager
         }
 
         // Validates that the input value is a defined DistanceType.
-        if (!Enum.IsDefined(typeof(DO.DistanceType), volunteer.DistanceType))
+        if (!Enum.IsDefined(typeof(BO.DistanceType), volunteer.DistanceType))
         {
             throw new BlInvalidInputException("Invalid DistanceType value.");
         }
     }
-    public static BO.CallInProgress? GetCallInProgress( int volunteerId)
+    public static BO.CallInProgress? GetCallInProgress(int volunteerId)
     {
         var assignments = s_dal.Assignment.ReadAll();
-        var calls =s_dal.Call.ReadAll();
+        var calls = s_dal.Call.ReadAll();
+        if (assignments is null || calls is null) return null;
 
         return assignments
             .Where(a => a.VolunteerId == volunteerId && a.EndTime == null)

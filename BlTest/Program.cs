@@ -445,7 +445,6 @@ namespace BlTest
                                     Console.WriteLine("Enter Filter Type ( CallType, OpenTime, MaxEndTime, Status) or press Enter to skip:");
                                     string? FilterTypeInput = Console.ReadLine();
                                     BO.FilterAndSortByFields? FilterType = Enum.TryParse(FilterTypeInput, out BO.FilterAndSortByFields parsedCallType) ? parsedCallType : null;
-
                                     Console.WriteLine("Enter Sort Field ( CallType, OpenTime, MaxEndTime, Status) or press Enter to skip:");
                                     string? sortFieldInput = Console.ReadLine();
                                     BO.FilterAndSortByFields? sortField = Enum.TryParse(sortFieldInput, out BO.FilterAndSortByFields parsedSortField) ? parsedSortField : null;

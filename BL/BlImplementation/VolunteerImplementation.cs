@@ -80,7 +80,7 @@ internal class VolunteerImplementation : IVolunteer
         }
         catch (DO.DalDoesNotExistException ex)
         {
-            throw new BO.BlDoesNotExistException($"Somthing went wrong during Get Volunteer Details in BL: ", ex);
+            throw new BO.BlDoesNotExistException($"Something went wrong during Get Volunteer Details in BL: ", ex);
         }
     }
     public void UpdateVolunteerDetails(int volunteerId, BO.Volunteer volunteer)

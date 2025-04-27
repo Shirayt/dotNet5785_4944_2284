@@ -34,6 +34,7 @@ internal static class VolunteerManager
     public static int? GetCallInTreatment(int volunteerId)
     {
         var assignments = s_dal.Assignment.ReadAll();
+        if (assignments is null) return 0;
         return assignments
             .Where(a => a.VolunteerId == volunteerId && a.EndTime == null)
             .Select(a => (int?)a.CallId)
@@ -43,7 +44,7 @@ internal static class VolunteerManager
     public static void ValidateBOVolunteerData(BO.Volunteer volunteer)
     {
         // Validate email format
-        var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$"; // Simple email pattern
+        var emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";// Simple email pattern
         if (!Regex.IsMatch(volunteer.Email, emailPattern))
         {
             throw new BlFormatException("Invalid email format.");

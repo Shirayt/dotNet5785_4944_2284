@@ -19,10 +19,10 @@ public class Volunteer
     public int AmountOfSelfCancelledCalls { get; set; }
     public int AmountOfExpiredCalls { get; set; }
     public BO.CallInProgress? callInProgress { get; set; }
-    //public override string ToString() => this.ToStringProperty();
     public override string ToString()
     {
         return
+            "---- Volunteer Details ----\n" +
             $"Id: {Id}\n" +
             $"FullName: {FullName}\n" +
             $"PhoneNumber: {PhoneNumber}\n" +

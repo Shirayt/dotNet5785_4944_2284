@@ -8,9 +8,10 @@ internal class VolunteerImplementation : IVolunteer
 
     public BO.Role LoginVolunteerToSystem(string username, string password)
     {
-        var volunteer = _dal.Volunteer.ReadAll().FirstOrDefault(v => v.Email == username);
+        var volunteers = _dal.Volunteer.ReadAll() ?? Enumerable.Empty<DO.Volunteer>();
+        var volunteer = volunteers.FirstOrDefault(v => v.FullName == username);
 
-        if (volunteer == null || volunteer.Password != password)
+        if (volunteer is null || volunteer.Password != password)
         {
             throw new BlInvalidInputException("Invalid email or password in Login Volunteer To System.");
         }
@@ -20,8 +21,10 @@ internal class VolunteerImplementation : IVolunteer
 
     public IEnumerable<BO.VolunteerInList> GetVolunteersList(bool? isActive = null, BO.VolunteerSortOption? sortBy = null)
     {
+
+        var volunteersList = _dal.Volunteer.ReadAll() ?? Enumerable.Empty<DO.Volunteer>(); ;
         //using LINQ to object
-        var volunteerList = from v in _dal.Volunteer.ReadAll()
+        var volunteerList = from v in volunteersList
                             let completedCalls = Helpers.VolunteerManager.GetCompletedCallsCount(v.Id)
                             let selfCancelledCalls = Helpers.VolunteerManager.GetSelfCancelledCallsCount(v.Id)
                             let callInTreatmentId = Helpers.VolunteerManager.GetCallInTreatment(v.Id)

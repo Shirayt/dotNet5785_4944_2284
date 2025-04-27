@@ -148,10 +148,10 @@ namespace BlTest
                         try
                         {
                             Console.WriteLine("Please log in.");
-                            Console.Write("Username: ");
+                            Console.Write("Enter Username: ");
                             string username = Console.ReadLine()!;
 
-                            Console.Write("Enter Password (must be at least 8 characters, contain upper and lower case letters, a digit, and a special character): ");
+                            Console.Write("Enter Password: ");
                             string password = Console.ReadLine()!;
 
                             BO.Role userRole = s_bl.Volunteer.LoginVolunteerToSystem(username, password);
@@ -166,7 +166,9 @@ namespace BlTest
                         try
                         {
                             foreach (var volunteer in s_bl.Volunteer.GetVolunteersList())
+                            {
                                 Console.WriteLine(volunteer);
+                            }
                         }
                         catch (Exception ex)
                         {

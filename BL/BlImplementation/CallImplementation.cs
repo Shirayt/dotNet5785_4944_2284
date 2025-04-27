@@ -88,17 +88,17 @@ internal class CallImplementation : ICall
                 Longitude = call.Longitude,
                 OpenTime = call.OpenTime,
                 MaxEndTime = call.MaxEndTime,
-                Status = Helpers.CallManager.GetCallStatus(call).Status,
-                CallAssignInList = assignments
-                              .Where(assign => assign.CallId == callId)
-                              .Select(assign => new BO.CallAssignInList
-                              {
-                                  VolunteerId = assign.VolunteerId,
-                                  FullName = Helpers.CallManager.GetLastVolunteerName(call),
-                                  StartTime = assign.StartTime,
-                                  EndTime = assign.EndTime,
-                                  Status = (BO.AssignmentStatus)assign.Status
-                              }).ToList() ?? null
+                //Status = Helpers.CallManager.GetCallStatus(call).Status,
+                //CallAssignInList = assignments
+                //              .Where(assign => assign.CallId == callId)
+                //              .Select(assign => new BO.CallAssignInList
+                //              {
+                //                  VolunteerId = assign.VolunteerId,
+                //                  FullName = Helpers.CallManager.GetLastVolunteerName(call),
+                //                  StartTime = assign.StartTime,
+                //                  EndTime = assign.EndTime,
+                //                  Status = (BO.AssignmentStatus)assign.Status
+                //              }).ToList() ?? null
             };
 
             return BOCall;
@@ -173,7 +173,6 @@ internal class CallImplementation : ICall
             // Create data object
             var doCall = new DO.Call
             {
-                Id = call.Id,
                 CallType = (DO.CallType)call.CallType,
                 Description = call.Description,
                 FullAddress = call.FullAddress,

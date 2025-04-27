@@ -403,7 +403,7 @@ namespace BlTest
                     Console.WriteLine("1. Get call quantities by status");
                     Console.WriteLine("2. Get Closed Calls Handled By Volunteer");
                     Console.WriteLine("3. Show All Calls");
-                    Console.WriteLine("4. Read Call by ID");
+                    Console.WriteLine("4. Get Call Details by ID");
                     Console.WriteLine("5. Add Call");
                     Console.WriteLine("6. Delete Call");
                     Console.WriteLine("7. Update Call");
@@ -520,15 +520,9 @@ namespace BlTest
                             try
                             {
                                 Console.WriteLine("Enter Call details:");
-                                Console.Write("ID: ");
-                                if (int.TryParse(Console.ReadLine(), out int id))
-                                {
-                                    BO.Call call = CreateCall(id);
-                                    s_bl.Call.AddCall(call);
-                                    Console.WriteLine("Call created successfully!");
-                                }
-                                else
-                                    throw new FormatException("Invalid input. Cll ID must be a number.");
+                                BO.Call call = CreateCall();
+                                s_bl.Call.AddCall(call);
+                                Console.WriteLine("Call created successfully!"); 
                             }
                             catch (Exception ex)
                             {
@@ -667,7 +661,7 @@ namespace BlTest
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
-        static BO.Call CreateCall(int id)
+        static BO.Call CreateCall()
         {
             Console.WriteLine("Enter the call type (0 for Emergency, 1 for Equipment, 2 for Doctor, 3 for Training):");
             if (!Enum.TryParse(Console.ReadLine(), out BO.CallType callType))
@@ -693,13 +687,13 @@ namespace BlTest
 
             return new BO.Call
             {
-                Id = id,
                 CallType = callType,
                 Description = description,
                 FullAddress = address,
                 Latitude = 0,
                 Longitude = 0,
-                OpenTime = s_bl.Admin.GetClock()
+                OpenTime = s_bl.Admin.GetClock(),
+                MaxEndTime= maxEndTime
             };
 
 
@@ -712,9 +706,9 @@ namespace BlTest
             string description = Console.ReadLine();
             Console.Write("Enter New Full Address (optional) : ");
             string address = Console.ReadLine();
-            Console.Write("Enter Call Type (optional) : ");
+            Console.Write("Enter New Call Type (optional) : ");
             BO.CallType? callType = Enum.TryParse(Console.ReadLine(), out BO.CallType parsedType) ? parsedType : (BO.CallType?)null;
-            Console.Write("Enter Max End Time (hh:mm , (optional)): ");
+            Console.Write("Enter New End Time (hh:mm , (optional)): ");
             TimeSpan? maxEndTime = TimeSpan.TryParse(Console.ReadLine(), out TimeSpan parsedTime) ? parsedTime : (TimeSpan?)null;
             try
             {

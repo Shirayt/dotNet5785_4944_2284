@@ -338,14 +338,14 @@ namespace BlTest
             Console.Write("Full Address: ");
             string? address = Console.ReadLine();
 
-            Console.WriteLine("Enter location details:");
-            Console.Write("Latitude: ");
-            if (!double.TryParse(Console.ReadLine(), out double latitude))
-                throw new FormatException("Invalid latitude format.");
+            //Console.WriteLine("Enter location details:");
+            //Console.Write("Latitude: ");
+            //if (!double.TryParse(Console.ReadLine(), out double latitude))
+            //    throw new FormatException("Invalid latitude format.");
 
-            Console.Write("Longitude: ");
-            if (!double.TryParse(Console.ReadLine(), out double longitude))
-                throw new FormatException("Invalid longitude format.");
+            //Console.Write("Longitude: ");
+            //if (!double.TryParse(Console.ReadLine(), out double longitude))
+            //    throw new FormatException("Invalid longitude format.");
 
             Console.Write("Max Distance For Call: ");
             if (!double.TryParse(Console.ReadLine(), out double MaxDistanceForCall))
@@ -363,8 +363,8 @@ namespace BlTest
                 Email = email,
                 Password = password,
                 CurrentFullAddress = address,
-                Latitude = latitude,
-                Longitude = longitude,
+                //Latitude = latitude,
+                //Longitude = longitude,
                 Role = role,
                 IsActive = active,
                 MaxDistanceForCall = MaxDistanceForCall,

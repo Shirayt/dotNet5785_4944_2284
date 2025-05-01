@@ -219,36 +219,73 @@ internal class CallImplementation : ICall
 
         return closedCalls;
     }
+    //public IEnumerable<BO.OpenCallInList> GetOpenCallsByVolunteer(int volunteerId, BO.FilterAndSortByFields? filterType, BO.FilterAndSortByFields? sortField)
+    //{
+
+    //    var calls = _dal.Call.ReadAll();
+    //    var assignments = _dal.Assignment.ReadAll();
+
+    //    // list of assignments that the volunteer was assigned to.
+    //    var volunteerassignments = assignments.Where(a => a.VolunteerId == volunteerId);
+
+    //    var openCalls = calls
+    //        .Where(c => volunteerassignments.Select(a => a.CallId).Contains(c.Id) // a volunteer call
+    //               && (Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.Open
+    //               || Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.OpenAtRisk
+    //               || Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.InProcessing)) //the call is open 
+    //        .Select(c => new BO.OpenCallInList
+    //        {
+    //            Id = c.Id,
+    //            CallType = (BO.CallType)c.CallType,
+    //            Description = c.Description,
+    //            FullAddress = c.FullAddress,
+    //            OpenTime = c.OpenTime,
+    //            MaxEndTime = c.MaxEndTime,
+    //            DistanceFromVolunteer = Tools.CalculateDistance(volunteerassignments.lutitude, volunteer.longitude, c.Latitude ?? 0, c.Longitude ?? 0),
+    //        });
+
+    //    // Apply filter and sort using the helper function
+    //    openCalls = Helpers.CallManager.ApplyFilterAndSort(openCalls.AsQueryable(), filterType, sortField);
+
+    //    return openCalls;
+    //}
+
+
     public IEnumerable<BO.OpenCallInList> GetOpenCallsByVolunteer(int volunteerId, BO.FilterAndSortByFields? filterType, BO.FilterAndSortByFields? sortField)
     {
+        try
+        {
+            var volunteer = _dal.Volunteer.Read(volunteerId) ?? throw new BO.BlDoesNotExistException($"Volunteer with ID={volunteerId} does not exist.");
+            var openCalls = _dal.Call.ReadAll()
+     .Where(c =>
+         (CallManager.GetCallStatus(c).Status == BO.CallStatus.Open || CallManager.GetCallStatus(c).Status == BO.CallStatus.OpenAtRisk))
+     .Select(c => new BO.OpenCallInList
+     {
+         Id = volunteerId,
+         CallType = (BO.CallType)c.CallType,
+         Description = c.Description,
+         FullAddress = c.FullAddress,
+         OpenTime = c.OpenTime,
+         MaxEndTime = c.MaxEndTime,
+         DistanceFromVolunteer = Tools.CalculateDistance(volunteer.Latitude, volunteer.Longitude, c.Latitude, c.Longitude)
+     });
 
-        var calls = _dal.Call.ReadAll();
-        var assignments = _dal.Assignment.ReadAll();
+            return sortField != null
+    ? openCalls.OrderBy(c => c.GetType().GetProperty(sortField.ToString()!)?.GetValue(c))
+    : openCalls.OrderBy(c => c.Id);
 
-        // list of assignments that the volunteer was assigned to.
-        var volunteerassignments = assignments.Where(a => a.VolunteerId == volunteerId);
-
-        var openCalls = calls
-            .Where(c => volunteerassignments.Select(a => a.CallId).Contains(c.Id) // a volunteer call
-                   && (Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.Open
-                   || Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.OpenAtRisk
-                   || Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.InProcessing)) //the call is open 
-            .Select(c => new BO.OpenCallInList
-            {
-                Id = c.Id,
-                CallType = (BO.CallType)c.CallType,
-                Description = c.Description,
-                FullAddress = c.FullAddress,
-                OpenTime = c.OpenTime,
-                MaxEndTime = c.MaxEndTime,
-                DistanceFromVolunteer = Helpers.CallManager.GetDistanceFromVolunteer(volunteerId, c)
-            });
-
-        // Apply filter and sort using the helper function
-        openCalls = Helpers.CallManager.ApplyFilterAndSort(openCalls.AsQueryable(), filterType, sortField);
-
-        return openCalls;
+        }
+        catch (DO.DalDoesNotExistException ex)
+        {
+            throw new BO.BlDoesNotExistException($"Volunteer with ID={volunteerId} does not exist.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new BO.BlGeneralException(ex.Message, ex);
+        }
     }
+
+
     public void MarkCallAsCompleted(int volunteerId, int assignmentId)
     {
         try

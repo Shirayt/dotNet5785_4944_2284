@@ -75,3 +75,14 @@ public class BlAuthorizationException : Exception
 {
     public BlAuthorizationException(string? message) : base(message) { }
 }
+public class BlGeneralException : Exception
+{
+    public BlGeneralException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
+
+
+}
+
+

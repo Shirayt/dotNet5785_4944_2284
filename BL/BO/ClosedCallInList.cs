@@ -11,5 +11,5 @@ public class ClosedCallInList
     public DateTime? TreatmentStartTime { get; set; }
     public AssignmentStatus? Status { get; set; }
 
-    //public override string ToString() => this.ToStringProperty();
+    public override string ToString() => this.ToStringProperty();
 }

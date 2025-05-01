@@ -9,6 +9,6 @@ public class OpenCallInList
     public DateTime? MaxEndTime { get; set; }
     public double DistanceFromVolunteer { get; set; }
 
-    //public override string ToString() => this.ToStringProperty();
+    public override string ToString() => this.ToStringProperty();
 
 }

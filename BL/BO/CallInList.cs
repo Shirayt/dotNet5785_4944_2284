@@ -11,5 +11,5 @@ public class CallInList
     public TimeSpan? RestTimeForTreatment { get; set; }
     public CallStatus Status { get; set; }
     public int AllocationsAmount { get; set; }
-    //public override string ToString() => this.ToStringProperty();
+    public override string ToString() => this.ToStringProperty();
 }

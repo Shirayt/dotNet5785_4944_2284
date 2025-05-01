@@ -1,8 +1,10 @@
 ﻿using BlApi;
 using BO;
+using DalApi;
+using DO;
 namespace BlImplementation;
 
-internal class VolunteerImplementation : IVolunteer
+internal class VolunteerImplementation : BlApi.IVolunteer
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
 
@@ -63,7 +65,7 @@ internal class VolunteerImplementation : IVolunteer
 
             return new BO.Volunteer
             {
-                Id = volunteer.Id,
+                Id = volunteer!.Id,
                 FullName = volunteer.FullName,
                 PhoneNumber = volunteer.PhoneNumber,
                 Email = volunteer.Email,
@@ -78,7 +80,7 @@ internal class VolunteerImplementation : IVolunteer
                 AmountOfCompletedCalls = Helpers.VolunteerManager.GetCompletedCallsCount(volunteer.Id),
                 AmountOfSelfCancelledCalls = Helpers.VolunteerManager.GetSelfCancelledCallsCount(volunteer.Id),
                 AmountOfExpiredCalls = Helpers.VolunteerManager.GetExpiredCallsCount(volunteer.Id),
-                callInProgress = callInProgress
+                callInProgress = callInProgress,
             };
         }
         catch (DO.DalDoesNotExistException ex)
@@ -141,13 +143,32 @@ internal class VolunteerImplementation : IVolunteer
             throw new BO.BlDoesNotExistException($"Somthing went wrong during volunteer deletion in BL: ", ex);
         }
     }
-
     public void AddVolunteer(BO.Volunteer volunteer)
     {
         try
         {
             Helpers.VolunteerManager.ValidateBOVolunteerData(volunteer);
 
+            // Step 1: Try to get coordinates before creating the DO.Volunteer
+            double? latitude = null, longitude = null;
+            if (!string.IsNullOrWhiteSpace(volunteer.CurrentFullAddress))
+            {
+                (latitude, longitude) = Tools.GetCoordinatesFromAddress(volunteer.CurrentFullAddress!);
+                if (latitude == null || longitude == null)
+                {
+                    volunteer.CurrentFullAddress = null;
+                }
+            }
+            else
+            {
+                volunteer.CurrentFullAddress = null;
+            }
+
+            // Update the volunteer object with the coordinates
+            volunteer.Latitude = latitude;
+            volunteer.Longitude = longitude;
+
+            // Step 2: Create the DO.Volunteer with correct lat/lng values
             var newVolunteer = new DO.Volunteer
             {
                 Id = volunteer.Id,
@@ -168,8 +189,54 @@ internal class VolunteerImplementation : IVolunteer
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Somthing went wrong during volunteer addition in BL: ", ex);
+            throw new BO.BlAlreadyExistsException($"Something went wrong during volunteer addition in BL: ", ex);
         }
     }
-}
 
+    //public void AddVolunteer(BO.Volunteer volunteer)
+    //{
+    //    try
+    //    {
+    //        Helpers.VolunteerManager.ValidateBOVolunteerData(volunteer);
+
+    //        var newVolunteer = new DO.Volunteer
+    //        {
+    //            Id = volunteer.Id,
+    //            FullName = volunteer.FullName,
+    //            PhoneNumber = volunteer.PhoneNumber,
+    //            Email = volunteer.Email,
+    //            Password = volunteer.Password,
+    //            CurrentFullAddress = volunteer.CurrentFullAddress,
+    //            //Latitude = volunteer.Latitude,
+    //            //Longitude = volunteer.Longitude,
+    //            Role = (DO.Role)volunteer.Role,
+    //            IsActive = volunteer.IsActive,
+    //            MaxDistanceForCall = volunteer.MaxDistanceForCall,
+    //            DistanceType = (DO.DistanceType)volunteer.DistanceType,
+
+
+    //        };
+    //        if (volunteer.CurrentFullAddress != null && volunteer.CurrentFullAddress != "")
+    //        {
+    //            var (latitude, longitude) = Tools.GetCoordinatesFromAddress(volunteer.CurrentFullAddress!);
+    //            if (latitude == null || longitude == null)
+    //            {
+    //                volunteer.CurrentFullAddress = null;
+    //                //throw new BO.BlInvalidFormatException($"Invalid address: {volunteer.CurrentFullAddress}");
+
+    //            }
+    //            volunteer.Latitude = latitude;
+    //            volunteer.Longitude = longitude;
+    //        }
+    //        else
+    //            volunteer.CurrentFullAddress = null;
+
+    //        _dal.Volunteer.Create(newVolunteer);
+    //    }
+    //    catch (DO.DalAlreadyExistsException ex)
+    //    {
+    //        throw new BO.BlAlreadyExistsException($"Somthing went wrong during volunteer addition in BL: ", ex);
+    //    }
+    //}
+
+}

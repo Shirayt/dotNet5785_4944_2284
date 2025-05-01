@@ -23,6 +23,6 @@ public class CallInProgress
 
     public StatusCallInProgress Status { get; set; }
 
-    //public override string ToString() => this.ToStringProperty();
+    public override string ToString() => this.ToStringProperty();
 
 }

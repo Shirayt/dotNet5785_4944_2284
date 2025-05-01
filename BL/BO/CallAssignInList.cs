@@ -7,5 +7,5 @@ public class CallAssignInList
     public DateTime StartTime { get; set; }
     public DateTime? EndTime { get; set; }
     public AssignmentStatus? Status { get; set; }
-    //public override string ToString() => this.ToStringProperty();
+    public override string ToString() => this.ToStringProperty();
 }

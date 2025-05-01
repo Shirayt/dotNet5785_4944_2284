@@ -1,5 +1,6 @@
 ﻿
 namespace BO;
+
 public enum AssignmentStatus
 {
     Completed,

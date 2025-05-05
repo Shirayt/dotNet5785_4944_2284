@@ -1,2 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfCall xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<ArrayOfCall xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Call>
+    <Id>0</Id>
+    <CallType>Emergency</CallType>
+    <Description>Emergency: Urgent medical help required</Description>
+    <FullAddress>Czech Republic, remote area</FullAddress>
+    <Latitude>50.755</Latitude>
+    <Longitude>16.432</Longitude>
+    <OpenTime>2025-07-26T02:58:06.2676262+03:00</OpenTime>
+    <MaxEndTime>2025-07-27T01:58:06.2676262+03:00</MaxEndTime>
+  </Call>
+  <Call>
+    <Id>1</Id>
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
+    <FullAddress>South Georgia and the South Sandwich Islands</FullAddress>
+    <Latitude>-62.957</Latitude>
+    <Longitude>139.063</Longitude>
+    <OpenTime>2025-07-27T02:58:06.2676262+03:00</OpenTime>
+    <MaxEndTime>2025-07-29T12:58:06.2676262+03:00</MaxEndTime>
+  </Call>
+  <Call>
+    <Id>3</Id>
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
+    <FullAddress>Oceania (remote island)</FullAddress>
+    <Latitude>-22.957</Latitude>
+    <Longitude>142.731</Longitude>
+    <OpenTime>2025-06-08T02:58:06.2676262+03:00</OpenTime>
+    <MaxEndTime>2025-06-10T15:58:06.2676262+03:00</MaxEndTime>
+  </Call>
+  <Call>
+    <Id>4</Id>
+    <CallType>Training</CallType>
+    <Description>Training: Request for volunteer medical training</Description>
+    <FullAddress>Pacific Ocean, Remote Pacific Island</FullAddress>
+    <Latitude>51.908</Latitude>
+    <Longitude>174.117</Longitude>
+    <OpenTime>2025-08-02T02:58:06.2676262+03:00</OpenTime>
+    <MaxEndTime>2025-08-02T16:58:06.2676262+03:00</MaxEndTime>
+  </Call>
+  <Call>
+    <Id>5</Id>
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
+    <FullAddress>Tristan da Cunha, South Atlantic Ocean</FullAddress>
+    <Latitude>-59.524</Latitude>
+    <Longitude>-43.024</Longitude>
+    <OpenTime>2025-07-24T02:58:06.2676262+03:00</OpenTime>
+    <MaxEndTime>2025-07-25T20:58:06.2676262+03:00</MaxEndTime>
+  </Call>
+  <Call>
+    <Id>6</Id>
+    <CallType>Emergency</CallType>
+    <Description>Emergency: Urgent medical help required</Description>
+    <FullAddress>Sumbawa, Indonesia</FullAddress>
+    <Latitude>-10.1565</Latitude>
+    <Longitude>115.2543</Longitude>
+    <OpenTime>2025-05-07T02:58:06.2676262+03:00</OpenTime>
+    <MaxEndTime>2025-05-09T16:58:06.2676262+03:00</MaxEndTime>
+  </Call>
+  <Call>
+    <Id>7</Id>
+    <CallType>Doctor</CallType>
+    <Description>Doctor: Urgent need for a doctor</Description>
+    <FullAddress>Vanuatu Islands, Pacific Ocean</FullAddress>
+    <Latitude>-11.629</Latitude>
+    <Longitude>149.035</Longitude>
+    <OpenTime>2025-06-20T02:58:06.2676262+03:00</OpenTime>
+    <MaxEndTime xsi:nil="true" />
+  </Call>
+  <Call>
+    <Id>8</Id>
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
+    <FullAddress>Ponta do Ouro, Mozambique</FullAddress>
+    <Latitude>42.659</Latitude>
+    <Longitude>-47.097</Longitude>
+    <OpenTime>2025-07-05T02:58:06.2676262+03:00</OpenTime>
+    <MaxEndTime xsi:nil="true" />
+  </Call>
+  <Call>
+    <Id>9</Id>
+    <CallType>Doctor</CallType>
+    <Description>Doctor: Urgent need for a doctor</Description>
+    <FullAddress>Vanuatu Islands, Pacific Ocean</FullAddress>
+    <Latitude>-11.629</Latitude>
+    <Longitude>149.035</Longitude>
+    <OpenTime>2025-05-19T02:58:06.2676262+03:00</OpenTime>
+    <MaxEndTime>2025-05-19T22:58:06.2676262+03:00</MaxEndTime>
+  </Call>
+  <Call>
+    <Id>50</Id>
+    <CallType>Emergency</CallType>
+    <Description>WOWWWWWW!!!!</Description>
+    <FullAddress>29 Chinggis Avenue, Ulaanbaatar, Mongolia</FullAddress>
+    <Latitude>0</Latitude>
+    <Longitude>0</Longitude>
+    <OpenTime>2026-05-05T03:58:06</OpenTime>
+    <MaxEndTime>2027-02-02T00:00:00</MaxEndTime>
+  </Call>
+  <Call>
+    <Id>51</Id>
+    <CallType>Emergency</CallType>
+    <Description>HAPPY!!!!</Description>
+    <FullAddress>29 Chinggis Avenue, Ulaanbaatar, Mongolia</FullAddress>
+    <Latitude>0</Latitude>
+    <Longitude>0</Longitude>
+    <OpenTime>2023-05-05T03:58:06</OpenTime>
+    <MaxEndTime>2027-04-05T00:00:00</MaxEndTime>
+  </Call>
+</ArrayOfCall>

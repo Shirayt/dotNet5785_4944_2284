@@ -1,115 +1,101 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfVolunteer>
   <Volunteer>
-    <Id>57928434</Id>
-    <FullName>Ahuva</FullName>
-    <PhoneNumber>0504188665</PhoneNumber>
-    <Email>AT0504188665@gmail.com</Email>
-    <Password>12345</Password>
-    <CurrentFullAddress>HOme</CurrentFullAddress>
-    <Latitude>11</Latitude>
-    <Longitude>22</Longitude>
-    <Role>Manager</Role>
+    <Id>389540391</Id>
+    <FullName>Dani Levy</FullName>
+    <PhoneNumber>0541111111</PhoneNumber>
+    <Email>dani@gmail.com</Email>
+    <Password></Password>
+    <CurrentFullAddress>29 Chinggis Avenue, Ulaanbaatar, Mongolia</CurrentFullAddress>
+    <Latitude>47.8862</Latitude>
+    <Longitude>106.9057</Longitude>
+    <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>3</MaxDistanceForCall>
+    <MaxDistanceForCall>82</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>215525197</Id>
-    <FullName>Racheli</FullName>
-    <PhoneNumber>0534114908</PhoneNumber>
-    <Email>Rachlios2005@gmail.com</Email>
-    <Password>123</Password>
-    <CurrentFullAddress>120 Dizengoff St, Tel Aviv</CurrentFullAddress>
-    <Latitude>0</Latitude>
-    <Longitude>0</Longitude>
-    <Role>Manager</Role>
+    <Id>365906357</Id>
+    <FullName>Shira Cohen</FullName>
+    <PhoneNumber>0542222222</PhoneNumber>
+    <Email>shira@gmail.com</Email>
+    <Password></Password>
+    <CurrentFullAddress>2 Tindall Street, Nelson, New Zealand</CurrentFullAddress>
+    <Latitude>-40.517</Latitude>
+    <Longitude>173.2885</Longitude>
+    <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>2</MaxDistanceForCall>
+    <MaxDistanceForCall>30</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>215042284</Id>
-    <FullName>Shira</FullName>
-    <PhoneNumber>0534164314</PhoneNumber>
-    <Email>Shirayt100@gmail.com</Email>
-    <Password>456</Password>
-    <CurrentFullAddress>120 Dizengoff St, Tel Aviv</CurrentFullAddress>
-    <Latitude></Latitude>
-    <Longitude></Longitude>
-    <Role>Manager</Role>
+    <Id>275486578</Id>
+    <FullName>Tali Amar</FullName>
+    <PhoneNumber>0543333333</PhoneNumber>
+    <Email>tali@gmail.com</Email>
+    <Password></Password>
+    <CurrentFullAddress>Via Lago di Bracciano 32, 00069 Trevignano Romano, Italy</CurrentFullAddress>
+    <Latitude>42.135</Latitude>
+    <Longitude>12.2715</Longitude>
+    <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>7</MaxDistanceForCall>
+    <MaxDistanceForCall>73</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>332180850</Id>
-    <FullName>Michal</FullName>
-    <PhoneNumber>0556789654</PhoneNumber>
-    <Email>Michal@gmail.com</Email>
-    <Password>12345t</Password>
-    <CurrentFullAddress>120 Dizengoff St, Tel Aviv</CurrentFullAddress>
-    <Latitude></Latitude>
-    <Longitude></Longitude>
-    <Role>Manager</Role>
-    <IsActive>False</IsActive>
-    <MaxDistanceForCall>7</MaxDistanceForCall>
+    <Id>301799345</Id>
+    <FullName>Yair Israelof</FullName>
+    <PhoneNumber>0544444444</PhoneNumber>
+    <Email>yair@gmail.com</Email>
+    <Password></Password>
+    <CurrentFullAddress>145 Kulusuk, Greenland</CurrentFullAddress>
+    <Latitude>65.6233</Latitude>
+    <Longitude>-37.4594</Longitude>
+    <Role>Volunteer</Role>
+    <IsActive>True</IsActive>
+    <MaxDistanceForCall>73</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>328268149</Id>
-    <FullName>Nechami</FullName>
-    <PhoneNumber>0823265987</PhoneNumber>
-    <Email>N@gmail.com</Email>
-    <Password>78</Password>
-    <CurrentFullAddress>120 Dizengoff St, Tel Aviv</CurrentFullAddress>
-    <Latitude></Latitude>
-    <Longitude></Longitude>
-    <Role>Manager</Role>
+    <Id>327200251</Id>
+    <FullName>Eli Klein</FullName>
+    <PhoneNumber>0545555555</PhoneNumber>
+    <Email>eli@gmail.com</Email>
+    <Password></Password>
+    <CurrentFullAddress>Vorshikhinskaya Street 11, Yakutsk, Russia</CurrentFullAddress>
+    <Latitude>62.036</Latitude>
+    <Longitude>129.7327</Longitude>
+    <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>4</MaxDistanceForCall>
-    <DistanceType>Drive</DistanceType>
-  </Volunteer>
-  <Volunteer>
-    <Id>203280946</Id>
-    <FullName>Hadas</FullName>
-    <PhoneNumber>0548488621</PhoneNumber>
-    <Email>ht@gmail.com</Email>
-    <Password>34567</Password>
-    <CurrentFullAddress>120 Dizengoff St, Tel Aviv</CurrentFullAddress>
-    <Latitude></Latitude>
-    <Longitude></Longitude>
-    <Role>Manager</Role>
-    <IsActive>True</IsActive>
-    <MaxDistanceForCall>4</MaxDistanceForCall>
+    <MaxDistanceForCall>48</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>338784119</Id>
-    <FullName>Sara</FullName>
-    <PhoneNumber>0583297854</PhoneNumber>
-    <Email>Sara@gmail.com</Email>
-    <Password>56ytrg</Password>
-    <CurrentFullAddress>120 Dizengoff St, Tel Aviv</CurrentFullAddress>
-    <Latitude></Latitude>
-    <Longitude></Longitude>
-    <Role>Manager</Role>
+    <Id>315476669</Id>
+    <FullName>Maya Shimon</FullName>
+    <PhoneNumber>0546666666</PhoneNumber>
+    <Email>maya@gmail.com</Email>
+    <Password></Password>
+    <CurrentFullAddress>Calle de los Reyes Católicos, 23, Fuerteventura, Spain</CurrentFullAddress>
+    <Latitude>28.432</Latitude>
+    <Longitude>-13.8597</Longitude>
+    <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>3</MaxDistanceForCall>
+    <MaxDistanceForCall>45</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>206220832</Id>
-    <FullName>Moriya</FullName>
-    <PhoneNumber>0504114258</PhoneNumber>
-    <Email>ms@gmail.com</Email>
-    <Password>vevb</Password>
-    <CurrentFullAddress>120 Dizengoff St, Tel Aviv</CurrentFullAddress>
-    <Latitude>32.084319</Latitude>
-    <Longitude>34.781364</Longitude>
-    <Role>Manager</Role>
+    <Id>223448703</Id>
+    <FullName>Avi Ben-David</FullName>
+    <PhoneNumber>0547777777</PhoneNumber>
+    <Email>avi@gmail.com</Email>
+    <Password></Password>
+    <CurrentFullAddress>9 Ngong Road, Nairobi, Kenya</CurrentFullAddress>
+    <Latitude>-1.2864</Latitude>
+    <Longitude>36.825</Longitude>
+    <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>6</MaxDistanceForCall>
+    <MaxDistanceForCall>17</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
 </ArrayOfVolunteer>

@@ -11,5 +11,18 @@ public class CallInList
     public TimeSpan? RestTimeForTreatment { get; set; }
     public CallStatus Status { get; set; }
     public int AllocationsAmount { get; set; }
-    public override string ToString() => this.ToStringProperty();
+
+    public override string ToString()
+    {
+        return
+            $"Id: {Id}\n" +
+            $"CallId: {CallId}\n" +
+            $"CallType: {CallType}\n" +
+            $"OpenTime: {OpenTime}\n" +
+            $"RestTimeForCall: {(RestTimeForCall.HasValue ? RestTimeForCall.Value.ToString() : "N/A")}\n" +
+            $"LastVolunteerName: {LastVolunteerName ?? "N/A"}\n" +
+            $"RestTimeForTreatment: {(RestTimeForTreatment.HasValue ? RestTimeForTreatment.Value.ToString() : "N/A")}\n" +
+            $"Status: {Status}\n" +
+            $"AllocationsAmount: {AllocationsAmount}";
+    }
 }

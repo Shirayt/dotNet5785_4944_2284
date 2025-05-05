@@ -285,7 +285,6 @@ namespace BlTest
             Console.WriteLine("Choose how to sort the volunteers by: ");
             Console.WriteLine("1. ByName");
             Console.WriteLine("2. ByCompletedCalls");
-            Console.WriteLine("3. MaxDistanceForCall");
             Console.WriteLine("Select sorting option by number: ");
             string sortInput = Console.ReadLine();
 
@@ -298,9 +297,6 @@ namespace BlTest
                         break;
                     case 2:
                         sortBy = BO.VolunteerSortOption.ByCompletedCalls;
-                        break;
-                    case 3:
-                        sortBy = BO.VolunteerSortOption.MaxDistanceForCall;
                         break;
                     default:
                         Console.WriteLine("Invalid selection. Defaulting to sorting by ID.");
@@ -338,14 +334,6 @@ namespace BlTest
             Console.Write("Full Address: ");
             string? address = Console.ReadLine();
 
-            //Console.WriteLine("Enter location details:");
-            //Console.Write("Latitude: ");
-            //if (!double.TryParse(Console.ReadLine(), out double latitude))
-            //    throw new FormatException("Invalid latitude format.");
-
-            //Console.Write("Longitude: ");
-            //if (!double.TryParse(Console.ReadLine(), out double longitude))
-            //    throw new FormatException("Invalid longitude format.");
 
             Console.Write("Max Distance For Call: ");
             if (!double.TryParse(Console.ReadLine(), out double MaxDistanceForCall))
@@ -363,8 +351,8 @@ namespace BlTest
                 Email = email,
                 Password = password,
                 CurrentFullAddress = address,
-                //Latitude = latitude,
-                //Longitude = longitude,
+                Latitude = null,
+                Longitude = null,
                 Role = role,
                 IsActive = active,
                 MaxDistanceForCall = MaxDistanceForCall,
@@ -522,7 +510,7 @@ namespace BlTest
                                 Console.WriteLine("Enter Call details:");
                                 BO.Call call = CreateCall();
                                 s_bl.Call.AddCall(call);
-                                Console.WriteLine("Call created successfully!"); 
+                                Console.WriteLine("Call created successfully!");
                             }
                             catch (Exception ex)
                             {
@@ -693,7 +681,7 @@ namespace BlTest
                 Latitude = 0,
                 Longitude = 0,
                 OpenTime = s_bl.Admin.GetClock(),
-                MaxEndTime= maxEndTime
+                MaxEndTime = maxEndTime
             };
 
 

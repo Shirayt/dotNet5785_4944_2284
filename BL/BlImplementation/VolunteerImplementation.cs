@@ -2,6 +2,7 @@
 using BO;
 using DalApi;
 using DO;
+using System.Net;
 namespace BlImplementation;
 
 internal class VolunteerImplementation : BlApi.IVolunteer
@@ -15,7 +16,7 @@ internal class VolunteerImplementation : BlApi.IVolunteer
 
         if (volunteer is null || volunteer.Password != password)
         {
-            throw new BlInvalidInputException("Invalid email or password in Login Volunteer To System.");
+            throw new BlInvalidInputException("Invalid username or password in Login Volunteer To System.");
         }
 
         return (BO.Role)volunteer.Role;
@@ -107,8 +108,8 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             existingVolunteer.Email = volunteer.Email;
             existingVolunteer.Password = volunteer.Password;
             existingVolunteer.CurrentFullAddress = volunteer.CurrentFullAddress;
-            existingVolunteer.Latitude = volunteer.Latitude;
-            existingVolunteer.Longitude = volunteer.Longitude;
+            existingVolunteer.Latitude = Tools.GetCoordinatesFromAddress(volunteer.CurrentFullAddress).Item1;
+            existingVolunteer.Longitude = Tools.GetCoordinatesFromAddress(volunteer.CurrentFullAddress).Item2;
             existingVolunteer.IsActive = volunteer.IsActive;
             existingVolunteer.MaxDistanceForCall = volunteer.MaxDistanceForCall;
             existingVolunteer.DistanceType = (DO.DistanceType)volunteer.DistanceType;
@@ -192,51 +193,4 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             throw new BO.BlAlreadyExistsException($"Something went wrong during volunteer addition in BL: ", ex);
         }
     }
-
-    //public void AddVolunteer(BO.Volunteer volunteer)
-    //{
-    //    try
-    //    {
-    //        Helpers.VolunteerManager.ValidateBOVolunteerData(volunteer);
-
-    //        var newVolunteer = new DO.Volunteer
-    //        {
-    //            Id = volunteer.Id,
-    //            FullName = volunteer.FullName,
-    //            PhoneNumber = volunteer.PhoneNumber,
-    //            Email = volunteer.Email,
-    //            Password = volunteer.Password,
-    //            CurrentFullAddress = volunteer.CurrentFullAddress,
-    //            //Latitude = volunteer.Latitude,
-    //            //Longitude = volunteer.Longitude,
-    //            Role = (DO.Role)volunteer.Role,
-    //            IsActive = volunteer.IsActive,
-    //            MaxDistanceForCall = volunteer.MaxDistanceForCall,
-    //            DistanceType = (DO.DistanceType)volunteer.DistanceType,
-
-
-    //        };
-    //        if (volunteer.CurrentFullAddress != null && volunteer.CurrentFullAddress != "")
-    //        {
-    //            var (latitude, longitude) = Tools.GetCoordinatesFromAddress(volunteer.CurrentFullAddress!);
-    //            if (latitude == null || longitude == null)
-    //            {
-    //                volunteer.CurrentFullAddress = null;
-    //                //throw new BO.BlInvalidFormatException($"Invalid address: {volunteer.CurrentFullAddress}");
-
-    //            }
-    //            volunteer.Latitude = latitude;
-    //            volunteer.Longitude = longitude;
-    //        }
-    //        else
-    //            volunteer.CurrentFullAddress = null;
-
-    //        _dal.Volunteer.Create(newVolunteer);
-    //    }
-    //    catch (DO.DalAlreadyExistsException ex)
-    //    {
-    //        throw new BO.BlAlreadyExistsException($"Somthing went wrong during volunteer addition in BL: ", ex);
-    //    }
-    //}
-
 }

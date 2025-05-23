@@ -1,5 +1,6 @@
 ﻿namespace BlImplementation;
 using BlApi;
+using BO;
 using Helpers;
 using System;
 using System.Collections.Generic;
@@ -10,23 +11,25 @@ using System.Text.Json;
 internal class CallImplementation : ICall
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
-
-    //private IEnumerable<DO.Call> calls;
-    //private IEnumerable<DO.Assignment> assignments;
     public IEnumerable<int> GetCallQuantitiesByStatus()
     {
-        // Get call statuses using a helper function
         var callStatuses = Helpers.CallManager.GetCallStatuses();
 
-        // Group calls by status and count the number of occurrences for each status
         var callCountsByStatus = callStatuses
-            .GroupBy(cs => cs.Status)       // Group calls by status
-            .OrderBy(group => group.Key)    // Sort by status order (Open, OpenAtRisk, InProcessing, Closed, Expired)
-            .Select(group => group.Count()) // Count calls in each status
-            .ToArray();                     // Convert result to an array
+            .GroupBy(cs => cs.Status)
+            .ToDictionary(g => g.Key, g => g.Count());
 
-        return callCountsByStatus;
+        return new[]
+        {
+        CallStatus.Open,
+        CallStatus.InProcessing,
+        CallStatus.Closed,
+        CallStatus.Expired,
+        CallStatus.OpenAtRisk
+        }
+        .Select(status => callCountsByStatus.TryGetValue(status, out var count) ? count : 0);
     }
+
     public IEnumerable<BO.CallInList> GetCallsList(BO.CallInListFields? filterField, object? filterValue, BO.CallInListFields? sortField)
     {
         var calls = _dal.Call.ReadAll();
@@ -88,17 +91,17 @@ internal class CallImplementation : ICall
                 Longitude = call.Longitude,
                 OpenTime = call.OpenTime,
                 MaxEndTime = call.MaxEndTime,
-                //Status = Helpers.CallManager.GetCallStatus(call).Status,
-                //CallAssignInList = assignments
-                //              .Where(assign => assign.CallId == callId)
-                //              .Select(assign => new BO.CallAssignInList
-                //              {
-                //                  VolunteerId = assign.VolunteerId,
-                //                  FullName = Helpers.CallManager.GetLastVolunteerName(call),
-                //                  StartTime = assign.StartTime,
-                //                  EndTime = assign.EndTime,
-                //                  Status = (BO.AssignmentStatus)assign.Status
-                //              }).ToList() ?? null
+                Status = Helpers.CallManager.GetCallStatus(call).Status,
+                CallAssignInList = assignments
+                              .Where(assign => assign.CallId == callId)
+                              .Select(assign => new BO.CallAssignInList
+                              {
+                                  VolunteerId = assign.VolunteerId,
+                                  FullName = Helpers.CallManager.GetLastVolunteerName(call),
+                                  StartTime = assign.StartTime,
+                                  EndTime = assign.EndTime,
+                                  Status = (BO.AssignmentStatus)assign.Status
+                              }).ToList() ?? null
             };
 
             return BOCall;
@@ -127,8 +130,6 @@ internal class CallImplementation : ICall
             };
 
             _dal.Call.Update(doCall);
-
-            ///לעדכן את הקאורדינטות של וולנטיר שקשור לקריאה הזו 
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -149,11 +150,12 @@ internal class CallImplementation : ICall
                                  select assign).ToList();
 
             // Check if the call is open and has not been assigned to a volunteer
-            if ((Helpers.CallManager.GetCallStatus(call).Status) != BO.CallStatus.Open || !assignedCalls.Any())
+            if (Helpers.CallManager.GetCallStatus(call).Status != BO.CallStatus.Open || assignedCalls.Any())
             {
                 // If the call is not open or has been assigned to a volunteer, it cannot be deleted
                 throw new InvalidOperationException("Cannot delete a call that is not 'Open' or has been assigned to a volunteer.");
             }
+
 
             // If everything is fine, proceed with deleting the call
             _dal.Call.Delete(callId);
@@ -219,37 +221,6 @@ internal class CallImplementation : ICall
 
         return closedCalls;
     }
-    //public IEnumerable<BO.OpenCallInList> GetOpenCallsByVolunteer(int volunteerId, BO.FilterAndSortByFields? filterType, BO.FilterAndSortByFields? sortField)
-    //{
-
-    //    var calls = _dal.Call.ReadAll();
-    //    var assignments = _dal.Assignment.ReadAll();
-
-    //    // list of assignments that the volunteer was assigned to.
-    //    var volunteerassignments = assignments.Where(a => a.VolunteerId == volunteerId);
-
-    //    var openCalls = calls
-    //        .Where(c => volunteerassignments.Select(a => a.CallId).Contains(c.Id) // a volunteer call
-    //               && (Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.Open
-    //               || Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.OpenAtRisk
-    //               || Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.InProcessing)) //the call is open 
-    //        .Select(c => new BO.OpenCallInList
-    //        {
-    //            Id = c.Id,
-    //            CallType = (BO.CallType)c.CallType,
-    //            Description = c.Description,
-    //            FullAddress = c.FullAddress,
-    //            OpenTime = c.OpenTime,
-    //            MaxEndTime = c.MaxEndTime,
-    //            DistanceFromVolunteer = Tools.CalculateDistance(volunteerassignments.lutitude, volunteer.longitude, c.Latitude ?? 0, c.Longitude ?? 0),
-    //        });
-
-    //    // Apply filter and sort using the helper function
-    //    openCalls = Helpers.CallManager.ApplyFilterAndSort(openCalls.AsQueryable(), filterType, sortField);
-
-    //    return openCalls;
-    //}
-
 
     public IEnumerable<BO.OpenCallInList> GetOpenCallsByVolunteer(int volunteerId, BO.FilterAndSortByFields? filterType, BO.FilterAndSortByFields? sortField)
     {
@@ -261,7 +232,7 @@ internal class CallImplementation : ICall
          (CallManager.GetCallStatus(c).Status == BO.CallStatus.Open || CallManager.GetCallStatus(c).Status == BO.CallStatus.OpenAtRisk))
      .Select(c => new BO.OpenCallInList
      {
-         Id = volunteerId,
+         Id = c.Id,
          CallType = (BO.CallType)c.CallType,
          Description = c.Description,
          FullAddress = c.FullAddress,
@@ -321,11 +292,11 @@ internal class CallImplementation : ICall
             throw new BO.BlDoesNotExistException($"Somthing went wrong during Mark Call As Completed in BL: ", ex);
         }
     }
-    public void CancelCallAssignment(int requesterId, int assignmentId)
+    public void CancelCallAssignment(int requesterId, int callId)
     {
         try
         {
-            var assignment = _dal.Assignment.Read(assignmentId);
+            var assignment = _dal.Assignment.ReadAll().FirstOrDefault(a => a.CallId == callId);
             var requesterVolunteer = _dal.Volunteer.Read(requesterId);
 
             //only Manager or the assignment volunteer authorized to cancel an assignment
@@ -334,7 +305,7 @@ internal class CallImplementation : ICall
                 throw new UnauthorizedAccessException("Requester is not authorized to cancel this assignment.");
             }
 
-            var call = _dal.Call.Read(assignment.CallId);
+            var call = _dal.Call.Read(callId);
             var callStatus = Helpers.CallManager.GetCallStatus(call).Status;
 
             //the assignment must be open for cancellation
@@ -346,7 +317,7 @@ internal class CallImplementation : ICall
             //create an object with updated status,End time fields
             var updatedAssignment = assignment with
             {
-                Status = assignment.VolunteerId == requesterId ? DO.AssignmentStatus.ManagerCancelled : DO.AssignmentStatus.SelfCancelled,
+                Status = assignment.VolunteerId == requesterId ? DO.AssignmentStatus.SelfCancelled : DO.AssignmentStatus.ManagerCancelled,
                 EndTime = ClockManager.Now
             };
 

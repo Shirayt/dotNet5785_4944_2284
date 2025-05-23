@@ -210,17 +210,26 @@ public static class Initialization
             DateTime randomStartTime = call.OpenTime.AddMinutes(randomMinutes);
             DateTime? randomEndTime = (s_rand.NextDouble() > 0.5) ? randomStartTime.AddMinutes(s_rand.Next((int)assignmentSpan.TotalMinutes)) : null;
 
-            // אם הזמן הסיום לא קיים, יהיה ביטול עצמי
             AssignmentStatus? status;
-            if (randomEndTime == null)
-                status = AssignmentStatus.SelfCancelled; // שינוי לסטטוס של ביטול עצמי
-            else if (call.MaxEndTime != null && randomEndTime > call.MaxEndTime)
+            if (randomEndTime != null)
             {
-                status = AssignmentStatus.Completed;
+                if (call.MaxEndTime != null && randomEndTime > call.MaxEndTime) //if  randomEndTime > MaxEndTime ->Expired
+                {
+                    status = AssignmentStatus.Expired;
+                }
+                else
+                {
+                    var statuses = new[] { AssignmentStatus.SelfCancelled,
+                                           AssignmentStatus.Completed,
+                                           AssignmentStatus.ManagerCancelled };
+                    var random = new Random();
+                    int index = random.Next(statuses.Length);
+                    status = statuses[index];
+                }
             }
             else
             {
-                status = (AssignmentStatus)s_rand.Next(Enum.GetValues(typeof(AssignmentStatus)).Length - 1);
+                status = null; // empty property for now 
             }
 
             s_dal!.Assignment.Create(new Assignment(

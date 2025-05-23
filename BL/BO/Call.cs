@@ -26,6 +26,7 @@ public class Call
             $"OpenTime: {OpenTime}\n" +
             $"MaxEndTime: {(MaxEndTime.HasValue ? MaxEndTime.Value.ToString() : "Not Provided")}\n" +
             $"Status: {Status}\n" +
-            $"CallAssignInList: {string.Join(", ", CallAssignInList ?? new List<CallAssignInList>())}";
+            $"CallAssignInList: \n{string.Join(", ", CallAssignInList ?? new List<CallAssignInList>())}";
+
     }
 }

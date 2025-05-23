@@ -9,6 +9,16 @@ public class OpenCallInList
     public DateTime? MaxEndTime { get; set; }
     public double DistanceFromVolunteer { get; set; }
 
-    public override string ToString() => this.ToStringProperty();
+    public override string ToString()
+    {
+        return
+            $"Id: {Id}\n" +
+            $"CallType: {CallType}\n" +
+            $"Description: {Description ?? "N/A"}\n" +
+            $"FullAddress: {FullAddress}\n" +
+            $"OpenTime: {OpenTime}\n" +
+            $"MaxEndTime: {(MaxEndTime.HasValue ? MaxEndTime.Value.ToString() : "N/A")}\n" +
+            $"DistanceFromVolunteer: {DistanceFromVolunteer} km";
+    }
 
 }

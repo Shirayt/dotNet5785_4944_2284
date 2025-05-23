@@ -23,19 +23,18 @@ internal static class CallManager
     public static (int CallId, CallStatus Status) GetCallStatus(DO.Call call)
     {
         var calls = s_dal.Call.ReadAll();
-        var assignments = s_dal.Assignment.ReadAll();
 
-        var callAssignments = assignments.Where(a => a.CallId == call.Id);
-        var latestAssignment = callAssignments.OrderByDescending(a => a.StartTime).FirstOrDefault();
-        var latestAssignmentStatus = latestAssignment?.Status;
+        var assignment = s_dal.Assignment .ReadAll() .FirstOrDefault(a => a.CallId == call.Id);
+
+        var assignmentStatus = assignment?.Status;
 
         // No assignment or assignment was canceled
-        if (latestAssignmentStatus == null ||
-            latestAssignmentStatus == DO.AssignmentStatus.SelfCancelled ||
-            latestAssignmentStatus == DO.AssignmentStatus.ManagerCancelled)
+        if (assignmentStatus == null ||
+            assignmentStatus == DO.AssignmentStatus.SelfCancelled ||
+            assignmentStatus == DO.AssignmentStatus.ManagerCancelled)
         {
-            // Check if the call is at risk
-            if (call.MaxEndTime.HasValue && (call.MaxEndTime.Value - ClockManager.Now).TotalHours <= 50)
+            // Check if the call is at risk 
+            if (call.MaxEndTime.HasValue && (call.MaxEndTime.Value - ClockManager.Now).TotalHours <= s_dal.Config.RiskRange.TotalHours)
             {
                 return (call.Id, CallStatus.OpenAtRisk);
             }
@@ -43,13 +42,13 @@ internal static class CallManager
         }
 
         // If the call is completed
-        if (latestAssignmentStatus == DO.AssignmentStatus.Completed)
+        if (assignmentStatus == DO.AssignmentStatus.Completed)
         {
             return (call.Id, CallStatus.Closed);
         }
 
         // If the assignment expired
-        if (latestAssignmentStatus == DO.AssignmentStatus.Expired)
+        if (assignmentStatus == DO.AssignmentStatus.Expired)
         {
             return (call.Id, CallStatus.Expired);
         }
@@ -90,7 +89,7 @@ internal static class CallManager
         // Check if call object is null
         if (call == null)
         {
-            throw new BlArgumentNullException( "BO Call object cannot be null.");
+            throw new BlArgumentNullException("BO Call object cannot be null.");
         }
 
         // Validate CallType is defined in the enum

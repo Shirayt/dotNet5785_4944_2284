@@ -7,5 +7,13 @@ public class CallAssignInList
     public DateTime StartTime { get; set; }
     public DateTime? EndTime { get; set; }
     public AssignmentStatus? Status { get; set; }
-    public override string ToString() => this.ToStringProperty();
+    public override string ToString()
+    {
+        return
+            $"VolunteerId: {(VolunteerId.HasValue ? VolunteerId.ToString() : "N/A")}\n" +
+            $"FullName: {FullName ?? "N/A"}\n" +
+            $"StartTime: {StartTime}\n" +
+            $"EndTime: {(EndTime.HasValue ? EndTime.Value.ToString() : "N/A")}\n" +
+            $"Status: {(Status.HasValue ? Status.ToString() : "N/A")}";
+    }
 }

@@ -3,7 +3,7 @@ namespace BlApi;
 /// <summary>
 /// Public interface methods to be invoked via the view or via BlTest
 /// </summary>
-public interface IVolunteer
+public interface IVolunteer: IObservable
 {
     /// <summary>
         /// Logs into the system and returns the user's role.

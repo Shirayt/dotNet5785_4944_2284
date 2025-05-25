@@ -11,6 +11,7 @@ namespace Helpers;
 internal static class CallManager
 {
     private static IDal s_dal = Factory.Get; //stage 4
+    internal static ObserverManager Observers = new(); //stage 5 
 
     // Determines the status of each call based on the latest assignment.
     public static IEnumerable<(int CallId, CallStatus Status)> GetCallStatuses()
@@ -34,7 +35,7 @@ internal static class CallManager
             assignmentStatus == DO.AssignmentStatus.ManagerCancelled)
         {
             // Check if the call is at risk 
-            if (call.MaxEndTime.HasValue && (call.MaxEndTime.Value - ClockManager.Now).TotalHours <= s_dal.Config.RiskRange.TotalHours)
+            if (call.MaxEndTime.HasValue && (call.MaxEndTime.Value - AdminManager.Now).TotalHours <= s_dal.Config.RiskRange.TotalHours)
             {
                 return (call.Id, CallStatus.OpenAtRisk);
             }
@@ -59,7 +60,7 @@ internal static class CallManager
 
     public static TimeSpan? CalculateRestTimeForCall(DO.Call call)
     {
-        var currentTime = ClockManager.Now;
+        var currentTime = AdminManager.Now;
         return currentTime > call.OpenTime ? currentTime - call.OpenTime : null;
     }
 
@@ -119,7 +120,7 @@ internal static class CallManager
         }
 
         // Validate OpenTime (cannot be in the future)
-        if (call.OpenTime > ClockManager.Now)
+        if (call.OpenTime > AdminManager.Now)
         {
             throw new BlInvalidTimeException("Open time cannot be in the future.");
         }

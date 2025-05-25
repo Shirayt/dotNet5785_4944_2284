@@ -2,6 +2,7 @@
 using BO;
 using DalApi;
 using DO;
+using Helpers;
 using System.Net;
 namespace BlImplementation;
 
@@ -118,6 +119,8 @@ internal class VolunteerImplementation : BlApi.IVolunteer
 
             // Update volunteer data in the database
             _dal.Volunteer.Update(existingVolunteer);
+            VolunteerManager.Observers.NotifyItemUpdated(existingVolunteer.Id); //stage 5
+            VolunteerManager.Observers.NotifyListUpdated(); //stage 5                                                    
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -138,6 +141,7 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             }
 
             _dal.Volunteer.Delete(volunteerId);
+            VolunteerManager.Observers.NotifyListUpdated(); //stage 5                                                    
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -187,10 +191,22 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             };
 
             _dal.Volunteer.Create(newVolunteer);
+            VolunteerManager.Observers.NotifyListUpdated(); //stage 5                                                     
         }
         catch (DO.DalAlreadyExistsException ex)
         {
             throw new BO.BlAlreadyExistsException($"Something went wrong during volunteer addition in BL: ", ex);
         }
     }
+
+    #region Stage 5
+    public void AddObserver(Action listObserver) =>
+    VolunteerManager.Observers.AddListObserver(listObserver); //stage 5
+    public void AddObserver(int id, Action observer) =>
+    VolunteerManager.Observers.AddObserver(id, observer); //stage 5
+    public void RemoveObserver(Action listObserver) =>
+    VolunteerManager.Observers.RemoveListObserver(listObserver); //stage 5
+    public void RemoveObserver(int id, Action observer) =>
+    VolunteerManager.Observers.RemoveObserver(id, observer); //stage 5
+    #endregion Stage 5
 }

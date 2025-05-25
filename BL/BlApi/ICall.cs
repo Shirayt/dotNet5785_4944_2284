@@ -3,7 +3,7 @@
 /// <summary>
 /// Public interface methods to be invoked via the view or via BlTest
 /// </summary>
-public interface ICall
+public interface ICall: IObservable
 {
     /// <summary>
     /// Requests the quantities of calls grouped by their status.

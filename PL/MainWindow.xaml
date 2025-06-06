@@ -6,7 +6,59 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
 
+    <!-- Main layout grid -->
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- System Clock area -->
+            <RowDefinition Height="Auto"/>
+            <!-- Configuration Variables area -->
+            <RowDefinition Height="*"/>
+            <!-- Spacer -->
+            <RowDefinition Height="Auto"/>
+            <!-- DB Control buttons -->
+        </Grid.RowDefinitions>
+
+        <!-- System Clock section with label and time control buttons -->
+        <Grid Grid.Row="0" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="12/04/2025 13:45"
+                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                   FontSize="16" Margin="10"/>
+
+            <!-- Horizontal StackPanel used to align buttons in a row -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                <Button Content="Add Minute" Width="80"/>
+                <Button Content="Add Hour" Width="80"/>
+                <Button Content="Add Day" Width="80"/>
+                <Button Content="Add Month" Width="80"/>
+                <Button Content="Add Year" Width="80"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Configuration Variables section -->
+        <!-- StackPanel used here for vertical stacking of each config line -->
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,20">
+            <!-- One config variable row: textbox + update button + label -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBox Width="200" Margin="0,0,10,0" Text="4" TextChanged="TextBox_TextChanged"/>
+                <Button Content="Update" Width="80"/>
+                <Label Content="Max years per student" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </StackPanel>
+            <!-- More config rows can be added below -->
+        </StackPanel>
+
+        <!-- DB operation buttons at the bottom -->
+        <!-- StackPanel aligns buttons horizontally -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+            <Button Content="List View" Width="120" Height="35"/>
+            <Button Content="Initialize DB" Width="120" Height="35"/>
+            <Button Content="Reset DB" Width="120" Height="35"/>
+        </StackPanel>
     </Grid>
 </Window>

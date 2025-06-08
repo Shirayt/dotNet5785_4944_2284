@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-
+        Title="MainWindow" Height="450" Width="800"
+         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+ 
     <!-- Main layout grid -->
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -27,17 +28,17 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="12/04/2025 13:45"
+            <Label Content="{Binding CurrentTime}"
                    HorizontalAlignment="Left" VerticalAlignment="Center"
                    FontSize="16" Margin="10"/>
 
             <!-- Horizontal StackPanel used to align buttons in a row -->
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
-                <Button Content="Add Minute" Width="80"/>
-                <Button Content="Add Hour" Width="80"/>
-                <Button Content="Add Day" Width="80"/>
-                <Button Content="Add Month" Width="80"/>
-                <Button Content="Add Year" Width="80"/>
+                <Button Content="Add Minute" Click="btnAddOneMinute_Click" Width="80"/>
+                <Button Content="Add Hour" Click="btnAddOneHour_Click" Width="80"/>
+                <Button Content="Add Day" Click="btnAddOneDay_Click" Width="80"/>
+                <Button Content="Add Month" Click="btnAddOneMonth_Click" Width="80"/>
+                <Button Content="Add Year" Click="btnAddOneYear_Click" Width="80"/>
             </StackPanel>
         </Grid>
 

@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800"
          DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
          Loaded="MainWindow_Loaded" Closed="MainWindow_Closed">
- 
+
     <!-- Main layout grid -->
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -43,19 +43,19 @@
             </StackPanel>
         </Grid>
 
-       <!-- Configuration Variables section -->
-<StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,20">
+        <!-- Configuration Variables section -->
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,20">
 
-    <!-- Clock configuration 
-    <StackPanel Orientation="Horizontal" Margin="0,5">
+            <!-- Clock configuration 
+      <StackPanel Orientation="Horizontal" Margin="0,5">
         <TextBox Width="200" Margin="0,0,10,0" 
                  Text="{Binding Clock, UpdateSourceTrigger=PropertyChanged}" />
         <Button Content="Update" Width="80" Click="UpdateClock_Click"/>
         <Label Content="Clock" VerticalAlignment="Center" Margin="10,0,0,0"/>
-    </StackPanel>
-    -->
+      </StackPanel>
+      -->
 
-    <!-- RiskRange configuration -->
+            <!-- RiskRange configuration -->
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <TextBox Width="200" Margin="0,0,10,0" 
                  Text="{Binding RiskRange}" IsReadOnly="False"/>

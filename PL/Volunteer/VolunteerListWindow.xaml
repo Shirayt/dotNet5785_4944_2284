@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Volunteer"
         mc:Ignorable="d"
-        Title="VolunteerListWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="VolunteerListWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
+    <DataGrid Margin="5" Grid.Row="1" ItemsSource="{Binding VolunteerList}">
+
+    </DataGrid>
+
 </Window>

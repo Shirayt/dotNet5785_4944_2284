@@ -6,7 +6,6 @@ using System.Threading;
 namespace BlImplementation;
 internal class AdminImplementation : IAdmin
 {
-    private readonly DalApi.IDal _dal = DalApi.Factory.Get;
     public DateTime GetClock()
     {
         return AdminManager.Now;
@@ -26,27 +25,15 @@ internal class AdminImplementation : IAdmin
 
         AdminManager.UpdateClock(newClock);
     }
+    public void SetRiskRange(TimeSpan timeRange)
+    {
+        AdminManager.RiskRange = timeRange;
+
+    }
     public TimeSpan GetRiskRange()
     {
         return AdminManager.RiskRange;
     }
-    public void SetRiskRange(TimeSpan timeRange)
-    {
-        AdminManager.RiskRange = timeRange;
-    }
-    //public void ResetDB()
-    //{
-    //    _dal.ResetDB();
-    //    _dal.Config.Reset();
-    //    AdminManager.UpdateClock(AdminManager.Now);
-    //}
-    //public void InitializeDB()
-    //{
-    //    _dal.ResetDB();
-    //    DalTest.Initialization.Do();
-    //    AdminManager.UpdateClock(AdminManager.Now);
-    //}
-
 
     public void InitializeDB()
     {

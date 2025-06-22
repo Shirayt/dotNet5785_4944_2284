@@ -14,6 +14,7 @@ internal static class AdminManager //stage 4
     #endregion Stage 4
 
     #region Stage 5
+
     internal static event Action? ConfigUpdatedObservers; //prepared for stage 5 - for config update observers
     internal static event Action? ClockUpdatedObservers; //prepared for stage 5 - for clock update observers
     #endregion Stage 5
@@ -36,21 +37,21 @@ internal static class AdminManager //stage 4
 
     internal static void InitializeDB()
     {
-        lock (BlMutex) //stage 7
-        {
+        //lock (BlMutex) //stage 7
+        //{
             DalTest.Initialization.Do();
             AdminManager.UpdateClock(AdminManager.Now);  // stage 5 - needed for update the PL
             AdminManager.RiskRange = AdminManager.RiskRange; // stage 5 - needed for update the PL
-        }
+        //}
     }
     internal static void ResetDB()
     {
-        lock (BlMutex) //stage 7
-        {
+        //lock (BlMutex) //stage 7
+        //{
             s_dal.ResetDB();
             AdminManager.UpdateClock(AdminManager.Now); //stage 5 - needed for update PL
             AdminManager.RiskRange = AdminManager.RiskRange; //stage 5 - needed for update PL
-        }
+        //}
     }
 
     /// <summary>
@@ -65,82 +66,81 @@ internal static class AdminManager //stage 4
     internal static void UpdateClock(DateTime newClock) //stage 4-7
     {
         // new Thread(() => { // stage 7 - not sure - still under investigation - see stage 7 instructions after it will be released        
-        UpdateClock(newClock);//stage 4-6
+        updateClock(newClock);//stage 4-6
         // }).Start(); // stage 7 as above
     }
 
-    //private static void updateClock(DateTime newClock) // prepared for stage 7 as DRY to eliminate needless repetition
-    //{
-    //    var oldClock = s_dal.Config.Clock; //stage 4
-    //    s_dal.Config.Clock = newClock; //stage 4
+    private static void updateClock(DateTime newClock) // prepared for stage 7 as DRY to eliminate needless repetition
+    {
+        //var oldClock = s_dal.Config.Clock; //stage 4
+        s_dal.Config.Clock = newClock; //stage 4
+        //TO_DO:
+        //Add calls here to any logic method that should be called periodically,
+        //after each clock update
+        //for example, Periodic students' updates:
+        //Go through all students to update properties that are affected by the clock update
+        //(students becomes not active after 5 years etc.)
 
-    //    //TO_DO:
-    //    //Add calls here to any logic method that should be called periodically,
-    //    //after each clock update
-    //    //for example, Periodic students' updates:
-    //    //Go through all students to update properties that are affected by the clock update
-    //    //(students becomes not active after 5 years etc.)
+        //StudentManager.PeriodicStudentsUpdates(oldClock, newClock); //stage 4
+        ////etc ...
 
-    //    StudentManager.PeriodicStudentsUpdates(oldClock, newClock); //stage 4
-    //    //etc ...
-
-    //    //Calling all the observers of clock update
-    //    ClockUpdatedObservers?.Invoke(); //prepared for stage 5
-    //}
+        //Calling all the observers of clock update
+        ClockUpdatedObservers?.Invoke(); //prepared for stage 5
+    }
     #endregion Stage 4
 
-    #region Stage 7 base
-    internal static readonly object blMutex = new();
-    private static Thread? s_thread;
-    private static int s_interval { get; set; } = 1; //in minutes by second    
-    private static volatile bool s_stop = false;
-    private static readonly object mutex = new();
+    //#region Stage 7 base
+    //internal static readonly object blMutex = new();
+    //private static Thread? s_thread;
+    //private static int s_interval { get; set; } = 1; //in minutes by second    
+    //private static volatile bool s_stop = false;
+    //private static readonly object mutex = new();
 
-    internal static void Start(int interval)
-    {
-        lock (mutex)
-            if (s_thread == null)
-            {
-                s_interval = interval;
-                s_stop = false;
-                s_thread = new Thread(clockRunner);
-                s_thread.Start();
-            }
-    }
+    //internal static void Start(int interval)
+    //{
+    //    lock (mutex)
+    //        if (s_thread == null)
+    //        {
+    //            s_interval = interval;
+    //            s_stop = false;
+    //            s_thread = new Thread(clockRunner);
+    //            s_thread.Start();
+    //        }
+    //}
 
-    internal static void Stop()
-    {
-        lock (mutex)
-            if (s_thread != null)
-            {
-                s_stop = true;
-                s_thread?.Interrupt();
-                s_thread = null;
-            }
-    }
+    //internal static void Stop()
+    //{
+    //    lock (mutex)
+    //        if (s_thread != null)
+    //        {
+    //            s_stop = true;
+    //            s_thread?.Interrupt();
+    //            s_thread = null;
+    //        }
+    //}
 
-    private static void clockRunner()
-    {
-        while (!s_stop)
-        {
-            UpdateClock(Now.AddMinutes(s_interval));
+    //private static void clockRunner()
+    //{
+    //    while (!s_stop)
+    //    {
+    //        UpdateClock(Now.AddMinutes(s_interval));
 
-            //#region Stage 7
-            ////TO_DO:
-            ////Add calls here to any logic simulation that was required in stage 7
-            ////for example: course registration simulation
-            //StudentManager.SimulateCourseRegistrationAndGrade(); //stage 7
+    //        //#region Stage 7
+    //        ////TO_DO:
+    //        ////Add calls here to any logic simulation that was required in stage 7
+    //        ////for example: course registration simulation
+    //        //StudentManager.SimulateCourseRegistrationAndGrade(); //stage 7
 
-            ////etc...
-            //#endregion Stage 7
+    //        ////etc...
+    //        //#endregion Stage 7
 
-            try
-            {
-                Thread.Sleep(1000); // 1 second
-            }
-            catch (ThreadInterruptedException) { }
-        }
-    }
-    #endregion Stage 7 base
+    //        try
+    //        {
+    //            Thread.Sleep(1000); // 1 second
+    //        }
+    //        catch (ThreadInterruptedException) { }
+    //    }
+    //}
+    //#endregion Stage 7 base
 
 }

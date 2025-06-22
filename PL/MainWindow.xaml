@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+         Loaded="MainWindow_Loaded" Closed="MainWindow_Closed">
  
     <!-- Main layout grid -->
     <Grid Margin="10">
@@ -42,24 +43,38 @@
             </StackPanel>
         </Grid>
 
-        <!-- Configuration Variables section -->
-        <!-- StackPanel used here for vertical stacking of each config line -->
-        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,20">
-            <!-- One config variable row: textbox + update button + label -->
+       <!-- Configuration Variables section -->
+<StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,20">
+
+    <!-- Clock configuration 
+    <StackPanel Orientation="Horizontal" Margin="0,5">
+        <TextBox Width="200" Margin="0,0,10,0" 
+                 Text="{Binding Clock, UpdateSourceTrigger=PropertyChanged}" />
+        <Button Content="Update" Width="80" Click="UpdateClock_Click"/>
+        <Label Content="Clock" VerticalAlignment="Center" Margin="10,0,0,0"/>
+    </StackPanel>
+    -->
+
+    <!-- RiskRange configuration -->
             <StackPanel Orientation="Horizontal" Margin="0,5">
-                <TextBox Width="200" Margin="0,0,10,0" Text="4" TextChanged="TextBox_TextChanged"/>
-                <Button Content="Update" Width="80"/>
-                <Label Content="Max years per student" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <TextBox Width="200" Margin="0,0,10,0" 
+                 Text="{Binding RiskRange}" IsReadOnly="False"/>
+                <Button Content="Update" Width="80" Click="UpdateRiskRange_Click"/>
+                <Label Content="Risk Range" VerticalAlignment="Center" Margin="10,0,0,0"/>
             </StackPanel>
-            <!-- More config rows can be added below -->
         </StackPanel>
+
 
         <!-- DB operation buttons at the bottom -->
         <!-- StackPanel aligns buttons horizontally -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+            <!-- btn show calls screen -->
+            <Button Content="Handle Calls" Width="120" Height="35" Click="btnCalls_Click"/>
             <Button Content="List View" Width="120" Height="35"/>
-            <Button Content="Initialize DB" Width="120" Height="35"/>
-            <Button Content="Reset DB" Width="120" Height="35"/>
+            <!-- btn Initialize DB -->
+            <Button Content="Initialize DB" Width="120" Height="35" Click="btnInitializeDB_Click"/>
+            <!-- btn Reset DB -->
+            <Button Content="Reset DB" Width="120" Height="35" Click="btnResetDB_Click"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -48,7 +48,8 @@ public enum VolunteerSortOption
 {
     ByName,
     ByCompletedCalls,
-    MaxDistanceForCall
+    MaxDistanceForCall,
+    None
 }
 public enum TimeUnit
 {

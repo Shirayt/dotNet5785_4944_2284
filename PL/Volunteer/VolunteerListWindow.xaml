@@ -6,10 +6,51 @@
         xmlns:local="clr-namespace:PL.Volunteer"
         mc:Ignorable="d"
         Title="VolunteerListWindow" Height="450" Width="800"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        Loaded="Window_Loaded" Closed="Window_Closed">
 
-    <DataGrid Margin="5" Grid.Row="1" ItemsSource="{Binding VolunteerList}">
+    <!--External Grid-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="500*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!--Internal, Upper Grid -->
+        <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-    </DataGrid>
+            <Label Content="Label" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ComboBox SelectedValue="{Binding VolunteerSortOption , Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource VolunteerSortOptionCollectionKey}}"
+              Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="ComboBox_SelectionChanged" />
+        </Grid>
+        <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding VolunteerList}"
+          AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <!-- 	 MouseDoubleClick="dgVolunteerList_MouseDoubleClick" SelectedItem="{Binding SelectedVolunteer}">-->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="Auto"/>
+                <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" Width="Auto"/>
+                <DataGridTextColumn Header="Is Active (text)" Binding="{Binding IsActive}" Width="Auto"/>
+
+                <DataGridTemplateColumn Header="Is Active (checkbox)">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsActive}" IsEnabled="False" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="Completed Calls" Binding="{Binding AmountOfCompletedCalls}" />
+                <DataGridTextColumn Header="Self Cancelled" Binding="{Binding AmountOfSelfCancelledCalls}" />
+                <DataGridTextColumn Header="Expired" Binding="{Binding AmountOfExpiredCalls}" />
+                <DataGridTextColumn Header="Treatment Id" Binding="{Binding CallInTreatmentId}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Content="Add Volunteer" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
+    </Grid>
 
 </Window>

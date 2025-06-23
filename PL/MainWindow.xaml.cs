@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BlApi;
+using PL.Volunteer;
 
 namespace PL
 {
@@ -43,15 +44,6 @@ namespace PL
 
         public static readonly DependencyProperty CurrentTimeProperty =
         DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(default(DateTime)));
-
-        //public DateTime Clock
-        //{
-        //    get { return (DateTime)GetValue(ClockProperty); }
-        //    set { SetValue(ClockProperty, value); }
-        //}
-
-        //public static readonly DependencyProperty ClockProperty =
-        //    DependencyProperty.Register("Clock", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(string.Empty));
 
         public TimeSpan RiskRange
         {
@@ -108,19 +100,14 @@ namespace PL
             s_bl.Admin.ForwardClock(BO.TimeUnit.Year);
         }
 
-        //private void UpdateClock_Click(object sender, RoutedEventArgs e)
-        //{
-        //        s_bl.Admin.SetClock(Clock);
-        //}
-
         private void UpdateRiskRange_Click(object sender, RoutedEventArgs e)
         {
             s_bl.Admin.SetRiskRange(RiskRange);
         }
 
-        private void btnCalls_Click(object sender, RoutedEventArgs e)
+        private void btnVolunteers_Click(object sender, RoutedEventArgs e)
         {
-            //new CallsListWindow().Show();
+           new VolunteerListWindow().Show();
         }
 
 

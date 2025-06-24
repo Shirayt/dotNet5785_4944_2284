@@ -21,6 +21,7 @@ namespace PL.Volunteer
     public partial class VolunteerListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        public BO.VolunteerInList? SelectedVolunteer { get; set; }
 
         public IEnumerable<BO.VolunteerInList> VolunteerList
         {
@@ -70,7 +71,19 @@ namespace PL.Volunteer
         }
         private void btnAddVolunteer_Click(object sender, RoutedEventArgs e)
         {
-            new VolunteerWindow().Show();
+            var window = new VolunteerWindow();
+            bool? result = window.ShowDialog();
         }
+
+
+        private void dgVolunteerList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (SelectedVolunteer is null)
+                return;
+
+            var window = new VolunteerWindow(SelectedVolunteer.Id);
+            window.Show(); 
+        }
+
     }
 }

@@ -7,5 +7,6 @@
         <local:VolunteerSortOptionCollection x:Key="VolunteerSortOptionCollectionKey"/>
         <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey"/>
         <local:RoleCollection x:Key="RoleCollectionKey"/>
+        <local:ConvertUpdateToCollapsedKey x:Key="ConvertUpdateToCollapsedKey" />
     </Application.Resources>
 </Application>

@@ -30,8 +30,51 @@ namespace PL.Volunteer
         public static readonly DependencyProperty CurrentVolunteerProperty =
             DependencyProperty.Register("CurrentVolunteer", typeof(BO.Volunteer), typeof(VolunteerWindow), new PropertyMetadata(null));
 
-        private int VolunteerId { get; set; }
+        private int VolunteerId { get; set; } = 0;
         public string ButtonText { get; set; }
+
+        public VolunteerWindow(int volunteerId)
+        {
+            InitializeComponent();
+
+            ButtonText = "Update";
+
+            try
+            {
+                CurrentVolunteer = s_bl.Volunteer.GetVolunteerDetails(volunteerId)!;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading volunteer details: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close(); // סגור את החלון אם לא מצליח לטעון את הנתונים
+            }
+        }
+
+
+
+        private void volunteerObserver()
+        {
+            int id = CurrentVolunteer!.Id;
+            CurrentVolunteer = null;
+            CurrentVolunteer = s_bl.Volunteer.GetVolunteerDetails(id);
+        }
+        private void VolunteerWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (CurrentVolunteer != null && CurrentVolunteer.Id != 0)
+            {
+                s_bl.Volunteer.AddObserver(CurrentVolunteer.Id, volunteerObserver);
+                // ניתן גם לטעון מחדש באופן מיידי אם רוצים:
+                volunteerObserver();
+            }
+        }
+        private void VolunteerWindow_Closed(object? sender, EventArgs e)
+        {
+            if (CurrentVolunteer != null && CurrentVolunteer.Id != 0)
+            {
+                s_bl.Volunteer.RemoveObserver(CurrentVolunteer.Id, volunteerObserver);
+            }
+        }
+
 
         public VolunteerWindow()
         {
@@ -76,21 +119,26 @@ namespace PL.Volunteer
 
         private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if (ButtonText == "Add")
+            try
             {
-                //הוספת מתנדב
-                // קוד להוספה
-                MessageBox.Show("Volunteer added successfuly\n");
-            }
-            else
-            {
-                //עדכון מתנדב
-                // קוד לעדכון
-                MessageBox.Show("Volunteer updated successfuly\n");
-            }
+                if (ButtonText == "Add")
+                {
+                    s_bl.Volunteer.AddVolunteer(CurrentVolunteer);
+                    MessageBox.Show("Volunteer added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    s_bl.Volunteer.UpdateVolunteerDetails(CurrentVolunteer.Id, CurrentVolunteer);
+                    MessageBox.Show("Volunteer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
 
-            DialogResult = true;
-            Close();
+                DialogResult = true;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

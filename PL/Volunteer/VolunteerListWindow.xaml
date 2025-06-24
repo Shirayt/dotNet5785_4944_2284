@@ -27,9 +27,8 @@
             <ComboBox SelectedValue="{Binding VolunteerSortOption , Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource VolunteerSortOptionCollectionKey}}"
               Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="ComboBox_SelectionChanged" />
         </Grid>
-        <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding VolunteerList}"
-          AutoGenerateColumns="False" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected">
-            <!-- 	 MouseDoubleClick="dgVolunteerList_MouseDoubleClick" SelectedItem="{Binding SelectedVolunteer}">-->
+        <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding VolunteerList}" SelectedItem="{Binding SelectedVolunteer}"
+          MouseDoubleClick="dgVolunteerList_MouseDoubleClick" AutoGenerateColumns="False" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="Auto"/>
                 <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" Width="Auto"/>

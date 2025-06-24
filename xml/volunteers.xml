@@ -210,4 +210,74 @@
     <MaxDistanceForCall>75</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
+  <Volunteer>
+    <Id>215525197</Id>
+    <FullName>Racheli</FullName>
+    <PhoneNumber>0534114908</PhoneNumber>
+    <Email>Rachlios2005@gmail.com</Email>
+    <Password>rjkh tuxyruc</Password>
+    <CurrentFullAddress>mavo tzalmona 2, Ramat Eskol, Jerusalem</CurrentFullAddress>
+    <Latitude>31.759595</Latitude>
+    <Longitude>35.215315</Longitude>
+    <Role>Volunteer</Role>
+    <IsActive>True</IsActive>
+    <MaxDistanceForCall>12</MaxDistanceForCall>
+    <DistanceType>Air</DistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>215042284</Id>
+    <FullName>Shira Taviv!</FullName>
+    <PhoneNumber>0534164314</PhoneNumber>
+    <Email>Shirayt100@gmail.com</Email>
+    <Password>shira</Password>
+    <CurrentFullAddress>Pinchas Kehati 12</CurrentFullAddress>
+    <Latitude>-22.207933</Latitude>
+    <Longitude>-49.679436</Longitude>
+    <Role>Volunteer</Role>
+    <IsActive>True</IsActive>
+    <MaxDistanceForCall>11</MaxDistanceForCall>
+    <DistanceType>Air</DistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>328268149</Id>
+    <FullName>Nechami</FullName>
+    <PhoneNumber>0583214569</PhoneNumber>
+    <Email>ns@gmail.com</Email>
+    <Password>123456</Password>
+    <CurrentFullAddress>Ramat Shlomo</CurrentFullAddress>
+    <Latitude>31.8111253</Latitude>
+    <Longitude>35.2174861</Longitude>
+    <Role>Volunteer</Role>
+    <IsActive>True</IsActive>
+    <MaxDistanceForCall>111</MaxDistanceForCall>
+    <DistanceType>Air</DistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>328304944</Id>
+    <FullName>Ayala</FullName>
+    <PhoneNumber>0556725037</PhoneNumber>
+    <Email>a0556725037@gmail.com</Email>
+    <Password>123456789</Password>
+    <CurrentFullAddress>Bazel 7</CurrentFullAddress>
+    <Latitude>47.5572953</Latitude>
+    <Longitude>7.6145738</Longitude>
+    <Role>Volunteer</Role>
+    <IsActive>True</IsActive>
+    <MaxDistanceForCall>123</MaxDistanceForCall>
+    <DistanceType>Air</DistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>215525874</Id>
+    <FullName>New</FullName>
+    <PhoneNumber>0567898765</PhoneNumber>
+    <Email>new@gmail.com</Email>
+    <Password>123212</Password>
+    <CurrentFullAddress>Jerusalem</CurrentFullAddress>
+    <Latitude>31.7788242</Latitude>
+    <Longitude>35.2257626</Longitude>
+    <Role>Volunteer</Role>
+    <IsActive>True</IsActive>
+    <MaxDistanceForCall>11</MaxDistanceForCall>
+    <DistanceType>Air</DistanceType>
+  </Volunteer>
 </ArrayOfVolunteer>

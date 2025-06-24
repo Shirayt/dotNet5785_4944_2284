@@ -33,6 +33,7 @@ public static class Initialization
     }
     private static void createVolunteer()
     {
+
         string[] volunteerNames = { "Dani Levy", "Shira Cohen", "Tali Amar", "Yair Israelof", "Eli Klein", "Maya Shimon", "Avi Ben-David", "Liat Ron", "Yaara Berman", "Noa Sasson", "Roi Peretz", "Gal Zohar", "Dana Kfir", "Yosef Shaked", "Ruth Erez" };
         string[] emails = { "dani@gmail.com", "shira@gmail.com", "tali@gmail.com", "yair@gmail.com", "eli@gmail.com", "maya@gmail.com", "avi@gmail.com", "liat@gmail.com", "yaara@gmail.com", "noa@gmail.com", "roi@gmail.com", "gal@gmail.com", "dana@gmail.com", "yosef@gmail.com", "ruth@gmail.com" };
         string[] phones = { "0541111111", "0542222222", "0543333333", "0544444444", "0545555555", "0546666666", "0547777777", "0548888888", "0549999999", "0550000000", "0551111111", "0552222222", "0553333333", "0554444444", "0555555555" };
@@ -48,8 +49,11 @@ public static class Initialization
                 do
                 {
                     id = s_rand.Next(200000000, 400000000);
-                    //} while (s_dalVolunteer!.Read(id) != null);//stage 1
-                } while (s_dal!.Volunteer.Read(id) != null);//stage 2
+                } while (s_dal!.Volunteer.Read(id) != null || id.ToString().PadLeft(9, '0').Reverse().Select((c, i) =>
+                {
+                    int n = (c - '0') * ((i % 2) + 1);
+                    return n > 9 ? n - 9 : n;
+                }).Sum() % 10 != 0);
 
                 // הגרלת המרחק המרבי לקבלת קריאה בטווח של 5 עד 100
                 double maxDistanceForCall = s_rand.Next(5, 101);
@@ -206,9 +210,9 @@ public static class Initialization
             else
                 assignmentSpan = TimeSpan.Zero;
 
-            double randomMinutes = s_rand.NextDouble() * assignmentSpan.TotalMinutes;
-            DateTime randomStartTime = call.OpenTime.AddMinutes(randomMinutes);
-            DateTime? randomEndTime = (s_rand.NextDouble() > 0.5) ? randomStartTime.AddMinutes(s_rand.Next((int)assignmentSpan.TotalMinutes)) : null;
+            double totalMinutes = Math.Max(1, assignmentSpan.TotalMinutes); // מבטיח שיהיה לפחות 1
+            DateTime randomStartTime = call.OpenTime.AddMinutes(s_rand.Next((int)totalMinutes));
+            DateTime? randomEndTime = (s_rand.NextDouble() > 0.5) ? randomStartTime.AddMinutes(s_rand.Next((int)totalMinutes)) : null;
 
             AssignmentStatus? status;
             if (randomEndTime != null)

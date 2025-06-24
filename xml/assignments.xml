@@ -3,9 +3,401 @@
   <Assignment>
     <Id>0</Id>
     <CallId>10</CallId>
-    <VolunteerId>344493694</VolunteerId>
-    <StartTime>2025-09-19T11:58:55.9951304+03:00</StartTime>
-    <EndTime>2025-09-19T19:15:55.9951304+03:00</EndTime>
+    <VolunteerId>394783567</VolunteerId>
+    <StartTime>2025-07-22T06:00:00.0704326+03:00</StartTime>
+    <EndTime>2025-07-23T15:16:00.0704326+03:00</EndTime>
     <Status>Expired</Status>
+  </Assignment>
+  <Assignment>
+    <Id>1</Id>
+    <CallId>11</CallId>
+    <VolunteerId>394783567</VolunteerId>
+    <StartTime>2025-08-30T22:03:00.0704326+03:00</StartTime>
+    <EndTime>2025-08-30T22:03:00.0704326+03:00</EndTime>
+    <Status>Completed</Status>
+  </Assignment>
+  <Assignment>
+    <Id>2</Id>
+    <CallId>12</CallId>
+    <VolunteerId>260728548</VolunteerId>
+    <StartTime>2025-07-18T05:38:00.0704326+03:00</StartTime>
+    <EndTime>2025-07-18T06:27:00.0704326+03:00</EndTime>
+    <Status>Expired</Status>
+  </Assignment>
+  <Assignment>
+    <Id>3</Id>
+    <CallId>13</CallId>
+    <VolunteerId>267164226</VolunteerId>
+    <StartTime>2025-07-26T22:58:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>4</Id>
+    <CallId>14</CallId>
+    <VolunteerId>238908800</VolunteerId>
+    <StartTime>2025-08-05T03:28:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>5</Id>
+    <CallId>15</CallId>
+    <VolunteerId>260728548</VolunteerId>
+    <StartTime>2025-08-13T22:03:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>6</Id>
+    <CallId>16</CallId>
+    <VolunteerId>395748551</VolunteerId>
+    <StartTime>2025-07-03T22:03:00.0704326+03:00</StartTime>
+    <EndTime>2025-07-03T22:03:00.0704326+03:00</EndTime>
+    <Status>Expired</Status>
+  </Assignment>
+  <Assignment>
+    <Id>7</Id>
+    <CallId>17</CallId>
+    <VolunteerId>267164226</VolunteerId>
+    <StartTime>2025-07-31T22:03:00.0704326+03:00</StartTime>
+    <EndTime>2025-07-31T22:03:00.0704326+03:00</EndTime>
+    <Status>ManagerCancelled</Status>
+  </Assignment>
+  <Assignment>
+    <Id>8</Id>
+    <CallId>18</CallId>
+    <VolunteerId>395748551</VolunteerId>
+    <StartTime>2025-08-18T22:03:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>9</Id>
+    <CallId>19</CallId>
+    <VolunteerId>305673667</VolunteerId>
+    <StartTime>2025-07-11T22:03:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>10</Id>
+    <CallId>20</CallId>
+    <VolunteerId>319099057</VolunteerId>
+    <StartTime>2025-08-08T22:03:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>11</Id>
+    <CallId>21</CallId>
+    <VolunteerId>384190187</VolunteerId>
+    <StartTime>2025-06-26T22:03:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>12</Id>
+    <CallId>22</CallId>
+    <VolunteerId>384190187</VolunteerId>
+    <StartTime>2025-08-01T10:39:00.0704326+03:00</StartTime>
+    <EndTime>2025-08-02T08:21:00.0704326+03:00</EndTime>
+    <Status>Completed</Status>
+  </Assignment>
+  <Assignment>
+    <Id>13</Id>
+    <CallId>23</CallId>
+    <VolunteerId>238908800</VolunteerId>
+    <StartTime>2025-07-11T01:01:00.0704326+03:00</StartTime>
+    <EndTime>2025-07-11T01:06:00.0704326+03:00</EndTime>
+    <Status>ManagerCancelled</Status>
+  </Assignment>
+  <Assignment>
+    <Id>14</Id>
+    <CallId>24</CallId>
+    <VolunteerId>395123268</VolunteerId>
+    <StartTime>2025-09-15T22:03:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>15</Id>
+    <CallId>25</CallId>
+    <VolunteerId>381873124</VolunteerId>
+    <StartTime>2025-08-20T23:07:00.0704326+03:00</StartTime>
+    <EndTime>2025-08-21T12:28:00.0704326+03:00</EndTime>
+    <Status>ManagerCancelled</Status>
+  </Assignment>
+  <Assignment>
+    <Id>16</Id>
+    <CallId>26</CallId>
+    <VolunteerId>267164226</VolunteerId>
+    <StartTime>2025-09-21T22:03:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>17</Id>
+    <CallId>27</CallId>
+    <VolunteerId>384190187</VolunteerId>
+    <StartTime>2025-06-30T17:48:00.0704326+03:00</StartTime>
+    <EndTime>2025-07-01T03:52:00.0704326+03:00</EndTime>
+    <Status>ManagerCancelled</Status>
+  </Assignment>
+  <Assignment>
+    <Id>18</Id>
+    <CallId>28</CallId>
+    <VolunteerId>394783567</VolunteerId>
+    <StartTime>2025-09-16T22:03:00.0704326+03:00</StartTime>
+    <EndTime>2025-09-16T22:03:00.0704326+03:00</EndTime>
+    <Status>Completed</Status>
+  </Assignment>
+  <Assignment>
+    <Id>19</Id>
+    <CallId>29</CallId>
+    <VolunteerId>395748551</VolunteerId>
+    <StartTime>2025-08-14T22:03:00.0704326+03:00</StartTime>
+    <EndTime>2025-08-14T22:03:00.0704326+03:00</EndTime>
+    <Status>ManagerCancelled</Status>
+  </Assignment>
+  <Assignment>
+    <Id>20</Id>
+    <CallId>30</CallId>
+    <VolunteerId>395748551</VolunteerId>
+    <StartTime>2025-07-07T05:13:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>21</Id>
+    <CallId>31</CallId>
+    <VolunteerId>381873124</VolunteerId>
+    <StartTime>2025-08-20T00:34:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>22</Id>
+    <CallId>32</CallId>
+    <VolunteerId>229522180</VolunteerId>
+    <StartTime>2025-08-07T00:36:00.0704326+03:00</StartTime>
+    <EndTime>2025-08-07T12:50:00.0704326+03:00</EndTime>
+    <Status>ManagerCancelled</Status>
+  </Assignment>
+  <Assignment>
+    <Id>23</Id>
+    <CallId>33</CallId>
+    <VolunteerId>331380949</VolunteerId>
+    <StartTime>2025-08-24T22:03:00.0704326+03:00</StartTime>
+    <EndTime>2025-08-24T22:03:00.0704326+03:00</EndTime>
+    <Status>Expired</Status>
+  </Assignment>
+  <Assignment>
+    <Id>24</Id>
+    <CallId>34</CallId>
+    <VolunteerId>252634191</VolunteerId>
+    <StartTime>2025-09-18T22:03:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>25</Id>
+    <CallId>35</CallId>
+    <VolunteerId>395748551</VolunteerId>
+    <StartTime>2025-10-01T14:51:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>26</Id>
+    <CallId>36</CallId>
+    <VolunteerId>395123268</VolunteerId>
+    <StartTime>2025-07-19T18:08:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>27</Id>
+    <CallId>37</CallId>
+    <VolunteerId>252831003</VolunteerId>
+    <StartTime>2025-09-05T22:03:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>28</Id>
+    <CallId>38</CallId>
+    <VolunteerId>395748551</VolunteerId>
+    <StartTime>2025-07-09T22:03:00.0704326+03:00</StartTime>
+    <EndTime>2025-07-09T22:03:00.0704326+03:00</EndTime>
+    <Status>Expired</Status>
+  </Assignment>
+  <Assignment>
+    <Id>29</Id>
+    <CallId>39</CallId>
+    <VolunteerId>384190187</VolunteerId>
+    <StartTime>2025-09-18T22:03:00.0704326+03:00</StartTime>
+    <EndTime>2025-09-18T22:03:00.0704326+03:00</EndTime>
+    <Status>Expired</Status>
+  </Assignment>
+  <Assignment>
+    <Id>30</Id>
+    <CallId>40</CallId>
+    <VolunteerId>238908800</VolunteerId>
+    <StartTime>2025-07-20T22:03:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>31</Id>
+    <CallId>41</CallId>
+    <VolunteerId>394783567</VolunteerId>
+    <StartTime>2025-07-26T22:03:00.0704326+03:00</StartTime>
+    <EndTime>2025-07-26T22:03:00.0704326+03:00</EndTime>
+    <Status>ManagerCancelled</Status>
+  </Assignment>
+  <Assignment>
+    <Id>32</Id>
+    <CallId>42</CallId>
+    <VolunteerId>331380949</VolunteerId>
+    <StartTime>2025-09-08T22:10:00.0704326+03:00</StartTime>
+    <EndTime>2025-09-08T23:53:00.0704326+03:00</EndTime>
+    <Status>Completed</Status>
+  </Assignment>
+  <Assignment>
+    <Id>33</Id>
+    <CallId>43</CallId>
+    <VolunteerId>261740054</VolunteerId>
+    <StartTime>2025-09-17T12:58:00.0704326+03:00</StartTime>
+    <EndTime>2025-09-17T22:29:00.0704326+03:00</EndTime>
+    <Status>Expired</Status>
+  </Assignment>
+  <Assignment>
+    <Id>34</Id>
+    <CallId>44</CallId>
+    <VolunteerId>252831003</VolunteerId>
+    <StartTime>2025-08-10T22:03:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>35</Id>
+    <CallId>45</CallId>
+    <VolunteerId>252831003</VolunteerId>
+    <StartTime>2025-08-16T22:03:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>36</Id>
+    <CallId>46</CallId>
+    <VolunteerId>252831003</VolunteerId>
+    <StartTime>2025-07-10T03:49:00.0704326+03:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>37</Id>
+    <CallId>47</CallId>
+    <VolunteerId>394783567</VolunteerId>
+    <StartTime>2025-08-08T01:39:00.0704326+03:00</StartTime>
+    <EndTime>2025-08-08T09:43:00.0704326+03:00</EndTime>
+    <Status>Completed</Status>
+  </Assignment>
+  <Assignment>
+    <Id>38</Id>
+    <CallId>48</CallId>
+    <VolunteerId>261740054</VolunteerId>
+    <StartTime>2025-07-13T22:03:00.0704326+03:00</StartTime>
+    <EndTime>2025-07-13T22:03:00.0704326+03:00</EndTime>
+    <Status>Completed</Status>
+  </Assignment>
+  <Assignment>
+    <Id>39</Id>
+    <CallId>49</CallId>
+    <VolunteerId>261740054</VolunteerId>
+    <StartTime>2025-09-10T12:13:00.0704326+03:00</StartTime>
+    <EndTime>2025-09-10T14:00:00.0704326+03:00</EndTime>
+    <Status>SelfCancelled</Status>
+  </Assignment>
+  <Assignment>
+    <Id>40</Id>
+    <CallId>0</CallId>
+    <VolunteerId>-1</VolunteerId>
+    <StartTime>0001-01-01T00:00:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>41</Id>
+    <CallId>1</CallId>
+    <VolunteerId>-1</VolunteerId>
+    <StartTime>0001-01-01T00:00:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>42</Id>
+    <CallId>2</CallId>
+    <VolunteerId>-1</VolunteerId>
+    <StartTime>0001-01-01T00:00:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>43</Id>
+    <CallId>3</CallId>
+    <VolunteerId>-1</VolunteerId>
+    <StartTime>0001-01-01T00:00:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>44</Id>
+    <CallId>4</CallId>
+    <VolunteerId>-1</VolunteerId>
+    <StartTime>0001-01-01T00:00:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>45</Id>
+    <CallId>5</CallId>
+    <VolunteerId>-1</VolunteerId>
+    <StartTime>0001-01-01T00:00:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>46</Id>
+    <CallId>6</CallId>
+    <VolunteerId>-1</VolunteerId>
+    <StartTime>0001-01-01T00:00:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>47</Id>
+    <CallId>7</CallId>
+    <VolunteerId>-1</VolunteerId>
+    <StartTime>0001-01-01T00:00:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>48</Id>
+    <CallId>8</CallId>
+    <VolunteerId>-1</VolunteerId>
+    <StartTime>0001-01-01T00:00:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>49</Id>
+    <CallId>9</CallId>
+    <VolunteerId>-1</VolunteerId>
+    <StartTime>0001-01-01T00:00:00</StartTime>
+    <EndTime xsi:nil="true" />
+    <Status xsi:nil="true" />
   </Assignment>
 </ArrayOfAssignment>

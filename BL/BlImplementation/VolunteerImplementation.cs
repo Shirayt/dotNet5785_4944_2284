@@ -133,9 +133,12 @@ internal class VolunteerImplementation : BlApi.IVolunteer
         try
         {
             var volunteer = _dal.Volunteer.Read(volunteerId);
+            int AmountOfCompletedCalls = Helpers.VolunteerManager.GetCompletedCallsCount(volunteer.Id);
+            int AmountOfSelfCancelledCalls = Helpers.VolunteerManager.GetSelfCancelledCallsCount(volunteer.Id);
+            int AmountOfExpiredCalls = Helpers.VolunteerManager.GetExpiredCallsCount(volunteer.Id);
 
             /// Checks if the volunteer is currently handling or has ever handled a call.
-            if (Helpers.VolunteerManager.GetCallInTreatment(volunteer.Id) == null)
+            if (Helpers.VolunteerManager.GetCallInTreatment(volunteer.Id) !=null || AmountOfCompletedCalls > 0 || AmountOfExpiredCalls >0 || AmountOfSelfCancelledCalls>0)
             {
                 throw new BlInvalidOperationException($"Volunteer with ID {volunteerId} cannot be deleted as they have handled calls.");
             }

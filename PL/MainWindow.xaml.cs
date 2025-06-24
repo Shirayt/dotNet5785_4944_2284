@@ -119,9 +119,8 @@ namespace PL
             {
                 try
                 {
-                    Mouse.OverrideCursor = Cursors.Wait; // change cursor to sand clock
+                    Mouse.OverrideCursor = Cursors.Wait;
 
-                    // close all windows despite the main window
                     foreach (Window window in Application.Current.Windows)
                     {
                         if (window != this)
@@ -129,7 +128,13 @@ namespace PL
                     }
 
                     s_bl.Admin.InitializeDB();
+                    MessageBox.Show("Database initialized successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Initialization failed:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
                 finally
                 {
                     Mouse.OverrideCursor = null; // return to regular cursor
@@ -157,6 +162,8 @@ namespace PL
                     }
 
                     s_bl.Admin.ResetDB();
+                    MessageBox.Show("Database reset was successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 }
                 finally
                 {

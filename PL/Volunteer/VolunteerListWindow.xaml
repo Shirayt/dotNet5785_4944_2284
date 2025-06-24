@@ -41,11 +41,17 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
                 <DataGridTextColumn Header="Completed Calls" Binding="{Binding AmountOfCompletedCalls}" />
                 <DataGridTextColumn Header="Self Cancelled" Binding="{Binding AmountOfSelfCancelledCalls}" />
                 <DataGridTextColumn Header="Expired" Binding="{Binding AmountOfExpiredCalls}" />
                 <DataGridTextColumn Header="Treatment Id" Binding="{Binding CallInTreatmentId}" />
+                <DataGridTemplateColumn Header="Delete">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="🗑 Delete" Click="DeleteVolunteer_Click" ToolTip="Delete Volunteer"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 

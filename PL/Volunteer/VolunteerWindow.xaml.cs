@@ -38,16 +38,24 @@ namespace PL.Volunteer
             InitializeComponent();
 
             ButtonText = "Update";
-
             try
             {
-                CurrentVolunteer = s_bl.Volunteer.GetVolunteerDetails(volunteerId)!;
+                var volunteer = s_bl.Volunteer.GetVolunteerDetails(volunteerId);
+                if (volunteer == null)
+                {
+                    MessageBox.Show("Volunteer not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Close();
+                    return;
+                }
+
+                CurrentVolunteer = volunteer;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading volunteer details: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Close(); // סגור את החלון אם לא מצליח לטעון את הנתונים
+                Close();
             }
+
         }
 
 
@@ -132,7 +140,6 @@ namespace PL.Volunteer
                     MessageBox.Show("Volunteer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
-                DialogResult = true;
                 Close();
             }
             catch (Exception ex)

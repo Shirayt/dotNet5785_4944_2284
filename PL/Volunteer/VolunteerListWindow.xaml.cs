@@ -69,10 +69,34 @@ namespace PL.Volunteer
             };
 
         }
+
+        private void DeleteVolunteer_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.DataContext is BO.VolunteerInList volunteer)
+            {
+                var result = MessageBox.Show(
+                    $"Are you sure you want to delete volunteer '{volunteer.FullName}' (ID: {volunteer.Id})?",
+                    "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        s_bl.Volunteer.DeleteVolunteer(volunteer.Id);
+                        MessageBox.Show("Volunteer deleted successfully!", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to delete volunteer: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+        }
+
         private void btnAddVolunteer_Click(object sender, RoutedEventArgs e)
         {
             var window = new VolunteerWindow();
-            bool? result = window.ShowDialog();
+            window.Show();
         }
 
 

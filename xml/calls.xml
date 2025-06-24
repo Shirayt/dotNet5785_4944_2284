@@ -2,502 +2,502 @@
 <ArrayOfCall xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Call>
     <Id>0</Id>
-    <CallType>Equipment</CallType>
-    <Description>Equipment: Need medical equipment for MCI</Description>
-    <FullAddress>Central Bangladesh, remote area</FullAddress>
-    <Latitude>24.374</Latitude>
-    <Longitude>90.276</Longitude>
-    <OpenTime>2025-07-23T23:25:42.5564855+03:00</OpenTime>
+    <CallType>Training</CallType>
+    <Description>Training: Request for volunteer medical training</Description>
+    <FullAddress>Heard Island, Australia</FullAddress>
+    <Latitude>-51.1</Latitude>
+    <Longitude>71.5</Longitude>
+    <OpenTime>2025-08-07T22:03:00.0704326+03:00</OpenTime>
     <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>1</Id>
-    <CallType>Training</CallType>
-    <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Central Java, Indonesia</FullAddress>
-    <Latitude>-7.3244</Latitude>
-    <Longitude>111.5917</Longitude>
-    <OpenTime>2025-08-08T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-08-10T01:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Emergency</CallType>
+    <Description>Emergency: Urgent medical help required</Description>
+    <FullAddress>Patagonia, Argentina</FullAddress>
+    <Latitude>-36.9379</Latitude>
+    <Longitude>-63.9</Longitude>
+    <OpenTime>2025-07-04T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-07-05T21:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>2</Id>
-    <CallType>Training</CallType>
-    <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Northern Ontario, Canada</FullAddress>
-    <Latitude>45.4825</Latitude>
-    <Longitude>-78.14</Longitude>
-    <OpenTime>2025-06-26T23:25:42.5564855+03:00</OpenTime>
+    <CallType>Emergency</CallType>
+    <Description>Emergency: Urgent medical help required</Description>
+    <FullAddress>Severnaya Zemlya, Russia</FullAddress>
+    <Latitude>66.5648</Latitude>
+    <Longitude>90.9623</Longitude>
+    <OpenTime>2025-08-08T22:03:00.0704326+03:00</OpenTime>
     <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>3</Id>
-    <CallType>Equipment</CallType>
-    <Description>Equipment: Need medical equipment for MCI</Description>
-    <FullAddress>Central Java, Indonesia</FullAddress>
-    <Latitude>-7.3244</Latitude>
-    <Longitude>111.5917</Longitude>
-    <OpenTime>2025-07-22T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-07-25T03:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Training</CallType>
+    <Description>Training: Request for volunteer medical training</Description>
+    <FullAddress>Juan Fernández Islands, Chile</FullAddress>
+    <Latitude>-21.1</Latitude>
+    <Longitude>-70.3</Longitude>
+    <OpenTime>2025-09-15T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>4</Id>
-    <CallType>Emergency</CallType>
-    <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Siberian Taiga, Russia</FullAddress>
-    <Latitude>61.145</Latitude>
-    <Longitude>91.602</Longitude>
-    <OpenTime>2025-09-07T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-09-10T17:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
+    <FullAddress>Vanuatu Islands, Pacific Ocean</FullAddress>
+    <Latitude>-11.629</Latitude>
+    <Longitude>149.035</Longitude>
+    <OpenTime>2025-08-12T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>5</Id>
     <CallType>Emergency</CallType>
     <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Bermuda Islands</FullAddress>
-    <Latitude>32.654</Latitude>
-    <Longitude>-69.897</Longitude>
-    <OpenTime>2025-07-20T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-07-21T09:25:42.5564855+03:00</MaxEndTime>
+    <FullAddress>India (remote region)</FullAddress>
+    <Latitude>30.3753</Latitude>
+    <Longitude>78.4744</Longitude>
+    <OpenTime>2025-08-08T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-08-10T07:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>6</Id>
-    <CallType>Doctor</CallType>
-    <Description>Doctor: Urgent need for a doctor</Description>
-    <FullAddress>Falkland Islands</FullAddress>
-    <Latitude>-63.3461</Latitude>
-    <Longitude>-60.6791</Longitude>
-    <OpenTime>2025-07-07T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-06-19T23:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
+    <FullAddress>Central Siberia, Russia</FullAddress>
+    <Latitude>69.344</Latitude>
+    <Longitude>39.822</Longitude>
+    <OpenTime>2025-07-16T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-07-17T06:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>7</Id>
-    <CallType>Doctor</CallType>
-    <Description>Doctor: Urgent need for a doctor</Description>
-    <FullAddress>Bouvet Island, South Atlantic Ocean</FullAddress>
-    <Latitude>-37.07</Latitude>
-    <Longitude>178.02</Longitude>
-    <OpenTime>2025-08-24T23:25:42.5564855+03:00</OpenTime>
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
+    <FullAddress>Juan Fernández Islands, Chile</FullAddress>
+    <Latitude>-21.1</Latitude>
+    <Longitude>-70.3</Longitude>
+    <OpenTime>2025-08-26T22:03:00.0704326+03:00</OpenTime>
     <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>8</Id>
     <CallType>Doctor</CallType>
     <Description>Doctor: Urgent need for a doctor</Description>
-    <FullAddress>Bimini, Bahamas</FullAddress>
-    <Latitude>25.0608</Latitude>
-    <Longitude>-77.1303</Longitude>
-    <OpenTime>2025-09-05T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime xsi:nil="true" />
+    <FullAddress>Central Siberia, Russia</FullAddress>
+    <Latitude>69.344</Latitude>
+    <Longitude>39.822</Longitude>
+    <OpenTime>2025-08-24T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-08-26T09:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>9</Id>
-    <CallType>Training</CallType>
-    <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Oceania (remote island)</FullAddress>
-    <Latitude>-22.957</Latitude>
-    <Longitude>142.731</Longitude>
-    <OpenTime>2025-08-11T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-06-16T23:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
+    <FullAddress>Tristan da Cunha, South Atlantic Ocean</FullAddress>
+    <Latitude>-59.524</Latitude>
+    <Longitude>-43.024</Longitude>
+    <OpenTime>2025-07-01T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-07-04T07:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>10</Id>
-    <CallType>Equipment</CallType>
-    <Description>Equipment: Need medical equipment for MCI</Description>
-    <FullAddress>Highlands of Papua New Guinea</FullAddress>
-    <Latitude>7.5645</Latitude>
-    <Longitude>50.8989</Longitude>
-    <OpenTime>2025-09-17T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-09-19T18:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Training</CallType>
+    <Description>Training: Request for volunteer medical training</Description>
+    <FullAddress>Kerman Province, Iran</FullAddress>
+    <Latitude>31.75</Latitude>
+    <Longitude>48.71</Longitude>
+    <OpenTime>2025-07-20T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-07-22T22:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>11</Id>
     <CallType>Doctor</CallType>
     <Description>Doctor: Urgent need for a doctor</Description>
-    <FullAddress>Northern Australia (remote area)</FullAddress>
-    <Latitude>-15.3601</Latitude>
-    <Longitude>135.885</Longitude>
-    <OpenTime>2025-09-23T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-06-15T23:25:42.5564855+03:00</MaxEndTime>
+    <FullAddress>Central Bangladesh, remote area</FullAddress>
+    <Latitude>24.374</Latitude>
+    <Longitude>90.276</Longitude>
+    <OpenTime>2025-08-30T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>12</Id>
     <CallType>Training</CallType>
     <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Siberian Taiga, Russia</FullAddress>
-    <Latitude>61.145</Latitude>
-    <Longitude>91.602</Longitude>
-    <OpenTime>2025-08-02T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-08-05T21:25:42.5564855+03:00</MaxEndTime>
+    <FullAddress>South Dakota, USA</FullAddress>
+    <Latitude>45.832</Latitude>
+    <Longitude>-98.579</Longitude>
+    <OpenTime>2025-07-17T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-07-18T06:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>13</Id>
     <CallType>Emergency</CallType>
     <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Central Bangladesh, remote area</FullAddress>
-    <Latitude>24.374</Latitude>
-    <Longitude>90.276</Longitude>
-    <OpenTime>2025-07-12T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime xsi:nil="true" />
+    <FullAddress>Chilika Lake, India</FullAddress>
+    <Latitude>9.072</Latitude>
+    <Longitude>78.6651</Longitude>
+    <OpenTime>2025-07-26T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-07-27T00:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>14</Id>
-    <CallType>Emergency</CallType>
-    <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Anambas Islands, Malaysia</FullAddress>
-    <Latitude>6.667</Latitude>
-    <Longitude>100</Longitude>
-    <OpenTime>2025-08-18T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-06-19T23:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Doctor</CallType>
+    <Description>Doctor: Urgent need for a doctor</Description>
+    <FullAddress>Christmas Island, Indian Ocean</FullAddress>
+    <Latitude>-24.396308</Latitude>
+    <Longitude>123.213434</Longitude>
+    <OpenTime>2025-08-04T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-08-05T05:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>15</Id>
-    <CallType>Doctor</CallType>
-    <Description>Doctor: Urgent need for a doctor</Description>
-    <FullAddress>Diomede Islands, Bering Strait</FullAddress>
-    <Latitude>47.1243</Latitude>
-    <Longitude>-122.7772</Longitude>
-    <OpenTime>2025-08-27T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-08-28T11:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
+    <FullAddress>Andaman Islands, India</FullAddress>
+    <Latitude>1.206</Latitude>
+    <Longitude>78.713</Longitude>
+    <OpenTime>2025-08-13T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>16</Id>
     <CallType>Equipment</CallType>
     <Description>Equipment: Need medical equipment for MCI</Description>
-    <FullAddress>Cypress Creek, Arkansas, USA</FullAddress>
-    <Latitude>33.125</Latitude>
-    <Longitude>-91.209</Longitude>
-    <OpenTime>2025-07-28T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-07-29T13:25:42.5564855+03:00</MaxEndTime>
+    <FullAddress>Northern Australia (remote area)</FullAddress>
+    <Latitude>-15.3601</Latitude>
+    <Longitude>135.885</Longitude>
+    <OpenTime>2025-07-03T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-06-16T22:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>17</Id>
-    <CallType>Emergency</CallType>
-    <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Czech Republic, remote area</FullAddress>
-    <Latitude>50.755</Latitude>
-    <Longitude>16.432</Longitude>
-    <OpenTime>2025-07-21T23:25:42.5564855+03:00</OpenTime>
+    <CallType>Doctor</CallType>
+    <Description>Doctor: Urgent need for a doctor</Description>
+    <FullAddress>Iceland (remote areas)</FullAddress>
+    <Latitude>60.056</Latitude>
+    <Longitude>-3.047</Longitude>
+    <OpenTime>2025-07-31T22:03:00.0704326+03:00</OpenTime>
     <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>18</Id>
-    <CallType>Doctor</CallType>
-    <Description>Doctor: Urgent need for a doctor</Description>
-    <FullAddress>Heard Island, Australia</FullAddress>
-    <Latitude>-51.1</Latitude>
-    <Longitude>71.5</Longitude>
-    <OpenTime>2025-07-20T23:25:42.5564855+03:00</OpenTime>
+    <CallType>Training</CallType>
+    <Description>Training: Request for volunteer medical training</Description>
+    <FullAddress>Kerguelen Islands, Southern Ocean</FullAddress>
+    <Latitude>-50.448</Latitude>
+    <Longitude>101.577</Longitude>
+    <OpenTime>2025-08-18T22:03:00.0704326+03:00</OpenTime>
     <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>19</Id>
-    <CallType>Emergency</CallType>
-    <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Algerian Desert, Algeria</FullAddress>
-    <Latitude>36.405</Latitude>
-    <Longitude>18.677</Longitude>
-    <OpenTime>2025-09-02T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-06-15T23:25:42.5564855+03:00</MaxEndTime>
-  </Call>
-  <Call>
-    <Id>20</Id>
-    <CallType>Training</CallType>
-    <Description>Training: Request for volunteer medical training</Description>
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
     <FullAddress>Central Java, Indonesia</FullAddress>
     <Latitude>-7.3244</Latitude>
     <Longitude>111.5917</Longitude>
-    <OpenTime>2025-08-25T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-08-28T13:25:42.5564855+03:00</MaxEndTime>
+    <OpenTime>2025-07-11T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime xsi:nil="true" />
+  </Call>
+  <Call>
+    <Id>20</Id>
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
+    <FullAddress>Anambas Islands, Malaysia</FullAddress>
+    <Latitude>6.667</Latitude>
+    <Longitude>100</Longitude>
+    <OpenTime>2025-08-08T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>21</Id>
     <CallType>Doctor</CallType>
     <Description>Doctor: Urgent need for a doctor</Description>
-    <FullAddress>Saskatchewan, Canada</FullAddress>
-    <Latitude>56.794</Latitude>
-    <Longitude>-106.725</Longitude>
-    <OpenTime>2025-09-20T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime xsi:nil="true" />
+    <FullAddress>Christmas Island, Indian Ocean</FullAddress>
+    <Latitude>-24.396308</Latitude>
+    <Longitude>123.213434</Longitude>
+    <OpenTime>2025-06-26T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-06-26T23:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>22</Id>
-    <CallType>Equipment</CallType>
-    <Description>Equipment: Need medical equipment for MCI</Description>
-    <FullAddress>Labrador, Canada</FullAddress>
-    <Latitude>47.6183</Latitude>
-    <Longitude>-56.7449</Longitude>
-    <OpenTime>2025-07-12T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-07-13T09:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Training</CallType>
+    <Description>Training: Request for volunteer medical training</Description>
+    <FullAddress>Saint Pierre and Miquelon, North Atlantic Ocean</FullAddress>
+    <Latitude>51.961</Latitude>
+    <Longitude>-57.641</Longitude>
+    <OpenTime>2025-07-31T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-08-03T01:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>23</Id>
-    <CallType>Emergency</CallType>
-    <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Comoros Islands</FullAddress>
-    <Latitude>-12.3456</Latitude>
-    <Longitude>40.9876</Longitude>
-    <OpenTime>2025-09-01T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime xsi:nil="true" />
+    <CallType>Doctor</CallType>
+    <Description>Doctor: Urgent need for a doctor</Description>
+    <FullAddress>Severnaya Zemlya, Russia</FullAddress>
+    <Latitude>66.5648</Latitude>
+    <Longitude>90.9623</Longitude>
+    <OpenTime>2025-07-10T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-07-13T03:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>24</Id>
-    <CallType>Equipment</CallType>
-    <Description>Equipment: Need medical equipment for MCI</Description>
-    <FullAddress>Pacific Ocean, Near Kamchatka, Russia</FullAddress>
-    <Latitude>52</Latitude>
-    <Longitude>172</Longitude>
-    <OpenTime>2025-09-06T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-09-09T17:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Emergency</CallType>
+    <Description>Emergency: Urgent medical help required</Description>
+    <FullAddress>Highlands of Papua New Guinea</FullAddress>
+    <Latitude>7.5645</Latitude>
+    <Longitude>50.8989</Longitude>
+    <OpenTime>2025-09-15T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>25</Id>
-    <CallType>Equipment</CallType>
-    <Description>Equipment: Need medical equipment for MCI</Description>
-    <FullAddress>Turkmenistan Desert, Central Asia</FullAddress>
-    <Latitude>55.623</Latitude>
-    <Longitude>25.028</Longitude>
-    <OpenTime>2025-09-08T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-09-11T13:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Emergency</CallType>
+    <Description>Emergency: Urgent medical help required</Description>
+    <FullAddress>Algerian Desert, Algeria</FullAddress>
+    <Latitude>36.405</Latitude>
+    <Longitude>18.677</Longitude>
+    <OpenTime>2025-08-20T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-08-22T00:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>26</Id>
-    <CallType>Emergency</CallType>
-    <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Juan Fernández Islands, Chile</FullAddress>
-    <Latitude>-21.1</Latitude>
-    <Longitude>-70.3</Longitude>
-    <OpenTime>2025-09-24T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime xsi:nil="true" />
+    <CallType>Training</CallType>
+    <Description>Training: Request for volunteer medical training</Description>
+    <FullAddress>Central Bangladesh, remote area</FullAddress>
+    <Latitude>24.374</Latitude>
+    <Longitude>90.276</Longitude>
+    <OpenTime>2025-09-21T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-06-21T22:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>27</Id>
-    <CallType>Training</CallType>
-    <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Patagonia, Argentina</FullAddress>
-    <Latitude>-36.9379</Latitude>
-    <Longitude>-63.9</Longitude>
-    <OpenTime>2025-07-10T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime xsi:nil="true" />
+    <CallType>Emergency</CallType>
+    <Description>Emergency: Urgent medical help required</Description>
+    <FullAddress>Central Bangladesh, remote area</FullAddress>
+    <Latitude>24.374</Latitude>
+    <Longitude>90.276</Longitude>
+    <OpenTime>2025-06-28T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-07-01T05:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>28</Id>
-    <CallType>Emergency</CallType>
-    <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Western Australia (remote area)</FullAddress>
-    <Latitude>-27.598</Latitude>
-    <Longitude>116.065</Longitude>
-    <OpenTime>2025-09-09T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-09-10T11:25:42.5564855+03:00</MaxEndTime>
-  </Call>
-  <Call>
-    <Id>29</Id>
-    <CallType>Training</CallType>
-    <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Falkland Islands</FullAddress>
-    <Latitude>-63.3461</Latitude>
-    <Longitude>-60.6791</Longitude>
-    <OpenTime>2025-08-20T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-08-22T07:25:42.5564855+03:00</MaxEndTime>
-  </Call>
-  <Call>
-    <Id>30</Id>
     <CallType>Doctor</CallType>
     <Description>Doctor: Urgent need for a doctor</Description>
-    <FullAddress>Turkmenistan Desert, Central Asia</FullAddress>
-    <Latitude>55.623</Latitude>
-    <Longitude>25.028</Longitude>
-    <OpenTime>2025-07-15T23:25:42.5564855+03:00</OpenTime>
+    <FullAddress>Pacific Ocean, Near Kamchatka, Russia</FullAddress>
+    <Latitude>52</Latitude>
+    <Longitude>172</Longitude>
+    <OpenTime>2025-09-16T22:03:00.0704326+03:00</OpenTime>
     <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
-    <Id>31</Id>
+    <Id>29</Id>
+    <CallType>Doctor</CallType>
+    <Description>Doctor: Urgent need for a doctor</Description>
+    <FullAddress>Siberian Taiga, Russia</FullAddress>
+    <Latitude>61.145</Latitude>
+    <Longitude>91.602</Longitude>
+    <OpenTime>2025-08-14T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime xsi:nil="true" />
+  </Call>
+  <Call>
+    <Id>30</Id>
     <CallType>Equipment</CallType>
     <Description>Equipment: Need medical equipment for MCI</Description>
-    <FullAddress>Labrador, Canada</FullAddress>
-    <Latitude>47.6183</Latitude>
-    <Longitude>-56.7449</Longitude>
-    <OpenTime>2025-08-24T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-08-25T13:25:42.5564855+03:00</MaxEndTime>
+    <FullAddress>South Georgia and the South Sandwich Islands</FullAddress>
+    <Latitude>-62.957</Latitude>
+    <Longitude>139.063</Longitude>
+    <OpenTime>2025-07-06T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-07-09T00:03:00.0704326+03:00</MaxEndTime>
+  </Call>
+  <Call>
+    <Id>31</Id>
+    <CallType>Doctor</CallType>
+    <Description>Doctor: Urgent need for a doctor</Description>
+    <FullAddress>Saint Pierre and Miquelon, North Atlantic Ocean</FullAddress>
+    <Latitude>51.961</Latitude>
+    <Longitude>-57.641</Longitude>
+    <OpenTime>2025-08-19T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-08-20T13:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>32</Id>
     <CallType>Doctor</CallType>
     <Description>Doctor: Urgent need for a doctor</Description>
-    <FullAddress>Macquarie Island, Southern Ocean</FullAddress>
-    <Latitude>-33.506</Latitude>
-    <Longitude>137.474</Longitude>
-    <OpenTime>2025-07-23T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-07-25T19:25:42.5564855+03:00</MaxEndTime>
+    <FullAddress>Saint Pierre and Miquelon, North Atlantic Ocean</FullAddress>
+    <Latitude>51.961</Latitude>
+    <Longitude>-57.641</Longitude>
+    <OpenTime>2025-08-06T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-08-07T16:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>33</Id>
-    <CallType>Training</CallType>
-    <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Comoros Islands</FullAddress>
-    <Latitude>-12.3456</Latitude>
-    <Longitude>40.9876</Longitude>
-    <OpenTime>2025-08-10T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime xsi:nil="true" />
+    <CallType>Emergency</CallType>
+    <Description>Emergency: Urgent medical help required</Description>
+    <FullAddress>Juan Fernández Islands, Chile</FullAddress>
+    <Latitude>-21.1</Latitude>
+    <Longitude>-70.3</Longitude>
+    <OpenTime>2025-08-24T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-06-14T22:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>34</Id>
-    <CallType>Training</CallType>
-    <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Macquarie Island, Southern Ocean</FullAddress>
-    <Latitude>-33.506</Latitude>
-    <Longitude>137.474</Longitude>
-    <OpenTime>2025-07-16T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-07-19T03:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Emergency</CallType>
+    <Description>Emergency: Urgent medical help required</Description>
+    <FullAddress>Pacific Ocean, Remote Pacific Island</FullAddress>
+    <Latitude>51.908</Latitude>
+    <Longitude>174.117</Longitude>
+    <OpenTime>2025-09-18T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>35</Id>
-    <CallType>Emergency</CallType>
-    <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Kerman Province, Iran</FullAddress>
-    <Latitude>31.75</Latitude>
-    <Longitude>48.71</Longitude>
-    <OpenTime>2025-06-29T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-07-02T14:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Training</CallType>
+    <Description>Training: Request for volunteer medical training</Description>
+    <FullAddress>Saint Pierre and Miquelon, North Atlantic Ocean</FullAddress>
+    <Latitude>51.961</Latitude>
+    <Longitude>-57.641</Longitude>
+    <OpenTime>2025-09-30T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-10-02T16:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>36</Id>
-    <CallType>Equipment</CallType>
-    <Description>Equipment: Need medical equipment for MCI</Description>
-    <FullAddress>Severnaya Zemlya, Russia</FullAddress>
-    <Latitude>66.5648</Latitude>
-    <Longitude>90.9623</Longitude>
-    <OpenTime>2025-09-29T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-10-01T21:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Doctor</CallType>
+    <Description>Doctor: Urgent need for a doctor</Description>
+    <FullAddress>Atacama Desert, Chile</FullAddress>
+    <Latitude>-37.479</Latitude>
+    <Longitude>107.963</Longitude>
+    <OpenTime>2025-07-18T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-07-20T20:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>37</Id>
-    <CallType>Training</CallType>
-    <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Pacific Ocean, Near Kamchatka, Russia</FullAddress>
-    <Latitude>52</Latitude>
-    <Longitude>172</Longitude>
-    <OpenTime>2025-09-10T23:25:42.5564855+03:00</OpenTime>
+    <CallType>Emergency</CallType>
+    <Description>Emergency: Urgent medical help required</Description>
+    <FullAddress>Central Java, Indonesia</FullAddress>
+    <Latitude>-7.3244</Latitude>
+    <Longitude>111.5917</Longitude>
+    <OpenTime>2025-09-05T22:03:00.0704326+03:00</OpenTime>
     <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>38</Id>
-    <CallType>Equipment</CallType>
-    <Description>Equipment: Need medical equipment for MCI</Description>
-    <FullAddress>Highlands of Papua New Guinea</FullAddress>
-    <Latitude>7.5645</Latitude>
-    <Longitude>50.8989</Longitude>
-    <OpenTime>2025-07-21T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-07-24T19:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Emergency</CallType>
+    <Description>Emergency: Urgent medical help required</Description>
+    <FullAddress>Alert, Canada</FullAddress>
+    <Latitude>77.56</Latitude>
+    <Longitude>-104.157</Longitude>
+    <OpenTime>2025-07-09T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-06-22T22:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>39</Id>
-    <CallType>Emergency</CallType>
-    <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Anambas Islands, Malaysia</FullAddress>
-    <Latitude>6.667</Latitude>
-    <Longitude>100</Longitude>
-    <OpenTime>2025-08-03T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-08-05T21:25:42.5564855+03:00</MaxEndTime>
+    <CallType>Training</CallType>
+    <Description>Training: Request for volunteer medical training</Description>
+    <FullAddress>Cape York Peninsula, Australia</FullAddress>
+    <Latitude>-13.518</Latitude>
+    <Longitude>142.945</Longitude>
+    <OpenTime>2025-09-18T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-06-15T22:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>40</Id>
     <CallType>Training</CallType>
     <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Siberian Taiga, Russia</FullAddress>
-    <Latitude>61.145</Latitude>
-    <Longitude>91.602</Longitude>
-    <OpenTime>2025-08-25T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-08-28T20:25:42.5564855+03:00</MaxEndTime>
+    <FullAddress>South Dakota, USA</FullAddress>
+    <Latitude>45.832</Latitude>
+    <Longitude>-98.579</Longitude>
+    <OpenTime>2025-07-20T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>41</Id>
-    <CallType>Training</CallType>
-    <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Bimini, Bahamas</FullAddress>
-    <Latitude>25.0608</Latitude>
-    <Longitude>-77.1303</Longitude>
-    <OpenTime>2025-07-11T23:25:42.5564855+03:00</OpenTime>
+    <CallType>Doctor</CallType>
+    <Description>Doctor: Urgent need for a doctor</Description>
+    <FullAddress>Kerman Province, Iran</FullAddress>
+    <Latitude>31.75</Latitude>
+    <Longitude>48.71</Longitude>
+    <OpenTime>2025-07-26T22:03:00.0704326+03:00</OpenTime>
     <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>42</Id>
     <CallType>Equipment</CallType>
     <Description>Equipment: Need medical equipment for MCI</Description>
-    <FullAddress>Ponta do Ouro, Mozambique</FullAddress>
-    <Latitude>42.659</Latitude>
-    <Longitude>-47.097</Longitude>
-    <OpenTime>2025-07-11T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-07-12T20:25:42.5564855+03:00</MaxEndTime>
-  </Call>
-  <Call>
-    <Id>43</Id>
-    <CallType>Training</CallType>
-    <Description>Training: Request for volunteer medical training</Description>
     <FullAddress>Sumbawa, Indonesia</FullAddress>
     <Latitude>-10.1565</Latitude>
     <Longitude>115.2543</Longitude>
-    <OpenTime>2025-09-24T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-09-26T04:25:42.5564855+03:00</MaxEndTime>
+    <OpenTime>2025-09-08T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-09-09T00:03:00.0704326+03:00</MaxEndTime>
+  </Call>
+  <Call>
+    <Id>43</Id>
+    <CallType>Doctor</CallType>
+    <Description>Doctor: Urgent need for a doctor</Description>
+    <FullAddress>Macquarie Island, Southern Ocean</FullAddress>
+    <Latitude>-33.506</Latitude>
+    <Longitude>137.474</Longitude>
+    <OpenTime>2025-09-16T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-09-17T14:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>44</Id>
     <CallType>Training</CallType>
     <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Saint Pierre and Miquelon, North Atlantic Ocean</FullAddress>
-    <Latitude>51.961</Latitude>
-    <Longitude>-57.641</Longitude>
-    <OpenTime>2025-09-11T23:25:42.5564855+03:00</OpenTime>
+    <FullAddress>Tristan da Cunha, South Atlantic Ocean</FullAddress>
+    <Latitude>-59.524</Latitude>
+    <Longitude>-43.024</Longitude>
+    <OpenTime>2025-08-10T22:03:00.0704326+03:00</OpenTime>
     <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>45</Id>
     <CallType>Doctor</CallType>
     <Description>Doctor: Urgent need for a doctor</Description>
-    <FullAddress>South Dakota, USA</FullAddress>
-    <Latitude>45.832</Latitude>
-    <Longitude>-98.579</Longitude>
-    <OpenTime>2025-08-15T23:25:42.5564855+03:00</OpenTime>
+    <FullAddress>Oceania (remote island)</FullAddress>
+    <Latitude>-22.957</Latitude>
+    <Longitude>142.731</Longitude>
+    <OpenTime>2025-08-16T22:03:00.0704326+03:00</OpenTime>
     <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>46</Id>
     <CallType>Training</CallType>
     <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Pacific Ocean, Near Kamchatka, Russia</FullAddress>
-    <Latitude>52</Latitude>
-    <Longitude>172</Longitude>
-    <OpenTime>2025-07-17T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime>2025-07-19T06:25:42.5564855+03:00</MaxEndTime>
+    <FullAddress>Central Siberia, Russia</FullAddress>
+    <Latitude>69.344</Latitude>
+    <Longitude>39.822</Longitude>
+    <OpenTime>2025-07-09T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-07-10T06:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>47</Id>
-    <CallType>Training</CallType>
-    <Description>Training: Request for volunteer medical training</Description>
-    <FullAddress>Labrador, Canada</FullAddress>
-    <Latitude>47.6183</Latitude>
-    <Longitude>-56.7449</Longitude>
-    <OpenTime>2025-09-23T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime xsi:nil="true" />
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
+    <FullAddress>Central Java, Indonesia</FullAddress>
+    <Latitude>-7.3244</Latitude>
+    <Longitude>111.5917</Longitude>
+    <OpenTime>2025-08-07T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-08-08T23:03:00.0704326+03:00</MaxEndTime>
   </Call>
   <Call>
     <Id>48</Id>
-    <CallType>Emergency</CallType>
-    <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Ogoniland, Nigeria</FullAddress>
-    <Latitude>4.8751</Latitude>
-    <Longitude>7.5251</Longitude>
-    <OpenTime>2025-09-29T23:25:42.5564855+03:00</OpenTime>
+    <CallType>Equipment</CallType>
+    <Description>Equipment: Need medical equipment for MCI</Description>
+    <FullAddress>Turkmenistan Desert, Central Asia</FullAddress>
+    <Latitude>55.623</Latitude>
+    <Longitude>25.028</Longitude>
+    <OpenTime>2025-07-13T22:03:00.0704326+03:00</OpenTime>
     <MaxEndTime xsi:nil="true" />
   </Call>
   <Call>
     <Id>49</Id>
     <CallType>Emergency</CallType>
     <Description>Emergency: Urgent medical help required</Description>
-    <FullAddress>Central Bangladesh, remote area</FullAddress>
-    <Latitude>24.374</Latitude>
-    <Longitude>90.276</Longitude>
-    <OpenTime>2025-08-20T23:25:42.5564855+03:00</OpenTime>
-    <MaxEndTime xsi:nil="true" />
+    <FullAddress>Kerguelen Islands, Southern Ocean</FullAddress>
+    <Latitude>-50.448</Latitude>
+    <Longitude>101.577</Longitude>
+    <OpenTime>2025-09-07T22:03:00.0704326+03:00</OpenTime>
+    <MaxEndTime>2025-09-10T15:03:00.0704326+03:00</MaxEndTime>
   </Call>
 </ArrayOfCall>

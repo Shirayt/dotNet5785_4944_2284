@@ -36,7 +36,6 @@ namespace PL.Volunteer
         public VolunteerListWindow()
         {
             InitializeComponent();
-            //DataContext = this;
         }
 
         private void QueryVolunteerList()
@@ -69,9 +68,9 @@ namespace PL.Volunteer
             };
 
         }
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void btnAddVolunteer_Click(object sender, RoutedEventArgs e)
         {
-
+            new VolunteerWindow().Show();
         }
     }
 }

@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <local:VolunteerSortOptionCollection x:Key="VolunteerSortOptionCollectionKey" />
+        <local:VolunteerSortOptionCollection x:Key="VolunteerSortOptionCollectionKey"/>
+        <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey"/>
+        <local:RoleCollection x:Key="RoleCollectionKey"/>
     </Application.Resources>
 </Application>

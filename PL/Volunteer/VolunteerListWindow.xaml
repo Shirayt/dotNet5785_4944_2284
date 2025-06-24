@@ -23,12 +23,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Label" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label Content="sort volunteers by: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <ComboBox SelectedValue="{Binding VolunteerSortOption , Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource VolunteerSortOptionCollectionKey}}"
               Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="ComboBox_SelectionChanged" />
         </Grid>
         <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding VolunteerList}"
-          AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged" RowDetailsVisibilityMode="VisibleWhenSelected">
+          AutoGenerateColumns="False" IsReadOnly="True" RowDetailsVisibilityMode="VisibleWhenSelected">
             <!-- 	 MouseDoubleClick="dgVolunteerList_MouseDoubleClick" SelectedItem="{Binding SelectedVolunteer}">-->
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="Auto"/>
@@ -50,7 +50,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Add Volunteer" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
+        <Button Content="Add Volunteer" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="btnAddVolunteer_Click"/>
     </Grid>
 
 </Window>

@@ -55,11 +55,9 @@ namespace PL
             DependencyProperty.Register("RiskRange", typeof(TimeSpan), typeof(MainWindow), new PropertyMetadata(TimeSpan.Zero));
 
 
-
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = this;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

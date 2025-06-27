@@ -2,11 +2,13 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PL"
-             StartupUri="MainWindow.xaml">
+             StartupUri="LoginWindow.xaml">
     <Application.Resources>
         <local:VolunteerSortOptionCollection x:Key="VolunteerSortOptionCollectionKey"/>
         <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey"/>
         <local:RoleCollection x:Key="RoleCollectionKey"/>
         <local:ConvertUpdateToCollapsedKey x:Key="ConvertUpdateToCollapsedKey" />
+        <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </Application.Resources>
 </Application>
+

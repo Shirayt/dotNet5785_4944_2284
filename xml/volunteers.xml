@@ -211,20 +211,6 @@
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>215042284</Id>
-    <FullName>Shira Taviv!</FullName>
-    <PhoneNumber>0534164314</PhoneNumber>
-    <Email>Shirayt100@gmail.com</Email>
-    <Password>shira</Password>
-    <CurrentFullAddress>Pinchas Kehati 12</CurrentFullAddress>
-    <Latitude>-22.207933</Latitude>
-    <Longitude>-49.679436</Longitude>
-    <Role>Volunteer</Role>
-    <IsActive>True</IsActive>
-    <MaxDistanceForCall>11</MaxDistanceForCall>
-    <DistanceType>Air</DistanceType>
-  </Volunteer>
-  <Volunteer>
     <Id>328268149</Id>
     <FullName>Nechami</FullName>
     <PhoneNumber>0583214569</PhoneNumber>
@@ -261,6 +247,20 @@
     <CurrentFullAddress>Jerusalem</CurrentFullAddress>
     <Latitude>31.7788242</Latitude>
     <Longitude>35.2257626</Longitude>
+    <Role>Volunteer</Role>
+    <IsActive>True</IsActive>
+    <MaxDistanceForCall>11</MaxDistanceForCall>
+    <DistanceType>Air</DistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>215042284</Id>
+    <FullName>Shira Taviv!</FullName>
+    <PhoneNumber>0534164314</PhoneNumber>
+    <Email>Shirayt100@gmail.com</Email>
+    <Password>Shira100</Password>
+    <CurrentFullAddress>Pinchas Kehati 12</CurrentFullAddress>
+    <Latitude>-22.207933</Latitude>
+    <Longitude>-49.679436</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
     <MaxDistanceForCall>11</MaxDistanceForCall>

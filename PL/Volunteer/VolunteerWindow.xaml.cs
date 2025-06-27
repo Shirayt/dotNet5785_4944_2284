@@ -71,7 +71,6 @@ namespace PL.Volunteer
             if (CurrentVolunteer != null && CurrentVolunteer.Id != 0)
             {
                 s_bl.Volunteer.AddObserver(CurrentVolunteer.Id, volunteerObserver);
-                // ניתן גם לטעון מחדש באופן מיידי אם רוצים:
                 volunteerObserver();
             }
         }

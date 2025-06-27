@@ -11,6 +11,7 @@ internal class VolunteerImplementation : BlApi.IVolunteer
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
 
+    //פרמטר ראשון להחליף ליוזר אי די ובהתאם את הפונקציה וגם בהצהרה
     public BO.Role LoginVolunteerToSystem(string username, string password)
     {
         var volunteers = _dal.Volunteer.ReadAll() ?? Enumerable.Empty<DO.Volunteer>();

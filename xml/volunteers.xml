@@ -261,7 +261,7 @@
     <CurrentFullAddress>Pinchas Kehati 12</CurrentFullAddress>
     <Latitude>-22.207933</Latitude>
     <Longitude>-49.679436</Longitude>
-    <Role>Volunteer</Role>
+    <Role>Manager</Role>
     <IsActive>True</IsActive>
     <MaxDistanceForCall>11</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>

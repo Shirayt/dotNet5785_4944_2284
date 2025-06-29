@@ -11,15 +11,14 @@ internal class VolunteerImplementation : BlApi.IVolunteer
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
 
-    //פרמטר ראשון להחליף ליוזר אי די ובהתאם את הפונקציה וגם בהצהרה
-    public BO.Role LoginVolunteerToSystem(string username, string password)
+    public BO.Role LoginVolunteerToSystem(int userId, string password)
     {
         var volunteers = _dal.Volunteer.ReadAll() ?? Enumerable.Empty<DO.Volunteer>();
-        var volunteer = volunteers.FirstOrDefault(v => v.FullName == username);
+        var volunteer = volunteers.FirstOrDefault(v => v.Id == userId);
 
         if (volunteer is null || volunteer.Password != password)
         {
-            throw new BlInvalidInputException("Invalid username or password in Login Volunteer To System.");
+            throw new BlInvalidInputException("Invalid username or password in Login Volunteer To System");
         }
 
         return (BO.Role)volunteer.Role;

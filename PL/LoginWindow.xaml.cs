@@ -7,7 +7,7 @@ using BlApi;
 
 namespace PL
 {
-    public partial class LoginWindow : Window
+    public partial class LoginWindow : Window, INotifyPropertyChanged
     {
         static readonly IBl s_bl = Factory.Get();
 
@@ -20,8 +20,8 @@ namespace PL
         public string UserId
         {
             get => _userId;
-            set { _userId = value; 
-                //OnPropertyChanged();
+            set { _userId = value;
+                OnPropertyChanged();
             }
         }
 
@@ -30,7 +30,7 @@ namespace PL
         {
             get => _password;
             set { _password = value;
-                //OnPropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -39,7 +39,7 @@ namespace PL
         {
             get => _errorMessage;
             set { _errorMessage = value;
-                //OnPropertyChanged();
+                OnPropertyChanged();
             }
 
         }
@@ -64,7 +64,7 @@ namespace PL
             try
             {
                 // App.CurrentUserId = parsedId;
-                var role = s_bl.Volunteer.LoginVolunteerToSystem(UserId, Password);
+                var role = s_bl.Volunteer.LoginVolunteerToSystem( parsedId, Password);
 
                 switch (role)
                 {
@@ -78,7 +78,7 @@ namespace PL
                             "Choose Role", MessageBoxButton.YesNoCancel);
 
                         if (result == MessageBoxResult.Yes)
-                            new MainWindow().Show();//לשנות את שם החלון למנג'ר מיין וינדאו
+                            new ManagerMainWindow().Show();
                         else if (result == MessageBoxResult.No)
                             new VolunteerMainWindow(parsedId).Show();
                         break;
@@ -91,8 +91,8 @@ namespace PL
             }
         }
 
-        //public event PropertyChangedEventHandler? PropertyChanged;
-        //private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

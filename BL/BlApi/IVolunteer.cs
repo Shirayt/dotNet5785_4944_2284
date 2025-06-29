@@ -12,7 +12,7 @@ public interface IVolunteer: IObservable
         /// <param name="password">The password of the user.</param>
         /// <returns>The role of the user.</returns>
         /// <exception cref="Exception">Thrown if the user does not exist or the password is incorrect.</exception>
-        BO.Role LoginVolunteerToSystem(string username, string password);
+        BO.Role LoginVolunteerToSystem(int userId, string password);
 
     /// <summary>
     /// Requests a filtered and sorted list of volunteers.

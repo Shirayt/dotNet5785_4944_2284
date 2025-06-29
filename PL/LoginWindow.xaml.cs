@@ -20,7 +20,9 @@ namespace PL
         public string UserId
         {
             get => _userId;
-            set { _userId = value;
+            set
+            {
+                _userId = value;
                 OnPropertyChanged();
             }
         }
@@ -29,7 +31,9 @@ namespace PL
         public string Password
         {
             get => _password;
-            set { _password = value;
+            set
+            {
+                _password = value;
                 OnPropertyChanged();
             }
         }
@@ -38,7 +42,9 @@ namespace PL
         public string ErrorMessage
         {
             get => _errorMessage;
-            set { _errorMessage = value;
+            set
+            {
+                _errorMessage = value;
                 OnPropertyChanged();
             }
 
@@ -64,23 +70,26 @@ namespace PL
             try
             {
                 // App.CurrentUserId = parsedId;
-                var role = s_bl.Volunteer.LoginVolunteerToSystem( parsedId, Password);
+                var role = s_bl.Volunteer.LoginVolunteerToSystem(parsedId, Password);
 
                 switch (role)
                 {
                     case BO.Role.Volunteer:
-                        new VolunteerMainWindow(parsedId).Show();
+                        new Volunteer.VolunteerMainWindow(parsedId).Show();
                         break;
-
                     case BO.Role.Manager:
                         var result = MessageBox.Show(
                             "Login as admin or volunteer?\nYes - Admin\nNo - Volunteer",
                             "Choose Role", MessageBoxButton.YesNoCancel);
 
                         if (result == MessageBoxResult.Yes)
+                        {
                             new ManagerMainWindow().Show();
+                        }
                         else if (result == MessageBoxResult.No)
-                            new VolunteerMainWindow(parsedId).Show();
+                        {
+                            new Volunteer.VolunteerMainWindow(parsedId).Show();
+                        }
                         break;
                 }
             }

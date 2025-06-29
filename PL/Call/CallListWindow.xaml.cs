@@ -48,6 +48,7 @@ namespace PL.Call
             s_bl.Call.RemoveObserver(callListObserver);
         }
 
+        //////////////////////
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is ComboBox comboBox && comboBox.SelectedItem is BO.CallInListFields selectedOption)

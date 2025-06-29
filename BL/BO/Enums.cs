@@ -74,6 +74,7 @@ public enum CallInListFields
     RestTimeForCall,
     LastVolunteerName,
     RestTimeForTreatment,
-    Status
+    Status,
+    None
 }
 

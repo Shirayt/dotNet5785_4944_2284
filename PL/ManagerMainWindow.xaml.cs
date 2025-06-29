@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BlApi;
 using PL.Volunteer;
+using PL.Call;
 
 namespace PL;
 
@@ -109,6 +110,10 @@ public partial class ManagerMainWindow : Window
         new VolunteerListWindow().Show();
     }
 
+    private void btnCalls_Click(object sender, RoutedEventArgs e)
+    {
+        new CallListWindow().Show();
+    }
 
     /// <summary>
     /// Treament of initialize DB btn

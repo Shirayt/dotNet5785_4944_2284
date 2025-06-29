@@ -31,6 +31,13 @@ public class RoleCollection : IEnumerable
     public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
 }
 
+public class CallSortOptionCollection : IEnumerable
+{
+    static readonly IEnumerable<BO.CallInListFields> s_enums =
+        (Enum.GetValues(typeof(BO.CallInListFields)) as IEnumerable<BO.CallInListFields>)!;
+
+    public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+}
 
 
 

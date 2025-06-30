@@ -39,6 +39,14 @@ public class CallSortOptionCollection : IEnumerable
     public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
 }
 
+public class FilterAndSortByFieldsCollection : IEnumerable
+{
+    static readonly IEnumerable<BO.FilterAndSortByFields> s_enums =
+        (Enum.GetValues(typeof(BO.FilterAndSortByFields)) as IEnumerable<BO.FilterAndSortByFields>)!;
+
+    public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+}
+
 
 
 

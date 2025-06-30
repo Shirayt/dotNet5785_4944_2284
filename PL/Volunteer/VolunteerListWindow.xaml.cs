@@ -106,7 +106,7 @@ namespace PL.Volunteer
                 return;
 
             var window = new VolunteerWindow(SelectedVolunteer.Id);
-            window.Show(); 
+            window.Show();
         }
 
     }

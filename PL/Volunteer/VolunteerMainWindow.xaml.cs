@@ -18,7 +18,7 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
 
     public bool HasCallInProgress => CallInProgress != null;
     public bool ShowChooseCallButton => CallInProgress == null;
-        //&& Volunteer.IsActive;
+    //&& Volunteer.IsActive;
 
     public VolunteerMainWindow(int volunteerId)
     {
@@ -91,9 +91,16 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
 
     private void ChooseCall_Click(object _, RoutedEventArgs __)
     {
-        //new ChooseCallWindow(Volunteer.Id).ShowDialog();
+        new ChooseCallForTreatmentWindow(Volunteer.Id).Show();
         LoadVolunteer(Volunteer.Id);
     }
+
+    private void btnShowVolunteerCallsHistory_Click(object sender, RoutedEventArgs e)
+    {
+        var window = new VolunteerCallHistoryWindow(Volunteer.Id);
+        window.Show();
+    }
+
 
     private void Window_Loaded(object _, RoutedEventArgs __)
     {
@@ -104,4 +111,6 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
     {
         // optional: cleanup
     }
+
+
 }

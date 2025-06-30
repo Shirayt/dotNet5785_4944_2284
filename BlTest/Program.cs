@@ -148,13 +148,13 @@ namespace BlTest
                         try
                         {
                             Console.WriteLine("Please log in.");
-                            Console.Write("Enter Username: ");
-                            string username = Console.ReadLine()!;
+                            Console.Write("Enter user Id: ");
+                            int userId = int.Parse(Console.ReadLine()!);
 
                             Console.Write("Enter Password: ");
                             string password = Console.ReadLine()!;
 
-                            BO.Role userRole = s_bl.Volunteer.LoginVolunteerToSystem(username, password);
+                            BO.Role userRole = s_bl.Volunteer.LoginVolunteerToSystem(userId, password);
                             Console.WriteLine($"Login successful! Your role is: {userRole}");
                         }
                         catch (Exception ex)

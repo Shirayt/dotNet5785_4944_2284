@@ -43,4 +43,20 @@ namespace PL
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
             throw new NotImplementedException();
     }
+
+    public class StatusToColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value switch
+            {
+                BO.AssignmentStatus.Completed => Brushes.LightGreen,
+                BO.AssignmentStatus.Expired => Brushes.LightSalmon,
+                _ => Brushes.White
+            };
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+            throw new NotImplementedException();
+    }
 }

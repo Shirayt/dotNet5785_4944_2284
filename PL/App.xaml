@@ -9,7 +9,7 @@
         <local:RoleCollection x:Key="RoleCollectionKey"/>
         <local:ConvertUpdateToCollapsedKey x:Key="ConvertUpdateToCollapsedKey" />
         <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
-        <!--<local:CallSortOptionCollection x:Key="CallSortOptionCollectionKey"/>-->
+        <local:CallSortOptionCollection x:Key="CallSortOptionCollectionKey"/>
     </Application.Resources>
 </Application>
 

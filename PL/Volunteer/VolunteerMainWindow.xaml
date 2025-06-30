@@ -73,6 +73,11 @@
                 <!-- Update Button -->
                 <Button Content="Update Details" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                 Margin="10" Click="UpdateVolunteer_Click"/>
-            </Grid>
+
+        <!-- Show calls history Button -->
+        <Button Content="show my calls history" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" 
+                Click="btnShowVolunteerCallsHistory_Click"/>
+
+    </Grid>
         </Window>
 

@@ -1,6 +1,7 @@
 ﻿<Window x:Class="PL.Volunteer.VolunteerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:local="clr-namespace:PL.Volunteer"
+        xmlns:bo="clr-namespace:BO;assembly=BL"
         xmlns:pl="clr-namespace:PL"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Volunteer Details" Height="650" Width="620"
@@ -17,6 +18,70 @@
         <Style TargetType="Control">
             <Setter Property="Margin" Value="5"/>
         </Style>
+
+        <pl:NullToCollapsedConverter x:Key="NullToCollapsedConverter"/>
+        <pl:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+
+        <DataTemplate DataType="{x:Type bo:CallInProgress}">
+            <GroupBox Header="Call In Progress" Margin="5">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Call ID" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding CallId}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"/>
+
+                    <Label Content="Type" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding CallType}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"/>
+
+                    <Grid Grid.Row="2" Grid.ColumnSpan="2"
+                    Visibility="{Binding Description, Converter={StaticResource StringToVisibilityConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Description" Grid.Column="0" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Description}" Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                    </Grid>
+
+                    <Label Content="Address" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding FullAddress}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap"/>
+
+                    <Label Content="Open Time" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding OpenTime}" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"/>
+
+                <Grid Grid.Row="5" Grid.ColumnSpan="2"
+                         Visibility="{Binding MaxEndTime, Converter={StaticResource NullToVisibilityConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Max End Time" Grid.Column="0" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding MaxEndTime}" Grid.Column="1" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <Label Content="Treatment Start" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding TreatmentStartTime}" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center"/>
+
+                    <Label Content="Distance (km)" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding DistanceFromVolunteer}" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center"/>
+                </Grid>
+            </GroupBox>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid Margin="10">
@@ -65,6 +130,7 @@
                     <!-- Cancelled -->
                     <RowDefinition Height="Auto" />
                     <!-- Expired -->
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!-- Id -->
@@ -127,8 +193,8 @@
                 <Label Content="Max Distance" Grid.Row="10" Grid.Column="0"/>
                 <TextBox Text="{Binding CurrentVolunteer.MaxDistanceForCall, Mode=TwoWay}" Grid.Row="10" Grid.Column="1"/>
 
-                 <!--DistanceType 
-                 Editable dropdown for distance type--> 
+                <!--DistanceType 
+                 Editable dropdown for distance type-->
                 <Label Content="Distance Type" Grid.Row="11" Grid.Column="0"/>
                 <ComboBox Grid.Row="11" Grid.Column="1"
                           ItemsSource="{Binding Source={StaticResource DistanceTypeCollectionKey}}"
@@ -151,6 +217,11 @@
                 <Label Content="Expired Calls" Grid.Row="14" Grid.Column="0"/>
                 <TextBox Text="{Binding CurrentVolunteer.AmountOfExpiredCalls}" IsReadOnly="True"
                          Grid.Row="14" Grid.Column="1"/>
+
+                <ContentControl Grid.Row="15" Grid.ColumnSpan="2"
+                Content="{Binding CurrentVolunteer.callInProgress}"
+                Visibility="{Binding CurrentVolunteer.callInProgress, Converter={StaticResource NullToCollapsedConverter}}"/>
+
             </Grid>
         </ScrollViewer>
 

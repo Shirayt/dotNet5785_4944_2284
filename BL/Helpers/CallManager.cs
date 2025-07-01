@@ -30,8 +30,7 @@ internal static class CallManager
         var assignmentStatus = assignment?.Status;
 
         // No assignment or assignment was canceled
-        if (assignmentStatus == null ||
-            assignmentStatus == DO.AssignmentStatus.SelfCancelled ||
+        if (assignmentStatus == DO.AssignmentStatus.SelfCancelled ||
             assignmentStatus == DO.AssignmentStatus.ManagerCancelled)
         {
             // Check if the call is at risk 

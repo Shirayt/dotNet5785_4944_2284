@@ -100,7 +100,7 @@ internal class CallImplementation : ICall
                                   FullName = Helpers.VolunteerManager.GetVolunteerFullName(assign.VolunteerId),
                                   StartTime = assign.StartTime,
                                   EndTime = assign.EndTime,
-                                  Status = (BO.AssignmentStatus)assign.Status
+                                  Status = assign.Status.HasValue ? (BO.AssignmentStatus?)assign.Status.Value : null
                               }).ToList() ?? null
             };
 
@@ -393,27 +393,27 @@ internal class CallImplementation : ICall
     }
 
     public IEnumerable<BO.CallAssignInList> GetAssignmentsByCallId(int callId)
-{
-    try
     {
-        var assignments = _dal.Assignment.ReadAll()
-            .Where(a => a.CallId == callId)
-            .Select(a => new BO.CallAssignInList
-            {
-                VolunteerId = a.VolunteerId,
-                FullName = Helpers.VolunteerManager.GetVolunteerFullName(a.VolunteerId),
-                StartTime = a.StartTime,
-                EndTime = a.EndTime,
-                Status = (BO.AssignmentStatus?)a.Status
-            });
+        try
+        {
+            var assignments = _dal.Assignment.ReadAll()
+                .Where(a => a.CallId == callId)
+                .Select(a => new BO.CallAssignInList
+                {
+                    VolunteerId = a.VolunteerId,
+                    FullName = Helpers.VolunteerManager.GetVolunteerFullName(a.VolunteerId),
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                    Status = (BO.AssignmentStatus?)a.Status
+                });
 
-        return assignments;
+            return assignments;
+        }
+        catch (Exception ex)
+        {
+            throw new BO.BlGeneralException("Something went wrong while retrieving assignments for call.", ex);
+        }
     }
-    catch (Exception ex)
-    {
-        throw new BO.BlGeneralException("Something went wrong while retrieving assignments for call.", ex);
-    }
-}
 
 
     public static (double, double) GetCoordinatesFromAddress(string address)

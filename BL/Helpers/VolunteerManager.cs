@@ -83,6 +83,7 @@ internal static class VolunteerManager
     }
     public static BO.CallInProgress? GetCallInProgress(int volunteerId)
     {
+        var volunteer = s_dal.Volunteer.Read(volunteerId);
         var assignments = s_dal.Assignment.ReadAll();
         var calls = s_dal.Call.ReadAll();
         if (assignments is null || calls is null) return null;
@@ -99,7 +100,7 @@ internal static class VolunteerManager
                 OpenTime = a.StartTime,
                 MaxEndTime = c.MaxEndTime,
                 TreatmentStartTime = a.StartTime,
-                DistanceFromVolunteer = 0,
+                DistanceFromVolunteer = Tools.CalculateDistance(volunteer.Latitude, volunteer.Longitude, c.Latitude, c.Longitude),
                 Status = (a.Status == null || a.Status == DO.AssignmentStatus.Completed)
                     ? BO.StatusCallInProgress.InProcessing
                     : BO.StatusCallInProgress.InProcessingInRisk
@@ -107,7 +108,7 @@ internal static class VolunteerManager
             .FirstOrDefault();
     }
 
-    public static string GetVolunteerFullName(int volunteerId)
+    public static string? GetVolunteerFullName(int volunteerId)
     {
         return s_dal.Volunteer.Read(volunteerId).FullName;
     }

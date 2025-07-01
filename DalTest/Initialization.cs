@@ -237,20 +237,23 @@ public static class Initialization
             }
 
             s_dal!.Assignment.Create(new Assignment(
-                call.Id,
-                randomVolunteer.Id,
-                randomStartTime,
-                randomEndTime,
-                status
-            ));
+           call.Id,
+           randomVolunteer.Id,
+           randomStartTime,
+           randomEndTime,
+           status
+       ));
         }
 
-        // הוספת קריאות שלא טופלו
+        // הוספת משימות שלא טופלו
         foreach (Call call in unassignedCalls)
         {
+            Volunteer randomVolunteer;  // מגרילים מתנדב באופן אקראי
+            randomVolunteer = volunteers.ElementAt(s_rand.Next(volunteers.Count()));
+
             s_dal!.Assignment.Create(new Assignment(
             call.Id,
-            -1, // אין מתנדב שמטפל בה
+            randomVolunteer.Id,
             DateTime.MinValue, // לא תהיה תאריך התחלה
             null, // לא יהיה זמן סיום
             null));// לא יהיה סטטוס סיום 

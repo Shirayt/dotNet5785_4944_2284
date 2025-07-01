@@ -80,6 +80,24 @@ public static class Initialization
         {
             Console.WriteLine($"Error: {ex.Message}");
         }
+
+
+        // יצירת מתנדבת מיוחדת מסוג Manager
+        Volunteer ManagerVolunteer = new Volunteer(
+            215042284,                             // Id
+            "Shira Taviv!",                        // FullName
+            "0534164314",                          // PhoneNumber
+            "shirayt100@gmail.com",               // Email
+            "Pinchas Kehati 12, Jerusalem, Israel", // CurrentFullAddress
+            31.7995,                               // Latitude
+            35.2115,                               // Longitude
+            Role.Manager,                          // Role
+            true,                                  // IsActive
+            68,                                    // MaxDistanceForCall
+            DistanceType.Air                       // DistanceType
+        );
+
+        s_dal!.Volunteer.Create(ManagerVolunteer);
     }
     private static void createCall()
     {

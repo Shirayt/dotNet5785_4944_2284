@@ -125,10 +125,11 @@
                     Visibility="{Binding ShowChooseCallButton, Converter={StaticResource BoolToVisibility}}" Margin="0 0 0 20"/>
 
             <!-- Map Placeholder -->
-            <GroupBox Header="Map View" Margin="0 0 0 20">
-                <TextBlock Text="📍 Map of Volunteer and Call Location Goes Here"
-                           HorizontalAlignment="Center" Foreground="DarkGray" FontStyle="Italic" Margin="20"/>
-            </GroupBox>
+            <!--<GroupBox Header="Map View" Margin="0 0 0 20" Height="300">
+                <Grid>
+                    <wv2:WebView2 x:Name="GoogleMapWebView" Height="300" Margin="10"/>
+                </Grid>
+            </GroupBox>-->
 
             <!-- Navigation Buttons -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">

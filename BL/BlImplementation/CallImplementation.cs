@@ -280,7 +280,7 @@ internal class CallImplementation : ICall
             var callStatus = Helpers.CallManager.GetCallStatus(call).Status;
 
             // checks if call is open
-            if (!(callStatus == BO.CallStatus.Open || callStatus == BO.CallStatus.OpenAtRisk) || assignment.EndTime != null)
+            if (!( callStatus == BO.CallStatus.InProcessing) || assignment.EndTime != null)
             {
                 throw new InvalidOperationException("Assignment is not open for completion.");
             }
@@ -319,7 +319,7 @@ internal class CallImplementation : ICall
             var callStatus = Helpers.CallManager.GetCallStatus(call).Status;
 
             //the assignment must be open for cancellation
-            if (!(callStatus == BO.CallStatus.Open || callStatus == BO.CallStatus.OpenAtRisk) || assignment.EndTime != null)
+            if (!(callStatus == BO.CallStatus.InProcessing) || assignment.EndTime == null)
             {
                 throw new InvalidOperationException("Call is not open for cancellation.");
             }

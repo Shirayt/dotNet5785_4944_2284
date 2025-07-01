@@ -1,82 +1,140 @@
-﻿        <Window x:Class="PL.Volunteer.VolunteerMainWindow"
+﻿<Window x:Class="PL.Volunteer.VolunteerMainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:PL.Volunteer"
-        Title="Volunteer Dashboard" Height="600" Width="900"
+        xmlns:pl="clr-namespace:PL"
+        Title="Volunteer Dashboard" Height="800" Width="920"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-            <Window.Resources>
-                <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
-            </Window.Resources>
 
-            <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style TargetType="Control">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style x:Key="MiniGroupBoxStyle" TargetType="GroupBox">
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="0.60" ScaleY="0.60"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <!-- Volunteer Details -->
-                <StackPanel Grid.Row="0" Orientation="Vertical" Margin="0,0,0,10">
-                    <TextBlock Text="Volunteer Details" FontSize="18" FontWeight="Bold"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Name: "/>
-                        <TextBox Text="{Binding FullName, Mode=TwoWay}" Width="150"/>
-                        <TextBlock Text="Phone: "/>
-                        <TextBox Text="{Binding PhoneNumber, Mode=TwoWay}" Width="120"/>
-                        <TextBlock Text="Email: "/>
-                        <TextBox Text="{Binding Email, Mode=TwoWay}" Width="180"/>
+    </Window.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+
+            <!-- Volunteer Full Details Compact Grid -->
+            <GroupBox Header="Update My Details" FontSize="14" FontWeight="Bold" Margin="0 0 0 10" Style="{StaticResource MiniGroupBoxStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Content="Id" Grid.Row="0" Grid.Column="0"/>
+                    <TextBox Text="{Binding Volunteer.Id}" Grid.Row="0" Grid.Column="1"/>
+
+                    <Label Content="Full Name" Grid.Row="1" Grid.Column="0"/>
+                    <TextBox Text="{Binding Volunteer.FullName, Mode=TwoWay}" Grid.Row="1" Grid.Column="1"/>
+
+                    <Label Content="Phone Number" Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Text="{Binding Volunteer.PhoneNumber, Mode=TwoWay}" Grid.Row="2" Grid.Column="1"/>
+
+                    <Label Content="Email" Grid.Row="3" Grid.Column="0"/>
+                    <TextBox Text="{Binding Volunteer.Email, Mode=TwoWay}" Grid.Row="3" Grid.Column="1"/>
+
+                    <Label Content="Password" Grid.Row="4" Grid.Column="0"/>
+                    <TextBox Text="{Binding Volunteer.Password, Mode=TwoWay}" Grid.Row="4" Grid.Column="1"/>
+
+                    <Label Content="Address" Grid.Row="5" Grid.Column="0"/>
+                    <TextBox Text="{Binding Volunteer.CurrentFullAddress, Mode=TwoWay}" Grid.Row="5" Grid.Column="1"/>
+
+                    <Label Content="Latitude" Grid.Row="6" Grid.Column="0"/>
+                    <TextBox Text="{Binding Volunteer.Latitude, Mode=TwoWay}" Grid.Row="6" Grid.Column="1" IsReadOnly="True"/>
+
+                    <Label Content="Longitude" Grid.Row="7" Grid.Column="0"/>
+                    <TextBox Text="{Binding Volunteer.Longitude, Mode=TwoWay}" Grid.Row="7" Grid.Column="1" IsReadOnly="True"/>
+
+                    <Label Content="Role" Grid.Row="8" Grid.Column="0"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource RoleCollectionKey}}"
+                              SelectedItem="{Binding Volunteer.Role}" Grid.Row="8" Grid.Column="1"/>
+
+                    <Label Content="Is Active" Grid.Row="9" Grid.Column="0"/>
+                    <CheckBox IsChecked="{Binding Volunteer.IsActive, Mode=TwoWay}" Grid.Row="9" Grid.Column="1"/>
+
+                    <Label Content="Max Distance" Grid.Row="10" Grid.Column="0"/>
+                    <TextBox Text="{Binding Volunteer.MaxDistanceForCall, Mode=TwoWay}" Grid.Row="10" Grid.Column="1"/>
+
+                    <Label Content="Distance Type" Grid.Row="11" Grid.Column="0"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource DistanceTypeCollectionKey}}"
+                              SelectedItem="{Binding Volunteer.DistanceType, Mode=TwoWay}" Grid.Row="11" Grid.Column="1"/>
+
+                    <Label Content="Completed Calls" Grid.Row="12" Grid.Column="0"/>
+                    <TextBox Text="{Binding Volunteer.AmountOfCompletedCalls}" IsReadOnly="True" Grid.Row="12" Grid.Column="1"/>
+
+                    <Label Content="Self Cancelled" Grid.Row="13" Grid.Column="0"/>
+                    <TextBox Text="{Binding Volunteer.AmountOfSelfCancelledCalls}" IsReadOnly="True" Grid.Row="13" Grid.Column="1"/>
+
+                    <Label Content="Expired Calls" Grid.Row="14" Grid.Column="0"/>
+                    <TextBox Text="{Binding Volunteer.AmountOfExpiredCalls}" IsReadOnly="True" Grid.Row="14" Grid.Column="1"/>
+                </Grid>
+            </GroupBox>
+
+            <!-- Current Call In Progress -->
+            <GroupBox Header="Current Call In Treatment" FontSize="16" FontWeight="Bold"
+                      Visibility="{Binding HasCallInProgress, Converter={StaticResource BoolToVisibility}}" Margin="0 0 0 10">
+                <StackPanel Margin="10">
+                    <TextBlock Text="{Binding CallInProgress.Description}" FontWeight="Bold" FontSize="14"/>
+                    <TextBlock Text="{Binding CallInProgress.FullAddress}"/>
+                    <TextBlock Text="{Binding CallInProgress.Status}"/>
+                    <TextBlock Text="{Binding CallInProgress.DistanceFromVolunteer, StringFormat='Distance: {0} km'}"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 0 0">
+                        <Button Content="Finish Treatment" Margin="5" Click="FinishTreatment_Click"/>
+                        <Button Content="Cancel Treatment" Margin="5" Click="CancelTreatment_Click"/>
                     </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Address: "/>
-                        <TextBox Text="{Binding CurrentFullAddress, Mode=TwoWay}" Width="300"/>
-                        <TextBlock Text="Max Distance: "/>
-                        <TextBox Text="{Binding MaxDistanceForCall, Mode=TwoWay}" Width="50"/>
-                        <TextBlock Text="Distance Type: "/>
-                        <ComboBox ItemsSource="{Binding DistanceTypeOptions}"
-                          SelectedItem="{Binding DistanceType, Mode=TwoWay}" Width="100"/>
-                    </StackPanel>
-
-                    <!--<CheckBox Content="Is Active" IsChecked="{Binding IsActive, Mode=TwoWay}"
-                      IsEnabled="{Binding CanDeactivate}"/>-->
                 </StackPanel>
+            </GroupBox>
 
-                <!-- Current Call Panel -->
-                <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Padding="10">
-                    <StackPanel>
-                        <TextBlock Text="Current Call In Treatment" FontSize="16" FontWeight="Bold"/>
+            <!-- Choose Call if none in progress -->
+            <Button Content="Choose Call for Treatment" Click="ChooseCall_Click" Width="200"
+                    Visibility="{Binding ShowChooseCallButton, Converter={StaticResource BoolToVisibility}}" Margin="0 0 0 20"/>
 
-                        <StackPanel Visibility="{Binding HasCurrentCall, Converter={StaticResource BoolToVisibility}}">
-                            <TextBlock Text="{Binding CurrentCall.Description}" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding CurrentCall.FullAddress}"/>
-                            <TextBlock Text="{Binding CurrentCall.DistanceFromVolunteer, StringFormat='Distance: {0} km'}"/>
-                            <TextBlock Text="{Binding CurrentCall.Status}"/>
+            <!-- Map Placeholder -->
+            <GroupBox Header="Map View" Margin="0 0 0 20">
+                <TextBlock Text="📍 Map of Volunteer and Call Location Goes Here"
+                           HorizontalAlignment="Center" Foreground="DarkGray" FontStyle="Italic" Margin="20"/>
+            </GroupBox>
 
-                            <!-- Map Placeholder -->
-                            <TextBlock Text="📍 Map of Volunteer and Call Location Goes Here" Foreground="DarkGray"/>
+            <!-- Navigation Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
+                <Button Content="Update My Details" Click="UpdateVolunteer_Click" Width="150" Margin="10"/>
+                <Button Content="My Call History" Click="btnShowVolunteerCallsHistory_Click" Width="150" Margin="10"/>
+            </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Content="Finish Treatment" Margin="5"
-                                Click="FinishTreatment_Click"/>
-                                <Button Content="Cancel Treatment" Margin="5"
-                                Click="CancelTreatment_Click"/>
-                            </StackPanel>
-                        </StackPanel>
-
-                        <Button Content="Choose Call"
-                        Click="ChooseCall_Click"
-                        Visibility="{Binding ShowChooseCallButton, Converter={StaticResource BoolToVisibility}}"
-                        HorizontalAlignment="Left" Margin="0,10,0,0"/>
-                    </StackPanel>
-                </Border>
-
-                <!-- Update Button -->
-                <Button Content="Update Details" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                Margin="10" Click="UpdateVolunteer_Click"/>
-
-        <!-- Show calls history Button -->
-        <Button Content="show my calls history" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="150" 
-                Click="btnShowVolunteerCallsHistory_Click"/>
-
-    </Grid>
-        </Window>
-
+        </StackPanel>
+    </ScrollViewer>
+</Window>

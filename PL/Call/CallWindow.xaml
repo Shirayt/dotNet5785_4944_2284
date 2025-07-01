@@ -25,6 +25,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
@@ -84,10 +85,10 @@
                 HorizontalAlignment="Center" Width="100" Height="30"/>
 
         <!--call history assignments-->
-        <Label Content="Assignments" Grid.Row="9" Grid.Column="0"
+        <Label Content="call history assignments" Grid.Row="1" Grid.Column="0"
        Visibility="{Binding Assignments, Converter={StaticResource EnumerableToVisibilityConverter}}"/>
 
-        <ListBox Grid.Row="9" Grid.Column="1"
+        <ListBox Grid.Row="2" Grid.Column="1" 
          ItemsSource="{Binding Assignments}"
          Visibility="{Binding Assignments, Converter={StaticResource EnumerableToVisibilityConverter}}"
          Height="120">

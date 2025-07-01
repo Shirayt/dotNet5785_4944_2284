@@ -13,16 +13,26 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public BO.Volunteer Volunteer { get; set; } = new();
+    public BO.Volunteer Volunteer
+    {
+        get { return (BO.Volunteer)GetValue(VolunteerProperty); }
+        set { SetValue(VolunteerProperty, value); }
+    }
+
+    public static readonly DependencyProperty VolunteerProperty =
+        DependencyProperty.Register("Volunteer", typeof(BO.Volunteer), typeof(VolunteerMainWindow), new PropertyMetadata(null));
+
     public CallInProgress? CallInProgress { get; set; }
 
     public bool HasCallInProgress => CallInProgress != null;
     public bool ShowChooseCallButton => CallInProgress == null;
-    //&& Volunteer.IsActive;
+
+    private readonly int _volunteerId;
 
     public VolunteerMainWindow(int volunteerId)
     {
         InitializeComponent();
+        _volunteerId = volunteerId;
         LoadVolunteer(volunteerId);
     }
 
@@ -77,9 +87,10 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
     {
         try
         {
-            if (CallInProgress != null) {
-            s_bl.Call.CancelCallAssignment(Volunteer.Id, CallInProgress.CallId);
-            MessageBox.Show("Treatment cancelled", "Cancelled", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (CallInProgress != null)
+            {
+                s_bl.Call.CancelCallAssignment(Volunteer.Id, CallInProgress.CallId);
+                MessageBox.Show("Treatment cancelled", "Cancelled", MessageBoxButton.OK, MessageBoxImage.Information);
                 LoadVolunteer(Volunteer.Id);
             }
         }
@@ -92,12 +103,10 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
     private void ChooseCall_Click(object _, RoutedEventArgs __)
     {
         new ChooseCallForTreatmentWindow(Volunteer.Id).Show();
-        //LoadVolunteer(Volunteer.Id);
     }
 
     private void btnShowVolunteerCallsHistory_Click(object sender, RoutedEventArgs e)
     {
         new VolunteerCallHistoryWindow(Volunteer.Id).Show();
     }
-
-}
+ }

@@ -89,14 +89,6 @@
     <Status xsi:nil="true" />
   </Assignment>
   <Assignment>
-    <Id>11</Id>
-    <CallId>21</CallId>
-    <VolunteerId>327925335</VolunteerId>
-    <StartTime>2025-08-10T03:02:55.0617749+03:00</StartTime>
-    <EndTime xsi:nil="true" />
-    <Status xsi:nil="true" />
-  </Assignment>
-  <Assignment>
     <Id>12</Id>
     <CallId>22</CallId>
     <VolunteerId>257356535</VolunteerId>
@@ -399,5 +391,37 @@
     <StartTime>0001-01-01T00:00:00</StartTime>
     <EndTime xsi:nil="true" />
     <Status xsi:nil="true" />
+  </Assignment>
+  <Assignment>
+    <Id>11</Id>
+    <CallId>21</CallId>
+    <VolunteerId>327925335</VolunteerId>
+    <StartTime>2025-08-10T03:02:55.0617749+03:00</StartTime>
+    <EndTime>2025-07-01T03:02:54</EndTime>
+    <Status>Completed</Status>
+  </Assignment>
+  <Assignment>
+    <Id>50</Id>
+    <CallId>3</CallId>
+    <VolunteerId>327925335</VolunteerId>
+    <StartTime>2025-07-01T03:02:54</StartTime>
+    <EndTime>2025-07-01T03:02:54</EndTime>
+    <Status>Completed</Status>
+  </Assignment>
+  <Assignment>
+    <Id>51</Id>
+    <CallId>31</CallId>
+    <VolunteerId>327925335</VolunteerId>
+    <StartTime>2025-07-01T03:02:54</StartTime>
+    <EndTime>2025-07-01T03:02:54</EndTime>
+    <Status>Completed</Status>
+  </Assignment>
+  <Assignment>
+    <Id>52</Id>
+    <CallId>12</CallId>
+    <VolunteerId>327925335</VolunteerId>
+    <StartTime>2025-07-01T03:02:54</StartTime>
+    <EndTime>2025-07-01T03:02:54</EndTime>
+    <Status>Completed</Status>
   </Assignment>
 </ArrayOfAssignment>

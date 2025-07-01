@@ -97,7 +97,7 @@ internal class CallImplementation : ICall
                               .Select(assign => new BO.CallAssignInList
                               {
                                   VolunteerId = assign.VolunteerId,
-                                  FullName = Helpers.CallManager.GetLastVolunteerName(call),
+                                  FullName = Helpers.VolunteerManager.GetVolunteerFullName(assign.VolunteerId),
                                   StartTime = assign.StartTime,
                                   EndTime = assign.EndTime,
                                   Status = (BO.AssignmentStatus)assign.Status
@@ -109,6 +109,10 @@ internal class CallImplementation : ICall
         catch (DO.DalDoesNotExistException ex)
         {
             throw new BO.BlDoesNotExistException($"Somthing went wrong during get call details in BL: ", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new BO.BlGeneralException(ex.Message, ex);
         }
     }
     public void UpdateCallDetails(BO.Call call)
@@ -183,7 +187,7 @@ internal class CallImplementation : ICall
                 FullAddress = call.FullAddress,
                 Latitude = call.Latitude ?? 0,
                 Longitude = call.Longitude ?? 0,
-                OpenTime = call.OpenTime,
+                OpenTime = Helpers.AdminManager.Now,
                 MaxEndTime = call.MaxEndTime
             };
 
@@ -259,7 +263,6 @@ internal class CallImplementation : ICall
             throw new BO.BlGeneralException(ex.Message, ex);
         }
     }
-
 
     public void MarkCallAsCompleted(int volunteerId, int assignmentId)
     {

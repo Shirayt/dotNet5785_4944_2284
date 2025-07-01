@@ -44,11 +44,11 @@ public partial class ChooseCallForTreatmentWindow : Window
         InitializeComponent();
     }
 
-    private void Window_Loaded(object _, RoutedEventArgs __) => LoadCalls();
+    private void Window_Loaded(object sender, RoutedEventArgs e) => LoadCalls();
 
-    private void Apply_Click(object _, RoutedEventArgs __) => LoadCalls();
+    private void Apply_Click(object sender, RoutedEventArgs e) => LoadCalls();
 
-    private void Select_Click(object _, RoutedEventArgs __)
+    private void Select_Click(object sender, RoutedEventArgs e)
     {
         if (SelectedCall == null)
         {

@@ -44,9 +44,9 @@ public partial class VolunteerCallHistoryWindow : Window
         InitializeComponent();
     }
 
-    private void Window_Loaded(object _, RoutedEventArgs __) => LoadData();
+    private void Window_Loaded(object sender, RoutedEventArgs e) => LoadData();
 
-    private void Apply_Click(object _, RoutedEventArgs __) => LoadData();
+    private void Apply_Click(object sender, RoutedEventArgs e) => LoadData();
 
 
     private void LoadData()

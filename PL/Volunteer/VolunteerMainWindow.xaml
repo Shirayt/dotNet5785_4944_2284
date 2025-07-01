@@ -4,7 +4,8 @@
         xmlns:local="clr-namespace:PL.Volunteer"
         xmlns:pl="clr-namespace:PL"
         Title="Volunteer Dashboard" Height="800" Width="920"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        Loaded="VolunteerMainWindow_Loaded" Closed="VolunteerMainWindow_Closed">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
@@ -70,7 +71,7 @@
                     <TextBox Text="{Binding Volunteer.Password, Mode=TwoWay}" Grid.Row="4" Grid.Column="1"/>
 
                     <Label Content="Address" Grid.Row="5" Grid.Column="0"/>
-                    <TextBox Text="{Binding Volunteer.CurrentFullAddress, Mode=TwoWay}" Grid.Row="5" Grid.Column="1"/>
+                    <TextBox Text="{Binding Volunteer.CurrentFullAddress, Mode=TwoWay}" Grid.Row="5" Grid.Column="1" TextChanged="TextBox_TextChanged"/>
 
                     <Label Content="Latitude" Grid.Row="6" Grid.Column="0"/>
                     <TextBox Text="{Binding Volunteer.Latitude, Mode=TwoWay}" Grid.Row="6" Grid.Column="1" IsReadOnly="True"/>

@@ -18,7 +18,7 @@
 
         <pl:ConvertUpdateToCollapsedKey x:Key="ConvertUpdateToCollapsedKey"/>
         <pl:EnumerableToVisibilityConverter x:Key="EnumerableToVisibilityConverter"/>
-
+        <pl:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </Window.Resources>
 
     <Grid Margin="10">
@@ -98,7 +98,8 @@
                         <TextBlock FontWeight="Bold" Text="{Binding FullName}"/>
                         <TextBlock Text="{Binding StartTime, StringFormat=Start: {0:dd/MM/yyyy HH:mm}}"/>
                         <TextBlock Text="{Binding EndTime, StringFormat=End: {0:dd/MM/yyyy HH:mm}}"/>
-                        <TextBlock Text="{Binding Status}"/>
+                        <TextBlock Text="{Binding Status}"      
+                                   Visibility="{Binding Status, Converter={StaticResource NullToVisibilityConverter}}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

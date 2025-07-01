@@ -253,7 +253,7 @@ public static class Initialization
             -1, // אין מתנדב שמטפל בה
             DateTime.MinValue, // לא תהיה תאריך התחלה
             null, // לא יהיה זמן סיום
-            null));// לא יהיה סטטוס
+            null));// לא יהיה סטטוס סיום 
         }
     }
 }

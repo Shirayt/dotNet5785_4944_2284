@@ -11,8 +11,6 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-
     public BO.Volunteer Volunteer
     {
         get { return (BO.Volunteer)GetValue(VolunteerProperty); }
@@ -27,13 +25,13 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
     public bool HasCallInProgress => CallInProgress != null;
     public bool ShowChooseCallButton => CallInProgress == null;
 
-    private readonly int _volunteerId;
+    private int VolunteerId;
 
     public VolunteerMainWindow(int volunteerId)
     {
         InitializeComponent();
-        _volunteerId = volunteerId;
-        LoadVolunteer(volunteerId);
+        VolunteerId = volunteerId;
+        LoadVolunteer(VolunteerId);
     }
 
     private void LoadVolunteer(int id)
@@ -50,17 +48,25 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
         OnPropertyChanged(nameof(HasCallInProgress));
         OnPropertyChanged(nameof(ShowChooseCallButton));
     }
+    private void volunteerObserver() => LoadVolunteer(VolunteerId);
 
-    private void OnPropertyChanged([CallerMemberName] string? name = null) =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    private void VolunteerMainWindow_Loaded(object sender, RoutedEventArgs e)
+    {
+        s_bl.Volunteer.AddObserver(VolunteerId, volunteerObserver);
+        volunteerObserver();
+    }
+    private void VolunteerMainWindow_Closed(object? sender, EventArgs e)
+    {
+        if (Volunteer != null)
+            s_bl.Volunteer.RemoveObserver(VolunteerId, volunteerObserver);
+    }
 
-    private void UpdateVolunteer_Click(object _, RoutedEventArgs __)
+    private void UpdateVolunteer_Click(object sender, RoutedEventArgs e)
     {
         try
         {
             s_bl.Volunteer.UpdateVolunteerDetails(Volunteer.Id, Volunteer);
             MessageBox.Show("Volunteer updated successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            LoadVolunteer(Volunteer.Id);
         }
         catch (Exception ex)
         {
@@ -68,14 +74,13 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
         }
     }
 
-    private void FinishTreatment_Click(object _, RoutedEventArgs __)
+    private void FinishTreatment_Click(object sender, RoutedEventArgs e)
     {
         try
         {
             if (CallInProgress == null) return;
             s_bl.Call.MarkCallAsCompleted(Volunteer.Id, CallInProgress.AssignmentId);
             MessageBox.Show("Treatment finished", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
-            LoadVolunteer(Volunteer.Id);
         }
         catch (Exception ex)
         {
@@ -83,7 +88,7 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
         }
     }
 
-    private void CancelTreatment_Click(object _, RoutedEventArgs __)
+    private void CancelTreatment_Click(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -91,7 +96,6 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
             {
                 s_bl.Call.CancelCallAssignment(Volunteer.Id, CallInProgress.CallId);
                 MessageBox.Show("Treatment cancelled", "Cancelled", MessageBoxButton.OK, MessageBoxImage.Information);
-                LoadVolunteer(Volunteer.Id);
             }
         }
         catch (Exception ex)
@@ -100,7 +104,7 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
         }
     }
 
-    private void ChooseCall_Click(object _, RoutedEventArgs __)
+    private void ChooseCall_Click(object sender, RoutedEventArgs e)
     {
         new ChooseCallForTreatmentWindow(Volunteer.Id).Show();
     }
@@ -109,4 +113,13 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
     {
         new VolunteerCallHistoryWindow(Volunteer.Id).Show();
     }
- }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    private void OnPropertyChanged([CallerMemberName] string? name = null) =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+    private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+
+    }
+}

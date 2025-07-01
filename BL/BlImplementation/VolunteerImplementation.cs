@@ -101,6 +101,12 @@ internal class VolunteerImplementation : BlApi.IVolunteer
                 throw new BlAuthorizationException("Only a manager or the volunteer themselves can update the details.");
             }
 
+            // Check if trying to change role to Manager without permission
+            if (existingVolunteer.Role != DO.Role.Manager && (DO.Role)volunteer.Role == DO.Role.Manager)
+            {
+                throw new BlAuthorizationException("Only a manager can assign the Manager role.");
+            }
+
             Helpers.VolunteerManager.ValidateBOVolunteerData(volunteer);
 
             // Update the volunteer details
@@ -114,8 +120,7 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             existingVolunteer.IsActive = volunteer.IsActive;
             existingVolunteer.MaxDistanceForCall = volunteer.MaxDistanceForCall;
             existingVolunteer.DistanceType = (DO.DistanceType)volunteer.DistanceType;
-            // Only managers can update volunteer's role
-            existingVolunteer.Role = existingVolunteer.Role == DO.Role.Manager ? (DO.Role)volunteer.Role : existingVolunteer.Role;
+            existingVolunteer.Role = (DO.Role)volunteer.Role ;
 
             // Update volunteer data in the database
             _dal.Volunteer.Update(existingVolunteer);
@@ -138,7 +143,7 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             int AmountOfExpiredCalls = Helpers.VolunteerManager.GetExpiredCallsCount(volunteer.Id);
 
             /// Checks if the volunteer is currently handling or has ever handled a call.
-            if (Helpers.VolunteerManager.GetCallInTreatment(volunteer.Id) !=null || AmountOfCompletedCalls > 0 || AmountOfExpiredCalls >0 || AmountOfSelfCancelledCalls>0)
+            if (Helpers.VolunteerManager.GetCallInTreatment(volunteer.Id) != null || AmountOfCompletedCalls > 0 || AmountOfExpiredCalls > 0 || AmountOfSelfCancelledCalls > 0)
             {
                 throw new BlInvalidOperationException($"Volunteer with ID {volunteerId} cannot be deleted as they have handled calls.");
             }

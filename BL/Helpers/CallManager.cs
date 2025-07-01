@@ -25,7 +25,7 @@ internal static class CallManager
     {
         var calls = s_dal.Call.ReadAll();
 
-        var assignment = s_dal.Assignment .ReadAll() .FirstOrDefault(a => a.CallId == call.Id);
+        var assignment = s_dal.Assignment.ReadAll().OrderByDescending(a => a.Id).FirstOrDefault(a => a.CallId == call.Id);
 
         var assignmentStatus = assignment?.Status;
 

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfVolunteer>
   <Volunteer>
-    <Id>381873124</Id>
+    <Id>380483685</Id>
     <FullName>Dani Levy</FullName>
     <PhoneNumber>0541111111</PhoneNumber>
     <Email>dani@gmail.com</Email>
@@ -11,11 +11,11 @@
     <Longitude>106.9057</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>59</MaxDistanceForCall>
+    <MaxDistanceForCall>88</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>331380949</Id>
+    <Id>257356535</Id>
     <FullName>Shira Cohen</FullName>
     <PhoneNumber>0542222222</PhoneNumber>
     <Email>shira@gmail.com</Email>
@@ -25,11 +25,11 @@
     <Longitude>173.2885</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>58</MaxDistanceForCall>
+    <MaxDistanceForCall>92</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>305673667</Id>
+    <Id>301410593</Id>
     <FullName>Tali Amar</FullName>
     <PhoneNumber>0543333333</PhoneNumber>
     <Email>tali@gmail.com</Email>
@@ -39,11 +39,11 @@
     <Longitude>12.2715</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>8</MaxDistanceForCall>
+    <MaxDistanceForCall>62</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>395748551</Id>
+    <Id>287408330</Id>
     <FullName>Yair Israelof</FullName>
     <PhoneNumber>0544444444</PhoneNumber>
     <Email>yair@gmail.com</Email>
@@ -53,11 +53,11 @@
     <Longitude>-37.4594</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>6</MaxDistanceForCall>
+    <MaxDistanceForCall>72</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>252831003</Id>
+    <Id>331152421</Id>
     <FullName>Eli Klein</FullName>
     <PhoneNumber>0545555555</PhoneNumber>
     <Email>eli@gmail.com</Email>
@@ -67,11 +67,11 @@
     <Longitude>129.7327</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>21</MaxDistanceForCall>
+    <MaxDistanceForCall>81</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>319099057</Id>
+    <Id>205126493</Id>
     <FullName>Maya Shimon</FullName>
     <PhoneNumber>0546666666</PhoneNumber>
     <Email>maya@gmail.com</Email>
@@ -81,11 +81,11 @@
     <Longitude>-13.8597</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>43</MaxDistanceForCall>
+    <MaxDistanceForCall>20</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>252634191</Id>
+    <Id>202369989</Id>
     <FullName>Avi Ben-David</FullName>
     <PhoneNumber>0547777777</PhoneNumber>
     <Email>avi@gmail.com</Email>
@@ -95,11 +95,11 @@
     <Longitude>36.825</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>48</MaxDistanceForCall>
+    <MaxDistanceForCall>68</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>260728548</Id>
+    <Id>294218409</Id>
     <FullName>Liat Ron</FullName>
     <PhoneNumber>0548888888</PhoneNumber>
     <Email>liat@gmail.com</Email>
@@ -109,11 +109,11 @@
     <Longitude>-0.3865</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>70</MaxDistanceForCall>
+    <MaxDistanceForCall>66</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>238908800</Id>
+    <Id>324039460</Id>
     <FullName>Yaara Berman</FullName>
     <PhoneNumber>0549999999</PhoneNumber>
     <Email>yaara@gmail.com</Email>
@@ -123,11 +123,11 @@
     <Longitude>-0.2976</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>58</MaxDistanceForCall>
+    <MaxDistanceForCall>23</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>394783567</Id>
+    <Id>389270117</Id>
     <FullName>Noa Sasson</FullName>
     <PhoneNumber>0550000000</PhoneNumber>
     <Email>noa@gmail.com</Email>
@@ -137,11 +137,11 @@
     <Longitude>13.4918</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>68</MaxDistanceForCall>
+    <MaxDistanceForCall>56</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>261740054</Id>
+    <Id>327925335</Id>
     <FullName>Roi Peretz</FullName>
     <PhoneNumber>0551111111</PhoneNumber>
     <Email>roi@gmail.com</Email>
@@ -151,11 +151,11 @@
     <Longitude>-77.2749</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>79</MaxDistanceForCall>
+    <MaxDistanceForCall>40</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>267164226</Id>
+    <Id>228745436</Id>
     <FullName>Gal Zohar</FullName>
     <PhoneNumber>0552222222</PhoneNumber>
     <Email>gal@gmail.com</Email>
@@ -165,11 +165,11 @@
     <Longitude>-97.2071</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>35</MaxDistanceForCall>
+    <MaxDistanceForCall>20</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>384190187</Id>
+    <Id>313026577</Id>
     <FullName>Dana Kfir</FullName>
     <PhoneNumber>0553333333</PhoneNumber>
     <Email>dana@gmail.com</Email>
@@ -179,11 +179,25 @@
     <Longitude>-60.8103</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>71</MaxDistanceForCall>
+    <MaxDistanceForCall>38</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>395123268</Id>
+    <Id>216163451</Id>
+    <FullName>Yosef Shaked</FullName>
+    <PhoneNumber>0554444444</PhoneNumber>
+    <Email>yosef@gmail.com</Email>
+    <Password></Password>
+    <CurrentFullAddress>Toraja, Sulawesi, Indonesia</CurrentFullAddress>
+    <Latitude>2.4769</Latitude>
+    <Longitude>-60.6933</Longitude>
+    <Role>Volunteer</Role>
+    <IsActive>True</IsActive>
+    <MaxDistanceForCall>19</MaxDistanceForCall>
+    <DistanceType>Air</DistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>398743625</Id>
     <FullName>Ruth Erez</FullName>
     <PhoneNumber>0555555555</PhoneNumber>
     <Email>ruth@gmail.com</Email>
@@ -193,77 +207,23 @@
     <Longitude>-60.7371</Longitude>
     <Role>Volunteer</Role>
     <IsActive>True</IsActive>
-    <MaxDistanceForCall>77</MaxDistanceForCall>
+    <MaxDistanceForCall>21</MaxDistanceForCall>
     <DistanceType>Air</DistanceType>
   </Volunteer>
-  <Volunteer>
-    <Id>215525197</Id>
-    <FullName>Racheli</FullName>
-    <PhoneNumber>0534114908</PhoneNumber>
-    <Email>Rachlios2005@gmail.com</Email>
-    <Password>rjkh tuxyruc</Password>
-    <CurrentFullAddress>mavo tzalmona 2, Ramat Eskol, Jerusalem</CurrentFullAddress>
-    <Latitude>31.759595</Latitude>
-    <Longitude>35.215315</Longitude>
-    <Role>Volunteer</Role>
-    <IsActive>True</IsActive>
-    <MaxDistanceForCall>12</MaxDistanceForCall>
-    <DistanceType>Air</DistanceType>
-  </Volunteer>
-  <Volunteer>
-    <Id>328268149</Id>
-    <FullName>Nechami</FullName>
-    <PhoneNumber>0583214569</PhoneNumber>
-    <Email>ns@gmail.com</Email>
-    <Password>123456</Password>
-    <CurrentFullAddress>Ramat Shlomo</CurrentFullAddress>
-    <Latitude>31.8111253</Latitude>
-    <Longitude>35.2174861</Longitude>
-    <Role>Volunteer</Role>
-    <IsActive>True</IsActive>
-    <MaxDistanceForCall>111</MaxDistanceForCall>
-    <DistanceType>Air</DistanceType>
-  </Volunteer>
-  <Volunteer>
-    <Id>328304944</Id>
-    <FullName>Ayala</FullName>
-    <PhoneNumber>0556725037</PhoneNumber>
-    <Email>a0556725037@gmail.com</Email>
-    <Password>123456789</Password>
-    <CurrentFullAddress>Bazel 7</CurrentFullAddress>
-    <Latitude>47.5572953</Latitude>
-    <Longitude>7.6145738</Longitude>
-    <Role>Volunteer</Role>
-    <IsActive>True</IsActive>
-    <MaxDistanceForCall>123</MaxDistanceForCall>
-    <DistanceType>Air</DistanceType>
-  </Volunteer>
-  <Volunteer>
-    <Id>215525874</Id>
-    <FullName>New</FullName>
-    <PhoneNumber>0567898765</PhoneNumber>
-    <Email>new@gmail.com</Email>
-    <Password>123212</Password>
-    <CurrentFullAddress>Jerusalem</CurrentFullAddress>
-    <Latitude>31.7788242</Latitude>
-    <Longitude>35.2257626</Longitude>
-    <Role>Volunteer</Role>
-    <IsActive>True</IsActive>
-    <MaxDistanceForCall>11</MaxDistanceForCall>
-    <DistanceType>Air</DistanceType>
-  </Volunteer>
-  <Volunteer>
-    <Id>215042284</Id>
-    <FullName>Shira Taviv!</FullName>
-    <PhoneNumber>0534164314</PhoneNumber>
-    <Email>Shirayt100@gmail.com</Email>
-    <Password>Shira100</Password>
-    <CurrentFullAddress>Pinchas Kehati 12</CurrentFullAddress>
-    <Latitude>-22.207933</Latitude>
-    <Longitude>-49.679436</Longitude>
-    <Role>Manager</Role>
-    <IsActive>True</IsActive>
-    <MaxDistanceForCall>11</MaxDistanceForCall>
-    <DistanceType>Air</DistanceType>
-  </Volunteer>
+	<Volunteer>
+		<Id>215042284</Id>
+		<FullName>Shira Taviv!</FullName>
+		<PhoneNumber>0534164314</PhoneNumber>
+		<Email>shirayt100@gmail.com</Email>
+		<Password>Shira100</Password>
+		<CurrentFullAddress>
+			Pinchas Kehati 12, Jerusalem, Israel
+		</CurrentFullAddress>
+		<Latitude>31.7995</Latitude>
+		<Longitude>35.2115</Longitude>
+		<Role>Manager</Role>
+		<IsActive>True</IsActive>
+		<MaxDistanceForCall>68</MaxDistanceForCall>
+		<DistanceType>Air</DistanceType>
+	</Volunteer>
 </ArrayOfVolunteer>

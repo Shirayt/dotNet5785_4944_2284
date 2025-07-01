@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace PL.Call
 {
-    public partial class CallWindow : Window
+    public partial class CallWindow : Window, INotifyPropertyChanged
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
@@ -18,49 +20,75 @@ namespace PL.Call
             DependencyProperty.Register(nameof(CurrentCall), typeof(BO.Call), typeof(CallWindow), new PropertyMetadata(null));
 
         private int CallId { get; set; }
-        public string ButtonText { get; set; }
 
-        public CallWindow()
+
+        private string _buttonText = "Add";
+        public string ButtonText
         {
-            CallId = 0;
-            ButtonText = "Add";
-            InitializeComponent();
-            CurrentCall = new BO.Call
+            get => _buttonText;
+            set
             {
-                Id = 0,
-                CallType = BO.CallType.Emergency,
-                Description = string.Empty,
-                FullAddress = string.Empty,
-                Latitude = null,
-                Longitude = null,
-                OpenTime = DateTime.Now,
-                MaxEndTime = null,
-                Status = BO.CallStatus.Open,
-                CallAssignInList = new List<BO.CallAssignInList>()
-            };
+                if (_buttonText != value)
+                {
+                    _buttonText = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
-        public CallWindow(int callId)
+        private IEnumerable<BO.CallAssignInList> _assignments;
+        public IEnumerable<BO.CallAssignInList> Assignments
+        {
+            get => _assignments;
+            set
+            {
+                _assignments = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public CallWindow(int callId = 0)
         {
             InitializeComponent();
             CallId = callId;
-            ButtonText = "Update";
+            ButtonText = callId == 0 ? "Add" : "Update";
 
-            try
+            if (callId == 0)
             {
-                var call = s_bl.Call.GetCallDetails(callId);
-                if (call == null)
+                CurrentCall = new BO.Call
                 {
-                    MessageBox.Show("Call not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Close();
-                    return;
-                }
-                CurrentCall = call;
+                    //Id = 0,
+                    CallType = BO.CallType.Emergency,
+                    Description = string.Empty,
+                    FullAddress = string.Empty,
+                    Latitude = null,
+                    Longitude = null,
+                    OpenTime = s_bl.Admin.GetClock(),
+                    MaxEndTime = null,
+                    Status = BO.CallStatus.Open,
+                    CallAssignInList = new List<BO.CallAssignInList>()
+                };
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error loading call details: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Close();
+                try
+                {
+                    var call = s_bl.Call.GetCallDetails(callId);
+                    if (call == null)
+                    {
+                        MessageBox.Show("Call not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Close();
+                        return;
+                    }
+                    CurrentCall = call;
+                    Assignments = s_bl.Call.GetAssignmentsByCallId(callId);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error loading call details: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Close();
+                }
             }
         }
 
@@ -85,5 +113,9 @@ namespace PL.Call
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

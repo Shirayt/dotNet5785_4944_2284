@@ -48,7 +48,7 @@
                 <DataGridTemplateColumn Header="Delete">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="🗑 Delete" Click="DeleteVolunteer_Click" ToolTip="Delete Volunteer"/>
+                            <Button Content="🗑 Delete" Click="DeleteVolunteer_Click"  PreviewMouseDown="Button_PreviewMouseDown" ToolTip="Delete Volunteer"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

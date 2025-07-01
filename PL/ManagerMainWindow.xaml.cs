@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using BlApi;
 using PL.Volunteer;
 using PL.Call;
+using System.Collections.ObjectModel;
 
 namespace PL;
 
@@ -56,11 +57,45 @@ public partial class ManagerMainWindow : Window
     public static readonly DependencyProperty RiskRangeProperty =
         DependencyProperty.Register("RiskRange", typeof(TimeSpan), typeof(ManagerMainWindow), new PropertyMetadata(TimeSpan.Zero));
 
+    public class CallStatusCount
+    {
+        public string Status { get; set; } = string.Empty;
+        public int Count { get; set; }
+    }
+
+    public ObservableCollection<CallStatusCount> CallQuantities
+    {
+        get { return (ObservableCollection<CallStatusCount>)GetValue(CallQuantitiesProperty); }
+        set { SetValue(CallQuantitiesProperty, value); }
+    }
+
+    public static readonly DependencyProperty CallQuantitiesProperty =
+        DependencyProperty.Register(nameof(CallQuantities), typeof(ObservableCollection<CallStatusCount>), typeof(ManagerMainWindow), new PropertyMetadata(new ObservableCollection<CallStatusCount>()));
 
     public ManagerMainWindow()
     {
         InitializeComponent();
     }
+
+    private void LoadCallQuantities()
+    {
+        var list = new ObservableCollection<CallStatusCount>();
+
+        var counts = s_bl.Call.GetCallQuantitiesByStatus().ToList();
+        var statuses = Enum.GetValues(typeof(BO.CallStatus)).Cast<BO.CallStatus>().ToList();
+
+        for (int i = 0; i < statuses.Count; i++)
+        {
+            list.Add(new CallStatusCount
+            {   
+                Status = statuses[i].ToString(),
+                Count = counts[i]
+            });
+        }
+
+        CallQuantities = list;
+    }
+
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
@@ -71,6 +106,8 @@ public partial class ManagerMainWindow : Window
         //register to be observable
         s_bl.Admin.AddClockObserver(clockObserver);
         s_bl.Admin.AddClockObserver(configObserver);
+
+        LoadCallQuantities();
     }
 
     private void MainWindow_Closed(object? sender, EventArgs e)

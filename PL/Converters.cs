@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -18,6 +19,17 @@ namespace PL
     //            throw new NotImplementedException(); 
     //        }
     //    }
+    //}
+
+    //public class UpdateToReadOnlyConverter : IValueConverter
+    //{
+    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        return value?.ToString() == "Update"; // אם הכפתור במצב Update, הפקד יהיה לקריאה בלבד
+    //    }
+
+    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+    //        throw new NotImplementedException();
     //}
 
     public class ConvertUpdateToCollapsedKey : IValueConverter
@@ -44,6 +56,24 @@ namespace PL
             throw new NotImplementedException();
     }
 
+    public class EnumerableToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var enumerable = value as IEnumerable;
+            if (enumerable == null)
+                return Visibility.Collapsed;
+
+            foreach (var _ in enumerable)
+                return Visibility.Visible;
+
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+            throw new NotImplementedException();
+    }
+
     public class StatusToColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -59,4 +89,5 @@ namespace PL
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
             throw new NotImplementedException();
     }
-}
+
+  }

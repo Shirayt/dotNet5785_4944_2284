@@ -10,6 +10,8 @@
         <local:ConvertUpdateToCollapsedKey x:Key="ConvertUpdateToCollapsedKey" />
         <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
         <local:CallSortOptionCollection x:Key="CallSortOptionCollectionKey"/>
+        <local:CallTypeCollection x:Key="CallTypeCollectionKey"/>
+        <local:CallStatusCollection x:Key="CallStatusCollectionKey"/>
     </Application.Resources>
 </Application>
 

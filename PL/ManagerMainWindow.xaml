@@ -55,6 +55,18 @@
             </StackPanel>
         </StackPanel>
 
+        <!-- Calls quantities -->
+        <GroupBox Header="Call quantities" Grid.Row="2" Margin="0,0,0,10">
+            <ListView ItemsSource="{Binding CallQuantities}" Height="200">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="150"/>
+                        <GridViewColumn Header="Count" DisplayMemberBinding="{Binding Count}" Width="100"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+
 
         <!-- DB operation buttons at the bottom -->
         <!-- StackPanel aligns buttons horizontally -->

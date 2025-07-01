@@ -8,7 +8,7 @@ namespace PL.Volunteer;
 
 public partial class VolunteerCallHistoryWindow : Window
 {
-    private readonly IBl _bl = Factory.Get();
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     private readonly int _volunteerId;
 
     public List<ClosedCallInList> ClosedCalls
@@ -52,6 +52,6 @@ public partial class VolunteerCallHistoryWindow : Window
     private void LoadData()
     {
         ClosedCalls = new List<ClosedCallInList>(
-            _bl.Call.GetClosedCallsByVolunteer(_volunteerId, FilterField, SortField));
+            s_bl.Call.GetClosedCallsByVolunteer(_volunteerId, FilterField, SortField));
     }
 }

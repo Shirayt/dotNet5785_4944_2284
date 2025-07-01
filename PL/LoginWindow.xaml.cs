@@ -93,7 +93,6 @@ namespace PL
                         break;
                 }
             }
-            //   לבדוק שמה איזה הוא זורק LoginVolunteerToSystem BL להוסיף עוד קטדש שמתאימים לשגיאות ספציפיות שיזרקו מ 
             catch (Exception ex)
             {
                 ErrorMessage = ex.Message;

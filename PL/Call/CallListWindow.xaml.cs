@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BO;
+using PL.Volunteer;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -48,29 +50,28 @@ namespace PL.Call
             s_bl.Call.RemoveObserver(callListObserver);
         }
 
-        //////////////////////
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is ComboBox comboBox && comboBox.SelectedItem is BO.CallInListFields selectedOption)
-            {
-                CallSortOption = selectedOption;
-                QueryCallList();
-            }
+            CallList = (CallSortOption == BO.CallInListFields.None)
+                          ? s_bl.Call.GetCallsList(null, null, null)!
+                          : s_bl.Call.GetCallsList(null, null, CallSortOption)!;
         }
+
+        private void Button_PreviewMouseDown(object sender, MouseButtonEventArgs e) { }
 
         private void DeleteCall_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && btn.DataContext is BO.CallInList call)
+            if (SelectedCall != null)
             {
                 var result = MessageBox.Show(
-                    $"Are you sure you want to delete call (ID: {call.Id})?",
-                    "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        $"Are you sure you want to delete call (ID: {SelectedCall.Id})?",
+                        "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     try
                     {
-                        s_bl.Call.DeleteCall(call.Id);
+                        s_bl.Call.DeleteCall(SelectedCall.Id);
                         MessageBox.Show("Call deleted successfully!", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     catch (Exception ex)
@@ -83,17 +84,22 @@ namespace PL.Call
 
         private void btnAddCall_Click(object sender, RoutedEventArgs e)
         {
-            var window = new CallWindow();
-            window.Show();
+            new CallWindow().Show();
+
         }
 
         private void dgCallList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (SelectedCall is null)
-                return;
-
-            var window = new CallWindow(SelectedCall.Id);
-            window.Show();
+            if (SelectedCall != null)
+            {
+                new CallWindow(SelectedCall.Id).Show();
+            }
         }
     }
+
 }
+
+
+
+
+

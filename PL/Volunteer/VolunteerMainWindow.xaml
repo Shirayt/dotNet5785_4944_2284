@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:PL.Volunteer"
         Title="Volunteer Dashboard" Height="600" Width="900"
-        Loaded="Window_Loaded"
-        Closing="Window_Closing">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
             <Window.Resources>
                 <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
             </Window.Resources>
@@ -75,7 +74,7 @@
                 Margin="10" Click="UpdateVolunteer_Click"/>
 
         <!-- Show calls history Button -->
-        <Button Content="show my calls history" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" 
+        <Button Content="show my calls history" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="150" 
                 Click="btnShowVolunteerCallsHistory_Click"/>
 
     </Grid>

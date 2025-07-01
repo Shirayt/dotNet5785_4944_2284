@@ -8,9 +8,9 @@ namespace PL.Volunteer;
 
 public partial class ChooseCallForTreatmentWindow : Window
 {
-    private readonly IBl _bl = Factory.Get();
-    private readonly int _volunteerId;
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
+    private readonly int _volunteerId;
     public List<OpenCallInList> OpenCalls
     {
         get => (List<OpenCallInList>)GetValue(OpenCallsProperty);
@@ -58,7 +58,7 @@ public partial class ChooseCallForTreatmentWindow : Window
 
         try
         {
-            _bl.Call.SelectCallForTreatment(_volunteerId, SelectedCall.Id);
+            s_bl.Call.SelectCallForTreatment(_volunteerId, SelectedCall.Id);
             MessageBox.Show("Call selected successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             Close();
         }
@@ -70,6 +70,6 @@ public partial class ChooseCallForTreatmentWindow : Window
 
     private void LoadCalls()
     {
-        OpenCalls = new List<OpenCallInList>(_bl.Call.GetOpenCallsByVolunteer(_volunteerId, null, SortField));
+        OpenCalls = new List<OpenCallInList>(s_bl.Call.GetOpenCallsByVolunteer(_volunteerId, null, SortField));
     }
 }

@@ -23,7 +23,6 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
     public VolunteerMainWindow(int volunteerId)
     {
         InitializeComponent();
-        DataContext = this;
         LoadVolunteer(volunteerId);
     }
 
@@ -78,10 +77,11 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
     {
         try
         {
-            if (CallInProgress == null) return;
-            //s_bl.Call.CancelCallAssignment(Volunteer.Id, CallInProgress.Id);
+            if (CallInProgress != null) {
+            s_bl.Call.CancelCallAssignment(Volunteer.Id, CallInProgress.CallId);
             MessageBox.Show("Treatment cancelled", "Cancelled", MessageBoxButton.OK, MessageBoxImage.Information);
-            LoadVolunteer(Volunteer.Id);
+                LoadVolunteer(Volunteer.Id);
+            }
         }
         catch (Exception ex)
         {
@@ -92,25 +92,12 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
     private void ChooseCall_Click(object _, RoutedEventArgs __)
     {
         new ChooseCallForTreatmentWindow(Volunteer.Id).Show();
-        LoadVolunteer(Volunteer.Id);
+        //LoadVolunteer(Volunteer.Id);
     }
 
     private void btnShowVolunteerCallsHistory_Click(object sender, RoutedEventArgs e)
     {
-        var window = new VolunteerCallHistoryWindow(Volunteer.Id);
-        window.Show();
+        new VolunteerCallHistoryWindow(Volunteer.Id).Show();
     }
-
-
-    private void Window_Loaded(object _, RoutedEventArgs __)
-    {
-        // nothing to do, already loaded
-    }
-
-    private void Window_Closing(object? _, CancelEventArgs __)
-    {
-        // optional: cleanup
-    }
-
 
 }

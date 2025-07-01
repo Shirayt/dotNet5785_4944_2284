@@ -3,7 +3,7 @@
 /// <summary>
 /// Public interface methods to be invoked via the view or via BlTest
 /// </summary>
-public interface ICall: IObservable
+public interface ICall : IObservable
 {
     /// <summary>
     /// Requests the quantities of calls grouped by their status.
@@ -67,13 +67,13 @@ public interface ICall: IObservable
     /// <returns>A collection of open calls available for the volunteer.</returns>
     IEnumerable<BO.OpenCallInList> GetOpenCallsByVolunteer(int volunteerId, BO.FilterAndSortByFields? filterType, BO.FilterAndSortByFields? sortField);
 
-        /// <summary>
-        /// Marks a call as completed by a volunteer.
-        /// </summary>
-        /// <param name="volunteerId">The ID of the volunteer completing the call.</param>
-        /// <param name="assignmentId">The ID of the call assignment.</param>
-        /// <exception cref="Exception">Thrown if the operation fails or the IDs are invalid.</exception>
-        void MarkCallAsCompleted(int volunteerId, int assignmentId);
+    /// <summary>
+    /// Marks a call as completed by a volunteer.
+    /// </summary>
+    /// <param name="volunteerId">The ID of the volunteer completing the call.</param>
+    /// <param name="assignmentId">The ID of the call assignment.</param>
+    /// <exception cref="Exception">Thrown if the operation fails or the IDs are invalid.</exception>
+    void MarkCallAsCompleted(int volunteerId, int assignmentId);
 
     /// <summary>
     /// Cancels a call assignment.
@@ -93,6 +93,13 @@ public interface ICall: IObservable
     /// has expired, or if any other validation fails.
     /// </exception>
     void SelectCallForTreatment(int volunteerId, int callId);
+
+    /// <summary>
+    /// Returns a list of all assignments for a given call ID.
+    /// </summary>
+    /// <param name="callId">The ID of the call.</param>
+    /// <returns>A collection of assignments related to the call.</returns>
+    IEnumerable<BO.CallAssignInList> GetAssignmentsByCallId(int callId);
 
 }
 

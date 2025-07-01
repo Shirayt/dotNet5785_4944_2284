@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:PL"
         xmlns:conv="clr-namespace:PL"
-        Title="Call History" Height="500" Width="850"
+        Title="Call History" Height="500" Width="900"
         Loaded="Window_Loaded"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 

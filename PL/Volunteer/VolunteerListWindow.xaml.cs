@@ -62,27 +62,26 @@ namespace PL.Volunteer
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is ComboBox comboBox && comboBox.SelectedItem is BO.VolunteerSortOption selectedOption)
-            {
-                VolunteerSortOption = selectedOption;
-                VolunteerList = s_bl.Volunteer.GetVolunteersList(null, VolunteerSortOption);
-            };
-
+         VolunteerList = (VolunteerSortOption == BO.VolunteerSortOption.None)
+                               ? s_bl.Volunteer.GetVolunteersList(null, null)!
+                               : s_bl.Volunteer.GetVolunteersList(null, VolunteerSortOption)!;
         }
+
+        private void Button_PreviewMouseDown(object sender, MouseButtonEventArgs e) { }
 
         private void DeleteVolunteer_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && btn.DataContext is BO.VolunteerInList volunteer)
+            if (SelectedVolunteer != null)
             {
                 var result = MessageBox.Show(
-                    $"Are you sure you want to delete volunteer '{volunteer.FullName}' (ID: {volunteer.Id})?",
-                    "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                   $"Are you sure you want to delete volunteer '{SelectedVolunteer.FullName}' (ID: {SelectedVolunteer.Id})?",
+                   "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     try
                     {
-                        s_bl.Volunteer.DeleteVolunteer(volunteer.Id);
+                        s_bl.Volunteer.DeleteVolunteer(SelectedVolunteer.Id);
                         MessageBox.Show("Volunteer deleted successfully!", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     catch (Exception ex)
@@ -95,18 +94,16 @@ namespace PL.Volunteer
 
         private void btnAddVolunteer_Click(object sender, RoutedEventArgs e)
         {
-            var window = new VolunteerWindow();
-            window.Show();
+            new VolunteerWindow().Show();
         }
 
 
         private void dgVolunteerList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (SelectedVolunteer is null)
-                return;
-
-            var window = new VolunteerWindow(SelectedVolunteer.Id);
-            window.Show();
+            if (SelectedVolunteer != null)
+            {
+                new VolunteerWindow(SelectedVolunteer.Id).Show();
+            }
         }
 
     }

@@ -106,4 +106,10 @@ internal static class VolunteerManager
             })
             .FirstOrDefault();
     }
+
+    public static string GetVolunteerFullName(int volunteerId)
+    {
+        return s_dal.Volunteer.Read(volunteerId).FullName;
+    }
+
 }

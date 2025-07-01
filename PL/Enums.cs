@@ -46,7 +46,19 @@ public class FilterAndSortByFieldsCollection : IEnumerable
 
     public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
 }
+public class CallTypeCollection : IEnumerable
+{
+    static readonly IEnumerable<BO.CallType> s_enums =
+        (Enum.GetValues(typeof(BO.CallType)) as IEnumerable<BO.CallType>)!;
 
+    public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+}
 
+public class CallStatusCollection : IEnumerable
+{
+    static readonly IEnumerable<BO.CallStatus> s_enums =
+        (Enum.GetValues(typeof(BO.CallStatus)) as IEnumerable<BO.CallStatus>)!;
 
+    public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+}
 

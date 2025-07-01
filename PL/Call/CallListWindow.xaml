@@ -23,9 +23,9 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="Sort calls by:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <!--<ComboBox SelectedValue="{Binding CallSortOption, Mode=TwoWay}"
+            <ComboBox SelectedValue="{Binding CallSortOption, Mode=TwoWay}"
                       ItemsSource="{Binding Source={StaticResource CallSortOptionCollectionKey}}"
-                      Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged"/>-->
+                      Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged"/>
         </Grid>
 
         <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding CallList}" SelectedItem="{Binding SelectedCall}"
@@ -43,7 +43,7 @@
                 <DataGridTemplateColumn Header="Delete">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="🗑 Delete" Click="DeleteCall_Click" ToolTip="Delete Call"
+                            <Button Content="🗑 Delete" Click="DeleteCall_Click" PreviewMouseDown="Button_PreviewMouseDown" ToolTip="Delete Call"
                                     Visibility="{Binding AllocationsAmount }"/>
                             <!--, Converter={StaticResource CanDeleteCallConverter}-->
 

@@ -84,29 +84,38 @@ internal static class VolunteerManager
     public static BO.CallInProgress? GetCallInProgress(int volunteerId)
     {
         var volunteer = s_dal.Volunteer.Read(volunteerId);
-        var assignments = s_dal.Assignment.ReadAll();
-        var calls = s_dal.Call.ReadAll();
-        if (assignments is null || calls is null) return null;
+        var assignments = s_dal.Assignment.ReadAll()?.ToList();
+        var calls = s_dal.Call.ReadAll()?.ToList();
 
-        return assignments
-            .Where(a => a.VolunteerId == volunteerId && a.EndTime == null)
-            .Join(calls, a => a.CallId, c => c.Id, (a, c) => new BO.CallInProgress
-            {
-                CallId = c.Id,
-                AssignmentId = a.Id,
-                CallType = (BO.CallType)c.CallType,
-                Description = c.Description,
-                FullAddress = c.FullAddress,
-                OpenTime = a.StartTime,
-                MaxEndTime = c.MaxEndTime,
-                TreatmentStartTime = a.StartTime,
-                DistanceFromVolunteer = Tools.CalculateDistance(volunteer.Latitude, volunteer.Longitude, c.Latitude, c.Longitude),
-                Status = (a.Status == null || a.Status == DO.AssignmentStatus.Completed)
-                    ? BO.StatusCallInProgress.InProcessing
-                    : BO.StatusCallInProgress.InProcessingInRisk
-            })
-            .FirstOrDefault();
+        var openAssignments = assignments
+            .Where(a =>
+                a.VolunteerId == volunteerId &&
+                (a.EndTime == null || a.EndTime == DateTime.MinValue) &&
+                a.Status == null)
+            .ToList();
+
+        if (!openAssignments.Any())
+            return null;
+
+        var assignment = openAssignments.First();
+
+        var call = calls.FirstOrDefault(c => c.Id == assignment.CallId) ?? throw new Exception($"No call found with ID {assignment.CallId}.");
+
+        return new BO.CallInProgress
+        {
+            CallId = call.Id,
+            AssignmentId = assignment.Id,
+            CallType = (BO.CallType)call.CallType,
+            Description = call.Description,
+            FullAddress = call.FullAddress,
+            OpenTime = assignment.StartTime,
+            MaxEndTime = call.MaxEndTime,
+            TreatmentStartTime = assignment.StartTime,
+            DistanceFromVolunteer = Tools.CalculateDistance(volunteer.Latitude, volunteer.Longitude, call.Latitude, call.Longitude),
+            Status = BO.StatusCallInProgress.InProcessing
+        };
     }
+
 
     public static string? GetVolunteerFullName(int volunteerId)
     {

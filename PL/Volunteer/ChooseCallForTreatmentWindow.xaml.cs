@@ -11,7 +11,7 @@ public partial class ChooseCallForTreatmentWindow : Window
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
     private readonly int _volunteerId;
-    public Action? OnCallSelectedSuccessfully { get; set; }
+    //public Action? OnCallSelectedSuccessfully { get; set; }
 
     public List<OpenCallInList> OpenCalls
     {
@@ -62,7 +62,8 @@ public partial class ChooseCallForTreatmentWindow : Window
         {
             s_bl.Call.SelectCallForTreatment(_volunteerId, SelectedCall.Id);
             MessageBox.Show("Call selected successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            OnCallSelectedSuccessfully?.Invoke();
+            //OnCallSelectedSuccessfully?.Invoke(); 
+            new VolunteerMainWindow(_volunteerId).Show();///לתקן אחרי טאג 7
             Close();
         }
         catch (Exception ex)

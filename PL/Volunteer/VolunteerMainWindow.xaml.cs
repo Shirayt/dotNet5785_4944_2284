@@ -4,8 +4,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using BlApi;
 using BO;
-//using Microsoft.Web.WebView2.Core;
-
 
 namespace PL.Volunteer;
 
@@ -38,22 +36,21 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
 
     private void LoadVolunteer(int id)
     {
-        Volunteer = s_bl.Volunteer.GetVolunteerDetails(id);
-        CallInProgress = Volunteer.callInProgress;
-        NotifyAll();
+        try
+        {
+            Volunteer = s_bl.Volunteer.GetVolunteerDetails(id);
+            CallInProgress = Volunteer.callInProgress;
+            NotifyAll();
+        }
+        catch (BO.BlDoesNotExistException ex)
+        {
+            MessageBox.Show($"Volunteer not found or missing.\n{ex.InnerException?.Message}", "Volunteer Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error loading volunteer data:\n{ex.Message}", "General Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
-
-    //private void LoadMap()
-    //{
-    //    if (!string.IsNullOrWhiteSpace(CallInProgress?.FullAddress))
-    //    {
-    //        string address = Uri.EscapeDataString(CallInProgress.FullAddress);
-    //        string url = $"https://maps.google.com/maps?q={address}&hl=es&z=16&output=embed";
-    //        GoogleMapWebView.Source = new Uri(url);
-    //    }
-    //}
-
-
     private void NotifyAll()
     {
         OnPropertyChanged(nameof(Volunteer));
@@ -68,8 +65,6 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
         s_bl.Volunteer.AddObserver(VolunteerId, volunteerObserver);
         volunteerObserver();
 
-        //await GoogleMapWebView.EnsureCoreWebView2Async();
-        //LoadMap();
     }
     private void VolunteerMainWindow_Closed(object? sender, EventArgs e)
     {
@@ -114,6 +109,7 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
             {
                 s_bl.Call.CancelCallAssignment(Volunteer.Id, CallInProgress.CallId);
                 MessageBox.Show("Treatment cancelled", "Cancelled", MessageBoxButton.OK, MessageBoxImage.Information);
+                LoadVolunteer(Volunteer.Id);
             }
         }
         catch (Exception ex)
@@ -124,12 +120,8 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
 
     private void ChooseCall_Click(object sender, RoutedEventArgs e)
     {
-        var window = new ChooseCallForTreatmentWindow(Volunteer.Id)
-        {
-            OnCallSelectedSuccessfully = () => LoadVolunteer(Volunteer.Id) // 👈 זו התוספת החשובה
-        };
-
-        window.Show();
+        new ChooseCallForTreatmentWindow(Volunteer.Id).Show();
+        this.Close();///לתקן אחרי טאג 7
     }
 
     private void btnShowVolunteerCallsHistory_Click(object sender, RoutedEventArgs e)

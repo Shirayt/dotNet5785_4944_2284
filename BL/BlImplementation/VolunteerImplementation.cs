@@ -89,6 +89,11 @@ internal class VolunteerImplementation : BlApi.IVolunteer
         {
             throw new BO.BlDoesNotExistException($"Something went wrong during Get Volunteer Details in BL: ", ex);
         }
+        catch (Exception ex)
+        {
+            throw new Exception( ex.Message);
+        }
+
     }
     public void UpdateVolunteerDetails(int volunteerId, BO.Volunteer volunteer)
     {

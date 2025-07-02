@@ -306,7 +306,7 @@ internal class CallImplementation : ICall
     {
         try
         {
-            var assignment = _dal.Assignment.ReadAll().FirstOrDefault(a => a.CallId == callId);
+            var assignment = _dal.Assignment.ReadAll().OrderByDescending(a => a.Id).FirstOrDefault(a => a.CallId == callId);
             var requesterVolunteer = _dal.Volunteer.Read(requesterId);
 
             //only Manager or the assignment volunteer authorized to cancel an assignment
@@ -319,7 +319,7 @@ internal class CallImplementation : ICall
             var callStatus = Helpers.CallManager.GetCallStatus(call).Status;
 
             //the assignment must be open for cancellation
-            if (!(callStatus == BO.CallStatus.InProcessing) || assignment.EndTime == null)
+            if (!(callStatus == BO.CallStatus.InProcessing) || assignment.EndTime != null)
             {
                 throw new InvalidOperationException("Call is not open for cancellation.");
             }
@@ -384,7 +384,8 @@ internal class CallImplementation : ICall
 
             };
 
-            _dal.Assignment.Create(newAssignment);
+
+             _dal.Assignment.Create(newAssignment);
         }
         catch (DO.DalAlreadyExistsException ex)
         {

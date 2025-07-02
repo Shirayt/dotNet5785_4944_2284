@@ -219,4 +219,33 @@ internal static class VolunteerManager
         return s_dal.Volunteer.Read(volunteerId).FullName;
     }
 
+    public static void PeriodicVolunteerUpdates(DateTime oldClock, DateTime newClock)
+    {
+        var assignments = s_dal.Assignment.ReadAll()
+            .Where(a => a.EndTime == null)
+            .ToList();
+
+        var toUpdate = assignments
+            .Select(a => new { Assignment = a, Call = s_dal.Call.Read(c => c.Id == a.CallId) })
+            .Where(ac => ac.Call.MaxEndTime.HasValue && ac.Call.MaxEndTime <= newClock)
+            .ToList();
+
+        foreach (var ac in toUpdate)
+        {
+            var updatedAssignment = ac.Assignment with
+            {
+                Status = (DO.AssignmentStatus)BO.AssignmentStatus.Expired,
+                EndTime = newClock
+            };
+
+            lock (AdminManager.blMutex)
+                s_dal.Assignment.Update(updatedAssignment);
+        }
+
+        foreach (var ac in toUpdate.Select(a => a.Assignment))
+            Observers.NotifyItemUpdated(ac.VolunteerId);
+
+        Observers.NotifyListUpdated();
+    }
 }
+

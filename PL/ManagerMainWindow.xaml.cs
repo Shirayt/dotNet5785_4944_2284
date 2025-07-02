@@ -72,6 +72,24 @@ public partial class ManagerMainWindow : Window
     public static readonly DependencyProperty CallQuantitiesProperty =
         DependencyProperty.Register(nameof(CallQuantities), typeof(ObservableCollection<CallStatusCount>), typeof(ManagerMainWindow), new PropertyMetadata(new ObservableCollection<CallStatusCount>()));
 
+
+    //public static readonly DependencyProperty IntervalProperty =
+    //DependencyProperty.Register("Interval", typeof(int), typeof(ManagerMainWindow), new PropertyMetadata(1));
+
+    //public int Interval
+    //{
+    //    get => (int)GetValue(IntervalProperty);
+    //    set => SetValue(IntervalProperty, value);
+    //}
+
+    //public static readonly DependencyProperty IsSimulatorRunningProperty =
+    //DependencyProperty.Register("IsSimulatorRunning", typeof(bool), typeof(ManagerMainWindow), new PropertyMetadata(false));
+
+    //public bool IsSimulatorRunning
+    //{
+    //    get => (bool)GetValue(IsSimulatorRunningProperty);
+    //    set => SetValue(IsSimulatorRunningProperty, value);
+    //}
     public ManagerMainWindow()
     {
         InitializeComponent();
@@ -87,7 +105,7 @@ public partial class ManagerMainWindow : Window
         for (int i = 0; i < statuses.Count; i++)
         {
             list.Add(new CallStatusCount
-            {   
+            {
                 Status = statuses[i].ToString(),
                 Count = counts[i]
             });
@@ -99,6 +117,12 @@ public partial class ManagerMainWindow : Window
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
+        //if (IsSimulatorRunning)
+        //{
+        //    s_bl.Admin.Stop();
+        //    IsSimulatorRunning = false;
+        //}
+
         //initialize with real values
         CurrentTime = s_bl.Admin.GetClock();
         RiskRange = s_bl.Admin.GetRiskRange();
@@ -185,6 +209,7 @@ public partial class ManagerMainWindow : Window
         }
     }
 
+
     /// <summary>
     /// Treament of reset DB btn
     /// </summary>
@@ -215,6 +240,26 @@ public partial class ManagerMainWindow : Window
         }
     }
 
+    //private void ToggleSimulator_Click(object sender, RoutedEventArgs e)
+    //{
+    //    try
+    //    {
+    //        if (!IsSimulatorRunning)
+    //        {
+    //            s_bl.Admin.Start(Interval);
+    //            IsSimulatorRunning = true;
+    //        }
+    //        else
+    //        {
+    //            s_bl.Admin.Stop();
+    //            IsSimulatorRunning = false;
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        MessageBox.Show(ex.Message);
+    //    }
+    //}
 
 }
 

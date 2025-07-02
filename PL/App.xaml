@@ -12,6 +12,8 @@
         <local:CallSortOptionCollection x:Key="CallSortOptionCollectionKey"/>
         <local:CallTypeCollection x:Key="CallTypeCollectionKey"/>
         <local:CallStatusCollection x:Key="CallStatusCollectionKey"/>
+        <local:SimulatorButtonTextConverter x:Key="SimulatorButtonTextConverter"/>
+        <local:InverseBoolConverter x:Key="InverseBoolConverter"/>
     </Application.Resources>
 </Application>
 

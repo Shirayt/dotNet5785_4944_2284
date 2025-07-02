@@ -213,4 +213,36 @@ internal static class CallManager
         double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
         return EarthRadiusKm * c;
     }
+
+    public static void PeriodicCallUpdates(DateTime oldClock, DateTime newClock)
+    {
+        var dal = Factory.Get;
+        var callsToUpdate = dal.Call.ReadAll()
+            .Where(c => c.MaxEndTime.HasValue && c.MaxEndTime <= newClock)
+            .ToList();
+
+        foreach (var call in callsToUpdate)
+        {
+            var assignments = dal.Assignment.ReadAll()
+                .Where(a => a.CallId == call.Id && a.EndTime == null)
+                .OrderByDescending(a => a.Id).ToList();
+
+            var latestAssignment = assignments.FirstOrDefault();
+            if (latestAssignment is null) continue;
+
+            var updatedAssignment = latestAssignment with
+            {
+                Status = (DO.AssignmentStatus)BO.AssignmentStatus.Expired,
+                EndTime = newClock
+            };
+
+            lock (AdminManager.blMutex)
+                dal.Assignment.Update(updatedAssignment);
+        }
+
+        foreach (var call in callsToUpdate)
+            Observers.NotifyItemUpdated(call.Id);
+
+        Observers.NotifyListUpdated();
+    }
 }

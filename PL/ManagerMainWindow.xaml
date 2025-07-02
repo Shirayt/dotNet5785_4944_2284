@@ -1,4 +1,4 @@
-﻿<Window x:Class="PL.ManagerMainWindow"
+﻿<!--<Window x:Class="PL.ManagerMainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,20 +9,20 @@
          DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
          Loaded="MainWindow_Loaded" Closed="MainWindow_Closed">
 
-    <!-- Main layout grid -->
+    --><!-- Main layout grid --><!--
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- System Clock area -->
+            --><!-- System Clock area --><!--
             <RowDefinition Height="Auto"/>
-            <!-- Configuration Variables area -->
+            --><!-- Configuration Variables area --><!--
             <RowDefinition Height="*"/>
-            <!-- Spacer -->
+            --><!-- Spacer --><!--
             <RowDefinition Height="Auto"/>
-            <!-- DB Control buttons -->
+            --><!-- DB Control buttons --><!--
         </Grid.RowDefinitions>
 
-        <!-- System Clock section with label and time control buttons -->
+        --><!-- System Clock section with label and time control buttons --><!--
         <Grid Grid.Row="0" Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -33,7 +33,7 @@
                    HorizontalAlignment="Left" VerticalAlignment="Center"
                    FontSize="16" Margin="10"/>
 
-            <!-- Horizontal StackPanel used to align buttons in a row -->
+            --><!-- Horizontal StackPanel used to align buttons in a row --><!--
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
                 <Button Content="Add Minute" Click="btnAddOneMinute_Click" Width="80"/>
                 <Button Content="Add Hour" Click="btnAddOneHour_Click" Width="80"/>
@@ -43,10 +43,10 @@
             </StackPanel>
         </Grid>
 
-        <!-- Configuration Variables section -->
+        --><!-- Configuration Variables section --><!--
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,20">
 
-            <!-- RiskRange configuration -->
+            --><!-- RiskRange configuration --><!--
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <TextBox Width="200" Margin="0,0,10,0" 
                  Text="{Binding RiskRange}" IsReadOnly="False"/>
@@ -55,7 +55,7 @@
             </StackPanel>
         </StackPanel>
 
-        <!-- Calls quantities -->
+        --><!-- Calls quantities --><!--
         <GroupBox Header="Call quantities" Grid.Row="2" Margin="0,0,0,10">
             <ListView ItemsSource="{Binding CallQuantities}" Height="200">
                 <ListView.View>
@@ -68,15 +68,106 @@
         </GroupBox>
 
 
-        <!-- DB operation buttons at the bottom -->
-        <!-- StackPanel aligns buttons horizontally -->
+        --><!-- DB operation buttons at the bottom -->
+        <!-- StackPanel aligns buttons horizontally --><!--
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
-            <!-- btn show calls screen -->
+            --><!-- btn show calls screen --><!--
             <Button Content="Handle Volunteers" Width="120" Height="35" Click="btnVolunteers_Click"/>
             <Button Content="Handle Calls" Width="120" Height="35" Click="btnCalls_Click"/>
-            <!-- btn Initialize DB -->
+            --><!-- btn Initialize DB --><!--
             <Button Content="Initialize DB" Width="120" Height="35" Click="btnInitializeDB_Click"/>
-            <!-- btn Reset DB -->
+            --><!-- btn Reset DB --><!--
+            <Button Content="Reset DB" Width="120" Height="35" Click="btnResetDB_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>-->
+
+<Window x:Class="PL.ManagerMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="ManagerMainWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        Loaded="MainWindow_Loaded" Closed="MainWindow_Closed">
+
+    <!-- Main layout grid -->
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Clock -->
+            <RowDefinition Height="Auto"/>
+            <!-- Config -->
+            <RowDefinition Height="Auto"/>
+            <!-- Simulator -->
+            <RowDefinition Height="*"/>
+            <!-- Calls -->
+            <RowDefinition Height="Auto"/>
+            <!-- Buttons -->
+        </Grid.RowDefinitions>
+
+        <!-- System Clock section -->
+        <Grid Grid.Row="0" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="{Binding CurrentTime}"
+                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                   FontSize="16" Margin="10"/>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                <Button Content="Add Minute" Click="btnAddOneMinute_Click" Width="80"/>
+                <Button Content="Add Hour" Click="btnAddOneHour_Click" Width="80"/>
+                <Button Content="Add Day" Click="btnAddOneDay_Click" Width="80"/>
+                <Button Content="Add Month" Click="btnAddOneMonth_Click" Width="80"/>
+                <Button Content="Add Year" Click="btnAddOneYear_Click" Width="80"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Configuration Variables -->
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBox Width="200" Margin="0,0,10,0" 
+                         Text="{Binding RiskRange}" IsReadOnly="False"/>
+                <Button Content="Update" Width="80" Click="UpdateRiskRange_Click"/>
+                <Label Content="Risk Range" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Simulator Controls (Stage 7) -->
+        <GroupBox Header="Simulator Controls" Grid.Row="2" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
+                <Label Content="Interval (minutes):" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox Width="60" Text="{Binding Interval, Mode=TwoWay}" 
+                         IsEnabled="{Binding IsSimulatorRunning, Converter={StaticResource InverseBoolConverter}}"
+                         VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <!--<Button Content="{Binding IsSimulatorRunning, Converter={StaticResource SimulatorButtonTextConverter}}"
+                        Click="ToggleSimulator_Click"
+                        Width="120" Height="30"/>-->
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Call quantities list -->
+        <GroupBox Header="Call quantities" Grid.Row="3" Margin="0,0,0,10">
+            <ListView ItemsSource="{Binding CallQuantities}" Height="200">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="150"/>
+                        <GridViewColumn Header="Count" DisplayMemberBinding="{Binding Count}" Width="100"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+
+        <!-- DB operation buttons -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+            <Button Content="Handle Volunteers" Width="120" Height="35" Click="btnVolunteers_Click"/>
+            <Button Content="Handle Calls" Width="120" Height="35" Click="btnCalls_Click"/>
+            <Button Content="Initialize DB" Width="120" Height="35" Click="btnInitializeDB_Click"/>
             <Button Content="Reset DB" Width="120" Height="35" Click="btnResetDB_Click"/>
         </StackPanel>
     </Grid>

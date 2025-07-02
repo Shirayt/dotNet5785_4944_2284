@@ -136,8 +136,8 @@ internal class CallImplementation : ICall
                 CallType = (DO.CallType)call.CallType,
                 Description = call.Description,
                 FullAddress = call.FullAddress,
-                Latitude = call.Latitude ?? 0,
-                Longitude = call.Longitude ?? 0,
+                Latitude =0,
+                Longitude = 0,
                 OpenTime = call.OpenTime,
                 MaxEndTime = call.MaxEndTime
             };
@@ -147,12 +147,16 @@ internal class CallImplementation : ICall
 
             CallManager.Observers.NotifyItemUpdated(doCall.Id);
             CallManager.Observers.NotifyListUpdated();
+
+            _ = Task.Run(() => Tools.UpdateCoordinatesForCallAsync(doCall));
+
         }
         catch (DO.DalDoesNotExistException ex)
         {
             throw new BO.BlDoesNotExistException("Somthing went wrong during update call details in BL: ", ex);
         }
     }
+    
 
     public void DeleteCall(int callId)
     {
@@ -188,7 +192,7 @@ internal class CallImplementation : ICall
         }
     }
 
-    public void AddCall(BO.Call call)
+    public async Task AddCall(BO.Call call)
     {
         AdminManager.ThrowOnSimulatorIsRunning();
 
@@ -201,22 +205,25 @@ internal class CallImplementation : ICall
                 CallType = (DO.CallType)call.CallType,
                 Description = call.Description,
                 FullAddress = call.FullAddress,
-                Latitude = call.Latitude ?? 0,
-                Longitude = call.Longitude ?? 0,
+                Latitude = 0,
+                Longitude = 0,
                 OpenTime = AdminManager.Now,
                 MaxEndTime = call.MaxEndTime
             };
 
             lock (AdminManager.blMutex)
                 _dal.Call.Create(doCall);
-
             CallManager.Observers.NotifyListUpdated();
+
+            _ = Task.Run(() => Tools.UpdateCoordinatesForCallAsync(doCall));
+
         }
         catch (DO.DalAlreadyExistsException ex)
         {
             throw new BO.BlAlreadyExistsException("Somthing went wrong during call addition in BL: ", ex);
         }
     }
+
     public IEnumerable<BO.ClosedCallInList> GetClosedCallsByVolunteer(int volunteerId, BO.FilterAndSortByFields? filterType, BO.FilterAndSortByFields? sortField)
     {
         IEnumerable<DO.Call> calls;

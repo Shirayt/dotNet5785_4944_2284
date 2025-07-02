@@ -128,9 +128,8 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             existingVolunteer.Email = volunteer.Email;
             existingVolunteer.Password = volunteer.Password;
             existingVolunteer.CurrentFullAddress = volunteer.CurrentFullAddress;
-            var (latitude, longitude) = await Tools.GetCoordinatesFromAddress(volunteer.CurrentFullAddress);
-            existingVolunteer.Latitude = latitude;
-            existingVolunteer.Longitude = longitude;
+            existingVolunteer.Latitude = null;
+            existingVolunteer.Longitude = null;
             existingVolunteer.IsActive = volunteer.IsActive;
             existingVolunteer.MaxDistanceForCall = volunteer.MaxDistanceForCall;
             existingVolunteer.DistanceType = (DO.DistanceType)volunteer.DistanceType;
@@ -138,6 +137,9 @@ internal class VolunteerImplementation : BlApi.IVolunteer
 
             lock (AdminManager.blMutex) //stage 7
                 _dal.Volunteer.Update(existingVolunteer);
+
+            _ = Task.Run(() => Tools.UpdateCoordinatesForVolunteerAddressAsync(existingVolunteer));
+
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -224,7 +226,7 @@ internal class VolunteerImplementation : BlApi.IVolunteer
 
 
             VolunteerManager.Observers.NotifyListUpdated(); //stage 5
-            _ = Task.Run(() => UpdateCoordinatesForVolunteerAddressAsync(newVolunteer));
+            _ = Task.Run(() => Tools.UpdateCoordinatesForVolunteerAddressAsync(newVolunteer));
         }
         catch (DO.DalAlreadyExistsException ex)
         {

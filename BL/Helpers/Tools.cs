@@ -6,11 +6,13 @@ using System.Text;
 using System;
 using DalApi;
 using Helpers;
+using BlApi;
 //using BO;
 
 internal static class Tools
 {
     private static readonly DalApi.IDal _dal = DalApi.Factory.Get; //stage 4
+    private static IBl s_bl = BlApi.Factory.Get();
 
     // Property to store the selected distance type
     private static BO.DistanceType _selectedDistanceType = BO.DistanceType.Air;
@@ -167,7 +169,7 @@ internal static class Tools
     }
 
 
-    private static async Task UpdateCoordinatesForVolunteerAddressAsync(DO.Volunteer doVolunteer)
+    public static async Task UpdateCoordinatesForVolunteerAddressAsync(DO.Volunteer doVolunteer)
     {
         if (!string.IsNullOrWhiteSpace(doVolunteer.CurrentFullAddress))
         {
@@ -180,12 +182,34 @@ internal static class Tools
             };
 
             lock (AdminManager.blMutex)
-                s_dal.Update(updatedVolunteer);
+                _dal.Volunteer.Update(updatedVolunteer);
 
             VolunteerManager.Observers.NotifyItemUpdated(updatedVolunteer.Id);
             VolunteerManager.Observers.NotifyListUpdated();
         }
     }
+
+    public static async Task UpdateCoordinatesForCallAsync(DO.Call doCall)
+    {
+        if (!string.IsNullOrWhiteSpace(doCall.FullAddress))
+        {
+            var (latitude, longitude) = await Tools.GetCoordinatesFromAddress(doCall.FullAddress);
+
+            var updatedCall = doCall with
+            {
+                Latitude = latitude,
+                Longitude = longitude
+            };
+
+            lock (AdminManager.blMutex)
+                _dal.Call.Update(updatedCall);
+
+            CallManager.Observers.NotifyItemUpdated(updatedCall.Id);
+            CallManager.Observers.NotifyListUpdated();
+        }
+    }
+
+
 
     /// <summary>
     /// Asynchronously calculates the distance between two geographical points based on the selected distance type.

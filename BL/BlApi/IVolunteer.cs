@@ -35,7 +35,7 @@ public interface IVolunteer: IObservable
     /// <param name="requesterId">The ID of the requester (manager or the volunteer themselves).</param>
     /// <param name="volunteer">A BO.Volunteer object with updated values.</param>
     /// <exception cref="Exception">Thrown if validation fails or the requester is unauthorized.</exception>
-    void UpdateVolunteerDetails(int volunteerId, BO.Volunteer volunteer);
+    Task UpdateVolunteerDetails(int volunteerId, BO.Volunteer volunteer);
 
     /// <summary>
     /// Requests the deletion of a volunteer.
@@ -49,6 +49,6 @@ public interface IVolunteer: IObservable
     /// </summary>
     /// <param name="volunteer">A BO.Volunteer object with complete details of the new volunteer.</param>
     /// <exception cref="Exception">Thrown if validation fails or a volunteer with the same ID already exists.</exception>
-    void AddVolunteer(BO.Volunteer volunteer);
+    Task AddVolunteer(BO.Volunteer volunteer);
 }
 

@@ -33,7 +33,7 @@ public interface ICall : IObservable
     /// </summary>
     /// <param name="call">A BO.Call object with updated values.</param>
     /// <exception cref="Exception">Thrown if validation fails.</exception>
-    void UpdateCallDetails(BO.Call call);
+    Task UpdateCallDetails(BO.Call call);
 
     /// <summary>
     /// Requests the deletion of a call.
@@ -47,7 +47,7 @@ public interface ICall : IObservable
     /// </summary>
     /// <param name="call">A BO.Call object with complete details of the new call.</param>
     /// <exception cref="Exception">Thrown if validation fails or a call with the same ID already exists.</exception>
-    void AddCall(BO.Call call);
+    Task AddCall(BO.Call call);
 
     /// <summary>
     /// Requests a list of closed calls handled by a specific volunteer.

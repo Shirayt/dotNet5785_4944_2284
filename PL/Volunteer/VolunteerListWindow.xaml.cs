@@ -23,6 +23,8 @@ namespace PL.Volunteer
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public BO.VolunteerInList? SelectedVolunteer { get; set; }
 
+        private volatile bool _observerWorking = false; // stage 7
+
         public IEnumerable<BO.VolunteerInList> VolunteerList
         {
             get { return (IEnumerable<BO.VolunteerInList>)GetValue(VolunteerListProperty); }
@@ -44,9 +46,17 @@ namespace PL.Volunteer
             VolunteerList = s_bl.Volunteer.GetVolunteersList(null, VolunteerSortOption);
         }
 
-        private void volunteerListObserver()
+        private void volunteerListObserver() 
         {
-            QueryVolunteerList();
+            if (!_observerWorking)
+            {
+                _observerWorking = true;
+                _ = Dispatcher.BeginInvoke(() =>
+                {
+                    QueryVolunteerList();
+                    _observerWorking = false;
+                });
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

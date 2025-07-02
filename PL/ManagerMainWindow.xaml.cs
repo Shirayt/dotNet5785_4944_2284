@@ -12,6 +12,7 @@ using BlApi;
 using PL.Volunteer;
 using PL.Call;
 using System.Collections.ObjectModel;
+using Helpers;
 
 namespace PL;
 
@@ -23,21 +24,62 @@ public partial class ManagerMainWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
+    private volatile bool _configObserverWorking = false; // stage 7
+    private volatile bool _clockObserverWorking = false; // stage 7
+
     /// <summary>
     /// Clock update view method
     /// </summary>
-    private void clockObserver()
+    private void clockObserver() // stage 7
     {
-        CurrentTime = s_bl.Admin.GetClock();
+        if (_clockObserverWorking)
+            return;
+
+        _clockObserverWorking = true;
+        _ = Dispatcher.BeginInvoke(() =>
+        {
+            try
+            {
+                CurrentTime = s_bl.Admin.GetClock();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Clock observer error:\n{ex.Message}", "Observer Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                _clockObserverWorking = false;
+            }
+        });
     }
+
 
     /// <summary>
     /// Config variables update view method
     /// </summary>
-    private void configObserver()
+    private void configObserver() 
     {
-        RiskRange = s_bl.Admin.GetRiskRange();
+        if (_configObserverWorking)
+            return;
+
+        _configObserverWorking = true;
+        _ = Dispatcher.BeginInvoke(() =>
+        {
+            try
+            {
+                RiskRange = s_bl.Admin.GetRiskRange();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Config observer error:\n{ex.Message}", "Observer Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                _configObserverWorking = false;
+            }
+        });
     }
+
 
     public DateTime CurrentTime
     {
@@ -73,23 +115,25 @@ public partial class ManagerMainWindow : Window
         DependencyProperty.Register(nameof(CallQuantities), typeof(ObservableCollection<CallStatusCount>), typeof(ManagerMainWindow), new PropertyMetadata(new ObservableCollection<CallStatusCount>()));
 
 
-    //public static readonly DependencyProperty IntervalProperty =
-    //DependencyProperty.Register("Interval", typeof(int), typeof(ManagerMainWindow), new PropertyMetadata(1));
+    public static readonly DependencyProperty IntervalProperty =
+    DependencyProperty.Register("Interval", typeof(int), typeof(ManagerMainWindow), new PropertyMetadata(1));
 
-    //public int Interval
-    //{
-    //    get => (int)GetValue(IntervalProperty);
-    //    set => SetValue(IntervalProperty, value);
-    //}
+    public int Interval
+    {
+        get => (int)GetValue(IntervalProperty);
+        set => SetValue(IntervalProperty, value);
+    }
 
-    //public static readonly DependencyProperty IsSimulatorRunningProperty =
-    //DependencyProperty.Register("IsSimulatorRunning", typeof(bool), typeof(ManagerMainWindow), new PropertyMetadata(false));
+    public static readonly DependencyProperty IsSimulatorRunningProperty =
+    DependencyProperty.Register("IsSimulatorRunning", typeof(bool), typeof(ManagerMainWindow), new PropertyMetadata(false));
 
-    //public bool IsSimulatorRunning
-    //{
-    //    get => (bool)GetValue(IsSimulatorRunningProperty);
-    //    set => SetValue(IsSimulatorRunningProperty, value);
-    //}
+    public bool IsSimulatorRunning
+    {
+        get => (bool)GetValue(IsSimulatorRunningProperty);
+        set => SetValue(IsSimulatorRunningProperty, value);
+    }
+
+
     public ManagerMainWindow()
     {
         InitializeComponent();
@@ -117,11 +161,11 @@ public partial class ManagerMainWindow : Window
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        //if (IsSimulatorRunning)
-        //{
-        //    s_bl.Admin.Stop();
-        //    IsSimulatorRunning = false;
-        //}
+        if (IsSimulatorRunning)
+        {
+            s_bl.Admin.StopSimulator();
+            IsSimulatorRunning = false;
+        }
 
         //initialize with real values
         CurrentTime = s_bl.Admin.GetClock();
@@ -136,6 +180,12 @@ public partial class ManagerMainWindow : Window
 
     private void MainWindow_Closed(object? sender, EventArgs e)
     {
+        if (IsSimulatorRunning)
+        {
+            s_bl.Admin.StopSimulator();
+            IsSimulatorRunning = false;
+        }
+
         s_bl.Admin.RemoveClockObserver(clockObserver);
         s_bl.Admin.RemoveConfigObserver(configObserver);
     }
@@ -240,26 +290,26 @@ public partial class ManagerMainWindow : Window
         }
     }
 
-    //private void ToggleSimulator_Click(object sender, RoutedEventArgs e)
-    //{
-    //    try
-    //    {
-    //        if (!IsSimulatorRunning)
-    //        {
-    //            s_bl.Admin.Start(Interval);
-    //            IsSimulatorRunning = true;
-    //        }
-    //        else
-    //        {
-    //            s_bl.Admin.Stop();
-    //            IsSimulatorRunning = false;
-    //        }
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        MessageBox.Show(ex.Message);
-    //    }
-    //}
+    private void ToggleSimulator_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (!IsSimulatorRunning)
+            {
+                s_bl.Admin.StartSimulator(Interval);
+                IsSimulatorRunning = true;
+            }
+            else
+            {
+                s_bl.Admin.StopSimulator();
+                IsSimulatorRunning = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+    }
 
 }
 

@@ -23,6 +23,8 @@ namespace PL.Volunteer
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
+        private volatile bool _observerWorking = false; // stage 7
+
         public BO.Volunteer CurrentVolunteer
         {
             get { return (BO.Volunteer?)GetValue(CurrentVolunteerProperty); }
@@ -97,12 +99,30 @@ namespace PL.Volunteer
                 Close();
             }
         }
-   
-        private void volunteerObserver()
+
+        private void volunteerObserver() 
         {
-            int id = CurrentVolunteer!.Id;
-            CurrentVolunteer = null;
-            CurrentVolunteer = s_bl.Volunteer.GetVolunteerDetails(id);
+            if (_observerWorking)
+                return;
+
+            _observerWorking = true;
+            _ = Dispatcher.BeginInvoke(() =>
+            {
+                try
+                {
+                    int id = CurrentVolunteer!.Id;
+                    CurrentVolunteer = null;
+                    CurrentVolunteer = s_bl.Volunteer.GetVolunteerDetails(id);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Observer error:\n{ex.Message}", "Observer Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                finally
+                {
+                    _observerWorking = false;
+                }
+            });
         }
         private void VolunteerWindow_Loaded(object sender, RoutedEventArgs e)
         {

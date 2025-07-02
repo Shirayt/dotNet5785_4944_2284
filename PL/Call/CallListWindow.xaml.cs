@@ -13,6 +13,8 @@ namespace PL.Call
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public BO.CallInList? SelectedCall { get; set; }
 
+        private volatile bool _observerWorking = false; // stage 7
+
         public IEnumerable<BO.CallInList> CallList
         {
             get { return (IEnumerable<BO.CallInList>)GetValue(CallListProperty); }
@@ -34,9 +36,17 @@ namespace PL.Call
             CallList = s_bl.Call.GetCallsList(null, null, CallSortOption);
         }
 
-        private void callListObserver()
+        private void callListObserver() 
         {
-            QueryCallList();
+            if (!_observerWorking)
+            {
+                _observerWorking = true;
+                _ = Dispatcher.BeginInvoke(() =>
+                {
+                    QueryCallList();
+                    _observerWorking = false;
+                });
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

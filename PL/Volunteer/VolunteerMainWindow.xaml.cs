@@ -11,6 +11,8 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
+    private volatile bool _observerWorking = false; // stage 7
+
     public BO.Volunteer Volunteer
     {
         get { return (BO.Volunteer)GetValue(VolunteerProperty); }
@@ -40,17 +42,28 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
         OnPropertyChanged(nameof(ShowChooseCallButton));
     }
 
-    private void volunteerObserver()
+    private void volunteerObserver() 
     {
-        try
+        if (_observerWorking)
+            return;
+
+        _observerWorking = true;
+        _ = Dispatcher.BeginInvoke(() =>
         {
-            Volunteer = s_bl.Volunteer.GetVolunteerDetails(VolunteerId);
-            NotifyAll();
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Observer error:\n{ex.Message}", "Observer Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+            try
+            {
+                Volunteer = s_bl.Volunteer.GetVolunteerDetails(VolunteerId);
+                NotifyAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Observer error:\n{ex.Message}", "Observer Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                _observerWorking = false;
+            }
+        });
     }
 
 

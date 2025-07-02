@@ -2,12 +2,14 @@
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Implementing the CRUD functions on the Volunteer entity
 /// </summary>
 internal class VolunteerImplementation : IVolunteer
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Create(Volunteer item)
     {
 
@@ -19,6 +21,7 @@ internal class VolunteerImplementation : IVolunteer
         DataSource.Volunteers.Add(item);
 
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Volunteer? Read(int id)
     {
         Volunteer? existingItem = DataSource.Volunteers.FirstOrDefault(volunteer => volunteer?.Id == id);
@@ -30,6 +33,7 @@ internal class VolunteerImplementation : IVolunteer
 
         throw new DalDoesNotExistException($"Volunteer with ID {id} does not exist.");
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Volunteer? Read(Func<Volunteer, bool> filter)
     {
         Volunteer? existingItem = DataSource.Volunteers.FirstOrDefault(volunteer => filter(volunteer));
@@ -41,6 +45,7 @@ internal class VolunteerImplementation : IVolunteer
 
         return null;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Volunteer>? ReadAll(Func<Volunteer, bool>? filter = null)
     {
         if (DataSource.Volunteers.Count == 0)
@@ -51,6 +56,7 @@ internal class VolunteerImplementation : IVolunteer
             ? DataSource.Volunteers.Select(item => item)
             : DataSource.Volunteers.Where(filter);
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Volunteer item)
     {
         // Find the index of the object in the list with the matching ID
@@ -62,6 +68,7 @@ internal class VolunteerImplementation : IVolunteer
         // Replace the existing object with the new object
         DataSource.Volunteers[index] = item;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         // Find the index of the object in the list with the matching ID
@@ -73,6 +80,7 @@ internal class VolunteerImplementation : IVolunteer
         // Remove the object from the list
         DataSource.Volunteers.RemoveAt(index);
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteAll()
     {
         DataSource.Volunteers.Clear();

@@ -12,6 +12,8 @@ internal class AdminImplementation : IAdmin
     }
     public void ForwardClock(TimeUnit unit)
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
+
         DateTime currentClock = AdminManager.Now;
         DateTime newClock = unit switch
         {
@@ -27,6 +29,8 @@ internal class AdminImplementation : IAdmin
     }
     public void SetRiskRange(TimeSpan timeRange)
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
+
         AdminManager.RiskRange = timeRange;
 
     }
@@ -37,10 +41,16 @@ internal class AdminImplementation : IAdmin
 
     public void InitializeDB()
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
+
+        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
         AdminManager.InitializeDB();
     }
     public void ResetDB()
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
+
+        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
         AdminManager.ResetDB();
     }
 
@@ -56,7 +66,16 @@ internal class AdminImplementation : IAdmin
     AdminManager.ConfigUpdatedObservers -= configObserver;
     #endregion Stage 5
 
-}
 
+    public void StartSimulator(int interval)  //stage 7
+    {
+        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
+        AdminManager.Start(interval); //stage 7
+    }
+
+    public void StopSimulator()
+    => AdminManager.Stop(); //stage 7
+
+}
 
 

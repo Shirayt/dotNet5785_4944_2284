@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text;
 using System;
+using DalApi;
+using Helpers;
 //using BO;
 
 internal static class Tools
@@ -111,17 +113,17 @@ internal static class Tools
     /// </summary>
     /// <param name="address">The address for which to retrieve coordinates.</param>
     /// <returns>A tuple containing the latitude and longitude of the address.</returns>
-    public static (double, double) GetCoordinatesFromAddress(string address)
+    public static async Task <(double, double)> GetCoordinatesFromAddress(string address)
     {
         string apiKey = "PK.83B935C225DF7E2F9B1ee90A6B46AD86";
         using var client = new HttpClient();
         string url = $"https://us1.locationiq.com/v1/search.php?key={apiKey}&q={Uri.EscapeDataString(address)}&format=json";
 
-        var response = client.GetAsync(url).GetAwaiter().GetResult();
+        var response = await client.GetAsync(url);
         if (!response.IsSuccessStatusCode)
             throw new Exception("Invalid address or API error.");
 
-        var json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        var json = await response.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(json);
 
         if (doc.RootElement.ValueKind != JsonValueKind.Array || doc.RootElement.GetArrayLength() == 0)
@@ -161,6 +163,27 @@ internal static class Tools
         })
         {
             smtpClient.Send(message);
+        }
+    }
+
+
+    private static async Task UpdateCoordinatesForVolunteerAddressAsync(DO.Volunteer doVolunteer)
+    {
+        if (!string.IsNullOrWhiteSpace(doVolunteer.CurrentFullAddress))
+        {
+            var (latitude, longitude) = await Tools.GetCoordinatesFromAddress(doVolunteer.CurrentFullAddress);
+
+            var updatedVolunteer = doVolunteer with
+            {
+                Latitude = latitude,
+                Longitude = longitude
+            };
+
+            lock (AdminManager.blMutex)
+                s_dal.Update(updatedVolunteer);
+
+            VolunteerManager.Observers.NotifyItemUpdated(updatedVolunteer.Id);
+            VolunteerManager.Observers.NotifyListUpdated();
         }
     }
 

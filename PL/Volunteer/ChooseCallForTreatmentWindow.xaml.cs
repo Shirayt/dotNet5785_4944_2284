@@ -62,8 +62,6 @@ public partial class ChooseCallForTreatmentWindow : Window
         {
             s_bl.Call.SelectCallForTreatment(_volunteerId, SelectedCall.Id);
             MessageBox.Show("Call selected successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            //OnCallSelectedSuccessfully?.Invoke(); 
-            new VolunteerMainWindow(_volunteerId).Show();///לתקן אחרי טאג 7
             Close();
         }
         catch (Exception ex)

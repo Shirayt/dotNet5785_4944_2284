@@ -1,6 +1,7 @@
 ﻿namespace BlImplementation;
 using BlApi;
 using BO;
+using DO;
 using Helpers;
 using System;
 using System.Collections.Generic;
@@ -280,7 +281,7 @@ internal class CallImplementation : ICall
             var callStatus = Helpers.CallManager.GetCallStatus(call).Status;
 
             // checks if call is open
-            if (!( callStatus == BO.CallStatus.InProcessing) || assignment.EndTime != null)
+            if (!(callStatus == BO.CallStatus.InProcessing) || assignment.EndTime != null)
             {
                 throw new InvalidOperationException("Assignment is not open for completion.");
             }
@@ -293,8 +294,12 @@ internal class CallImplementation : ICall
             };
 
             _dal.Assignment.Update(updatedAssignment);
-            AssignmentManager.Observers.NotifyItemUpdated(assignmentId); //stage 5
-            AssignmentManager.Observers.NotifyListUpdated(); //stage 5                                                    
+
+            CallManager.Observers.NotifyItemUpdated(call.Id); //stage 5
+            CallManager.Observers.NotifyListUpdated(); //stage 5    
+
+            VolunteerManager.Observers.NotifyItemUpdated(volunteerId); //stage 5
+            VolunteerManager.Observers.NotifyListUpdated(); //stage 5 
 
         }
         catch (DO.DalDoesNotExistException ex)
@@ -332,8 +337,12 @@ internal class CallImplementation : ICall
             };
 
             _dal.Assignment.Update(updatedAssignment);
-            AssignmentManager.Observers.NotifyItemUpdated(updatedAssignment.Id); //stage 5                                                    
-            AssignmentManager.Observers.NotifyListUpdated(); //stage 5                                                    
+          
+            CallManager.Observers.NotifyItemUpdated(call.Id); //stage 5
+            CallManager.Observers.NotifyListUpdated(); //stage 5    
+
+            VolunteerManager.Observers.NotifyItemUpdated(requesterId); //stage 5
+            VolunteerManager.Observers.NotifyListUpdated(); //stage 5 
 
         }
 
@@ -385,7 +394,13 @@ internal class CallImplementation : ICall
             };
 
 
-             _dal.Assignment.Create(newAssignment);
+            _dal.Assignment.Create(newAssignment);
+
+            CallManager.Observers.NotifyItemUpdated(callId); //stage 5
+            CallManager.Observers.NotifyListUpdated(); //stage 5    
+
+            VolunteerManager.Observers.NotifyItemUpdated(volunteerId); //stage 5
+            VolunteerManager.Observers.NotifyListUpdated(); //stage 5 
         }
         catch (DO.DalAlreadyExistsException ex)
         {

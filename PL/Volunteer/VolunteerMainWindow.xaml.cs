@@ -20,7 +20,7 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
     public static readonly DependencyProperty VolunteerProperty =
         DependencyProperty.Register("Volunteer", typeof(BO.Volunteer), typeof(VolunteerMainWindow), new PropertyMetadata(null));
 
-    public CallInProgress? CallInProgress { get; set; }
+    public CallInProgress? CallInProgress => Volunteer?.callInProgress;
 
     public bool HasCallInProgress => CallInProgress != null;
     public bool ShowChooseCallButton => CallInProgress == null;
@@ -31,25 +31,6 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
     {
         InitializeComponent();
         VolunteerId = volunteerId;
-        LoadVolunteer(VolunteerId);
-    }
-
-    private void LoadVolunteer(int id)
-    {
-        try
-        {
-            Volunteer = s_bl.Volunteer.GetVolunteerDetails(id);
-            CallInProgress = Volunteer.callInProgress;
-            NotifyAll();
-        }
-        catch (BO.BlDoesNotExistException ex)
-        {
-            MessageBox.Show($"Volunteer not found or missing.\n{ex.InnerException?.Message}", "Volunteer Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error loading volunteer data:\n{ex.Message}", "General Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
     }
     private void NotifyAll()
     {
@@ -58,7 +39,20 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
         OnPropertyChanged(nameof(HasCallInProgress));
         OnPropertyChanged(nameof(ShowChooseCallButton));
     }
-    private void volunteerObserver() => LoadVolunteer(VolunteerId);
+
+    private void volunteerObserver()
+    {
+        try
+        {
+            Volunteer = s_bl.Volunteer.GetVolunteerDetails(VolunteerId);
+            NotifyAll();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Observer error:\n{ex.Message}", "Observer Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
 
     private void VolunteerMainWindow_Loaded(object sender, RoutedEventArgs e)
     {
@@ -93,7 +87,6 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
             if (CallInProgress == null) return;
             s_bl.Call.MarkCallAsCompleted(Volunteer.Id, CallInProgress.AssignmentId);
             MessageBox.Show("Treatment finished", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
-            LoadVolunteer(Volunteer.Id);
         }
         catch (Exception ex)
         {
@@ -109,7 +102,6 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
             {
                 s_bl.Call.CancelCallAssignment(Volunteer.Id, CallInProgress.CallId);
                 MessageBox.Show("Treatment cancelled", "Cancelled", MessageBoxButton.OK, MessageBoxImage.Information);
-                LoadVolunteer(Volunteer.Id);
             }
         }
         catch (Exception ex)
@@ -121,7 +113,6 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
     private void ChooseCall_Click(object sender, RoutedEventArgs e)
     {
         new ChooseCallForTreatmentWindow(Volunteer.Id).Show();
-        this.Close();///לתקן אחרי טאג 7
     }
 
     private void btnShowVolunteerCallsHistory_Click(object sender, RoutedEventArgs e)

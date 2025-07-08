@@ -16,6 +16,7 @@ internal class CallImplementation : ICall
     {
         var callStatuses = Helpers.CallManager.GetCallStatuses();
 
+
         var callCountsByStatus = callStatuses
             .GroupBy(cs => cs.Status)
             .ToDictionary(g => g.Key, g => g.Count());
@@ -48,7 +49,7 @@ internal class CallImplementation : ICall
                 OpenTime = c.OpenTime,
                 RestTimeForCall = Helpers.CallManager.CalculateRestTimeForCall(c),
                 LastVolunteerName = Helpers.CallManager.GetLastVolunteerName(c),
-                RestTimeForTreatment = Helpers.CallManager.CalculateRestTimeForTreatment(c),
+                TreatmentCompletionTime = Helpers.CallManager.CalculateTreatmentCompletionTime(c),
                 Status = Helpers.CallManager.GetCallStatus(c).Status,
                 AllocationsAmount = Helpers.CallManager.GetAllocationsAmount(c.Id)
             });
@@ -136,7 +137,7 @@ internal class CallImplementation : ICall
                 CallType = (DO.CallType)call.CallType,
                 Description = call.Description,
                 FullAddress = call.FullAddress,
-                Latitude =0,
+                Latitude = 0,
                 Longitude = 0,
                 OpenTime = call.OpenTime,
                 MaxEndTime = call.MaxEndTime
@@ -156,7 +157,7 @@ internal class CallImplementation : ICall
             throw new BO.BlDoesNotExistException("Somthing went wrong during update call details in BL: ", ex);
         }
     }
-    
+
 
     public void DeleteCall(int callId)
     {
@@ -208,7 +209,7 @@ internal class CallImplementation : ICall
                 Latitude = 0,
                 Longitude = 0,
                 OpenTime = AdminManager.Now,
-                MaxEndTime = call.MaxEndTime
+                MaxEndTime = call.MaxEndTime,
             };
 
             lock (AdminManager.blMutex)
@@ -280,7 +281,7 @@ internal class CallImplementation : ICall
                     OpenTime = c.OpenTime,
                     MaxEndTime = c.MaxEndTime,
                     DistanceFromVolunteer = Tools.CalculateDistance(volunteer.Latitude, volunteer.Longitude, c.Latitude, c.Longitude)
-                });
+                }).Where(c => c.DistanceFromVolunteer <= volunteer.MaxDistanceForCall);
 
             return sortField != null
                 ? openCalls.OrderBy(c => c.GetType().GetProperty(sortField.ToString()!)?.GetValue(c))
@@ -298,10 +299,10 @@ internal class CallImplementation : ICall
 
     public void MarkCallAsCompleted(int volunteerId, int assignmentId)
     {
-        AdminManager.ThrowOnSimulatorIsRunning();
 
         try
         {
+            AdminManager.ThrowOnSimulatorIsRunning();
             DO.Assignment assignment;
             DO.Call call;
             lock (AdminManager.blMutex)
@@ -340,10 +341,10 @@ internal class CallImplementation : ICall
 
     public void CancelCallAssignment(int requesterId, int callId)
     {
-        AdminManager.ThrowOnSimulatorIsRunning();
 
         try
         {
+            AdminManager.ThrowOnSimulatorIsRunning();
             DO.Assignment assignment;
             DO.Volunteer requesterVolunteer;
             DO.Call call;

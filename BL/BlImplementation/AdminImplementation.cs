@@ -26,13 +26,14 @@ internal class AdminImplementation : IAdmin
         };
 
         AdminManager.UpdateClock(newClock);
+        CallManager.Observers.NotifyListUpdated();
+        VolunteerManager.Observers.NotifyListUpdated();
     }
     public void SetRiskRange(TimeSpan timeRange)
     {
         AdminManager.ThrowOnSimulatorIsRunning();
-
         AdminManager.RiskRange = timeRange;
-
+        CallManager.Observers.NotifyListUpdated();
     }
     public TimeSpan GetRiskRange()
     {
@@ -41,15 +42,11 @@ internal class AdminImplementation : IAdmin
 
     public void InitializeDB()
     {
-        AdminManager.ThrowOnSimulatorIsRunning();
-
         AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
         AdminManager.InitializeDB();
     }
     public void ResetDB()
     {
-        AdminManager.ThrowOnSimulatorIsRunning();
-
         AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
         AdminManager.ResetDB();
     }

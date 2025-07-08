@@ -49,9 +49,11 @@ internal static class AdminManager //stage 4
         lock (blMutex) //stage 7
         {
             s_dal.ResetDB();
-            AdminManager.UpdateClock(AdminManager.Now); //stage 5 - needed since we want the label on Pl to be updated
-            AdminManager.RiskRange = AdminManager.RiskRange; // stage 5 - needed to update PL
         }
+        AdminManager.UpdateClock(AdminManager.Now); //stage 5 - needed since we want the label on Pl to be updated
+        AdminManager.RiskRange = AdminManager.RiskRange; // stage 5 - needed to update PL
+        VolunteerManager.Observers.NotifyListUpdated(); //stage 5
+        CallManager.Observers.NotifyListUpdated(); //stage 5
     }
 
     internal static void InitializeDB() //stage 4
@@ -59,9 +61,10 @@ internal static class AdminManager //stage 4
         lock (blMutex) //stage 7
         {
             DalTest.Initialization.Do();
-            AdminManager.UpdateClock(AdminManager.Now);  //stage 5 - needed since we want the label on Pl to be updated
-            AdminManager.RiskRange = AdminManager.RiskRange; // stage 5 - needed for update the PL
         }
+        AdminManager.UpdateClock(AdminManager.Now);  //stage 5 - needed since we want the label on Pl to be updated
+        AdminManager.RiskRange = AdminManager.RiskRange; // stage 5 - needed for update the PL
+
     }
 
     private static Task? _periodicTask = null;
@@ -72,10 +75,11 @@ internal static class AdminManager //stage 4
     /// <param name="newClock">updated clock value</param>
     internal static void UpdateClock(DateTime newClock) //stage 4-7
     {
+
         var oldClock = s_dal.Config.Clock; //stage 4
-        s_dal.Config.Clock = newClock; //stage 4
 
-
+        lock (blMutex) //stage 7
+            s_dal.Config.Clock = newClock; //stage 4
 
         if (_periodicTask is null || _periodicTask.IsCompleted) //stage 7
             _periodicTask = Task.Run(() =>

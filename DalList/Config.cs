@@ -18,6 +18,8 @@ internal static class Config
     internal static int NextAssignmentId { get => AssignmentId++; }
     public static DateTime Clock { get; set; }
     static TimeSpan RiskRange { get; set; }
+
+
     [MethodImpl(MethodImplOptions.Synchronized)]
     internal static void Reset()
     {

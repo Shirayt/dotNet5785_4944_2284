@@ -11,8 +11,6 @@ public partial class ChooseCallForTreatmentWindow : Window
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
     private readonly int _volunteerId;
-    //public Action? OnCallSelectedSuccessfully { get; set; }
-
     public List<OpenCallInList> OpenCalls
     {
         get => (List<OpenCallInList>)GetValue(OpenCallsProperty);

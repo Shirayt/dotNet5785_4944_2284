@@ -37,7 +37,7 @@
                 <DataGridTextColumn Header="Open Time" Binding="{Binding OpenTime}" Width="Auto"/>
                 <DataGridTextColumn Header="Rest Time For Call" Binding="{Binding RestTimeForCall}" Width="Auto"/>
                 <DataGridTextColumn Header="Volunteer" Binding="{Binding LastVolunteerName}" Width="Auto"/>
-                <DataGridTextColumn Header="Rest Time For Treatment" Binding="{Binding RestTimeForTreatment}" Width="Auto"/>
+                <DataGridTextColumn Header="Treatment Completion Time" Binding="{Binding TreatmentCompletionTime}" Width="Auto"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="Auto"/>
                 <DataGridTextColumn Header="Allocations" Binding="{Binding AllocationsAmount}" Width="Auto"/>
                 <DataGridTemplateColumn Header="Delete">

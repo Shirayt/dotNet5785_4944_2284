@@ -178,6 +178,19 @@ internal static class VolunteerManager
             throw new BlInvalidInputException("Invalid DistanceType value.");
         }
     }
+
+    public static bool IsSingleManager(int volunteerId, DO.Role selfRole)
+    {
+       IEnumerable<DO.Volunteer> ? volunteers;
+
+        lock (AdminManager.blMutex)
+        {
+            volunteers = s_dal.Volunteer.ReadAll();
+        }
+
+        return volunteers.Count(v => v.Role == DO.Role.Manager) == 1 && selfRole == DO.Role.Manager;
+    }
+
     public static BO.CallInProgress? GetCallInProgress(int volunteerId)
     {
         var volunteer = s_dal.Volunteer.Read(volunteerId);
@@ -221,11 +234,12 @@ internal static class VolunteerManager
 
     public static void PeriodicVolunteerUpdates(DateTime oldClock, DateTime newClock)
     {
-        var assignments = s_dal.Assignment.ReadAll()
+        var assignments = s_dal.Assignment.ReadAll() ?? Enumerable.Empty<DO.Assignment>();
+        var udatedAssignments = assignments
             .Where(a => a.EndTime == null)
             .ToList();
 
-        var toUpdate = assignments
+        var toUpdate = udatedAssignments
             .Select(a => new { Assignment = a, Call = s_dal.Call.Read(c => c.Id == a.CallId) })
             .Where(ac => ac.Call.MaxEndTime.HasValue && ac.Call.MaxEndTime <= newClock)
             .ToList();

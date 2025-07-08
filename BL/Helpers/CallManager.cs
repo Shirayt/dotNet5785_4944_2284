@@ -15,11 +15,14 @@ internal static class CallManager
 
     public static IEnumerable<(int CallId, CallStatus Status)> GetCallStatuses()
     {
-        IEnumerable<DO.Call> calls;
+        IEnumerable<DO.Call>? calls;
         lock (AdminManager.blMutex)
         {
             calls = s_dal.Call.ReadAll();
         }
+
+        if (calls == null || !calls.Any())
+            return Enumerable.Empty<(int CallId, CallStatus Status)>();
 
         return calls.Select(call => GetCallStatus(call));
     }
@@ -29,11 +32,8 @@ internal static class CallManager
         IEnumerable<DO.Assignment> assignments;
         lock (AdminManager.blMutex)
         {
-            assignments = s_dal.Assignment.ReadAll();
+            assignments = s_dal.Assignment.ReadAll() ?? Enumerable.Empty<DO.Assignment>(); ;
         }
-
-        var assignment = assignments.OrderByDescending(a => a.Id).FirstOrDefault(a => a.CallId == call.Id);
-        var assignmentStatus = assignment?.Status;
 
         TimeSpan? riskRange;
         lock (AdminManager.blMutex)
@@ -41,8 +41,12 @@ internal static class CallManager
             riskRange = s_dal.Config.RiskRange;
         }
 
-        if (assignmentStatus == DO.AssignmentStatus.SelfCancelled ||
-            assignmentStatus == DO.AssignmentStatus.ManagerCancelled)
+        var assignment = assignments.OrderByDescending(a => a.Id).FirstOrDefault(a => a.CallId == call.Id);
+        var assignmentStatus = assignment?.Status;
+
+        if (assignment == null ||
+            assignmentStatus == DO.AssignmentStatus.SelfCancelled ||
+             assignmentStatus == DO.AssignmentStatus.ManagerCancelled)
         {
             if (call.MaxEndTime.HasValue && (call.MaxEndTime.Value - AdminManager.Now).TotalHours <= riskRange.Value.TotalHours)
             {
@@ -66,8 +70,11 @@ internal static class CallManager
 
     public static TimeSpan? CalculateRestTimeForCall(DO.Call call)
     {
+        if (call.MaxEndTime == null)
+            return null;
+
         var currentTime = AdminManager.Now;
-        return currentTime > call.OpenTime ? currentTime - call.OpenTime : null;
+        return call.MaxEndTime > currentTime ? call.MaxEndTime - currentTime  : null;
     }
 
     public static string? GetLastVolunteerName(DO.Call call)
@@ -88,7 +95,7 @@ internal static class CallManager
         return lastAssignment != null ? volunteers.FirstOrDefault(v => v.Id == lastAssignment.VolunteerId)?.FullName : null;
     }
 
-    public static TimeSpan? CalculateRestTimeForTreatment(DO.Call call)
+    public static TimeSpan? CalculateTreatmentCompletionTime(DO.Call call)
     {
         IEnumerable<DO.Assignment> assignments;
         lock (AdminManager.blMutex)
@@ -145,9 +152,9 @@ internal static class CallManager
             throw new BlInvalidTimeException("Open time cannot be in the future.");
         }
 
-        if (call.MaxEndTime.HasValue && call.MaxEndTime.Value <= call.OpenTime)
+        if (call.MaxEndTime.HasValue && call.MaxEndTime.Value <= call.OpenTime && call.MaxEndTime < AdminManager.Now)
         {
-            throw new BlInvalidTimeException("Maximum end time must be after open time.");
+            throw new BlInvalidTimeException("Maximum end time must be after current and open time.");
         }
 
         if (!Enum.IsDefined(typeof(BO.CallStatus), call.Status))
@@ -189,6 +196,7 @@ internal static class CallManager
     public static double GetDistanceFromVolunteer(int volunteerId, DO.Call call)
     {
         DO.Volunteer volunteer;
+
         lock (AdminManager.blMutex)
         {
             volunteer = s_dal.Volunteer.Read(volunteerId);
@@ -216,14 +224,14 @@ internal static class CallManager
 
     public static void PeriodicCallUpdates(DateTime oldClock, DateTime newClock)
     {
-        var dal = Factory.Get;
-        var callsToUpdate = dal.Call.ReadAll()
+        var Calls = s_dal.Call.ReadAll() ?? Enumerable.Empty<DO.Call>();
+        var callsToUpdate = Calls
             .Where(c => c.MaxEndTime.HasValue && c.MaxEndTime <= newClock)
             .ToList();
 
         foreach (var call in callsToUpdate)
         {
-            var assignments = dal.Assignment.ReadAll()
+            var assignments = s_dal.Assignment.ReadAll()
                 .Where(a => a.CallId == call.Id && a.EndTime == null)
                 .OrderByDescending(a => a.Id).ToList();
 
@@ -237,7 +245,7 @@ internal static class CallManager
             };
 
             lock (AdminManager.blMutex)
-                dal.Assignment.Update(updatedAssignment);
+                s_dal.Assignment.Update(updatedAssignment);
         }
 
         foreach (var call in callsToUpdate)

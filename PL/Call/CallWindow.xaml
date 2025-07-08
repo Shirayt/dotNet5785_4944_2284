@@ -74,10 +74,12 @@
 
                 <Label Content="Max End Time" Grid.Row="7" Grid.Column="0"/>
                 <TextBox Text="{Binding CurrentCall.MaxEndTime, Mode=TwoWay}" Grid.Row="7" Grid.Column="1"/>
+                
+                <Label Content="Status"   Grid.Row="8" Grid.Column="0"
+                 Visibility="{Binding ButtonText, Converter={StaticResource ConvertUpdateToCollapsedKey}}"/>
+                <TextBox Text="{Binding CurrentCall.Status}"      Grid.Row="8" Grid.Column="1"   IsReadOnly="True"
+                Visibility="{Binding ButtonText, Converter={StaticResource ConvertUpdateToCollapsedKey}}"/>
 
-                <Label Content="Status" Grid.Row="8" Grid.Column="0"/>
-                <ComboBox ItemsSource="{Binding Source={StaticResource CallStatusCollectionKey}}"
-                          SelectedItem="{Binding CurrentCall.Status}" Grid.Row="8" Grid.Column="1"/>
             </Grid>
         </ScrollViewer>
 

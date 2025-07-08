@@ -157,6 +157,14 @@ namespace PL.Volunteer
 
                 Close();
             }
+            catch (BO.BlTemporaryNotAvailableException ex)
+            {
+                MessageBox.Show(ex.Message, "Temporary Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (BO.BlInvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "Cannot Delete Volunteer", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);

@@ -63,9 +63,9 @@ internal class VolunteerImplementation : BlApi.IVolunteer
 
     public BO.Volunteer GetVolunteerDetails(int volunteerId)
     {
-        DO.Volunteer volunteer;
         try
         {
+            DO.Volunteer volunteer;
             lock (AdminManager.blMutex) //stage 7
                 volunteer = _dal.Volunteer.Read(volunteerId);
 
@@ -103,11 +103,12 @@ internal class VolunteerImplementation : BlApi.IVolunteer
 
     public async Task UpdateVolunteerDetails(int volunteerId, BO.Volunteer volunteer)
     {
-        AdminManager.ThrowOnSimulatorIsRunning();
-
-        DO.Volunteer existingVolunteer;
+        
         try
         {
+            AdminManager.ThrowOnSimulatorIsRunning();
+
+            DO.Volunteer existingVolunteer;
             lock (AdminManager.blMutex) //stage 7
                 existingVolunteer = _dal.Volunteer.Read(volunteerId);
 
@@ -119,6 +120,11 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             if (existingVolunteer.Role != DO.Role.Manager && (DO.Role)volunteer.Role == DO.Role.Manager)
             {
                 throw new BlAuthorizationException("Only a manager can assign the Manager role.");
+            }
+
+            if ((DO.Role)volunteer.Role != DO.Role.Manager && VolunteerManager.IsSingleManager(volunteerId, existingVolunteer.Role))
+            {
+                throw new BlAuthorizationException("Cannot remove the last remaining manager from the system.");
             }
 
             Helpers.VolunteerManager.ValidateBOVolunteerData(volunteer);
@@ -140,23 +146,31 @@ internal class VolunteerImplementation : BlApi.IVolunteer
 
             _ = Task.Run(() => Tools.UpdateCoordinatesForVolunteerAddressAsync(existingVolunteer));
 
+            VolunteerManager.Observers.NotifyItemUpdated(existingVolunteer.Id); //stage 5
+            VolunteerManager.Observers.NotifyListUpdated(); //stage 5
         }
         catch (DO.DalDoesNotExistException ex)
         {
             throw new BO.BlDoesNotExistException($"Somthing went wrong during Update Volunteer Details in BL: ", ex);
         }
-
-        VolunteerManager.Observers.NotifyItemUpdated(existingVolunteer.Id); //stage 5
-        VolunteerManager.Observers.NotifyListUpdated(); //stage 5
+        catch (BO.BlTemporaryNotAvailableException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 
     public void DeleteVolunteer(int volunteerId)
     {
-        AdminManager.ThrowOnSimulatorIsRunning();
 
-        DO.Volunteer volunteer;
         try
         {
+            AdminManager.ThrowOnSimulatorIsRunning();
+
+            DO.Volunteer volunteer;
             lock (AdminManager.blMutex) //stage 7
                 volunteer = _dal.Volunteer.Read(volunteerId);
 
@@ -176,16 +190,28 @@ internal class VolunteerImplementation : BlApi.IVolunteer
         {
             throw new BO.BlDoesNotExistException($"Somthing went wrong during volunteer deletion in BL: ", ex);
         }
+        catch (BO.BlTemporaryNotAvailableException)
+        {
+            throw;
+        }
+        catch (BO.BlInvalidOperationException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
 
         VolunteerManager.Observers.NotifyListUpdated(); //stage 5
     }
 
     public async Task AddVolunteer(BO.Volunteer volunteer)
     {
-        AdminManager.ThrowOnSimulatorIsRunning();
 
         try
         {
+            AdminManager.ThrowOnSimulatorIsRunning();
             Helpers.VolunteerManager.ValidateBOVolunteerData(volunteer);
 
             double? latitude = null, longitude = null;
@@ -232,13 +258,16 @@ internal class VolunteerImplementation : BlApi.IVolunteer
         {
             throw new BO.BlAlreadyExistsException($"Something went wrong during volunteer addition in BL: ", ex);
         }
+        catch (BO.BlTemporaryNotAvailableException)
+        {
+            throw; 
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+
     }
-
-
-
-
-
-
 
 
 

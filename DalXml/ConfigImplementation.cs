@@ -11,7 +11,11 @@ internal class ConfigImplementation : IConfig
         get => Config.Clock;
         set => Config.Clock = value;
     }
-    public TimeSpan RiskRange { get; set; }
+    public TimeSpan RiskRange
+    {
+        get => Config.RiskRange;
+        set => Config.RiskRange = value;
+    }
     public void Reset()
     {
         Config.Reset();

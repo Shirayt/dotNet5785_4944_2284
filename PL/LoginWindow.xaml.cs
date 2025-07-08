@@ -76,6 +76,7 @@ namespace PL
                 {
                     case BO.Role.Volunteer:
                         new Volunteer.VolunteerMainWindow(parsedId).Show();
+                        this.Close();
                         break;
                     case BO.Role.Manager:
                         var result = MessageBox.Show(
@@ -85,13 +86,16 @@ namespace PL
                         if (result == MessageBoxResult.Yes)
                         {
                             new ManagerMainWindow().Show();
+                            this.Close();
                         }
                         else if (result == MessageBoxResult.No)
                         {
                             new Volunteer.VolunteerMainWindow(parsedId).Show();
+                            this.Close();
                         }
                         break;
                 }
+
             }
             catch (Exception ex)
             {

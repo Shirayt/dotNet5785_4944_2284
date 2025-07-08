@@ -8,7 +8,7 @@ public class CallInList
     public DateTime OpenTime { get; set; }
     public TimeSpan? RestTimeForCall { get; set; }
     public string? LastVolunteerName { get; set; }
-    public TimeSpan? RestTimeForTreatment { get; set; }
+    public TimeSpan? TreatmentCompletionTime { get; set; }
     public CallStatus Status { get; set; }
     public int AllocationsAmount { get; set; }
 
@@ -21,7 +21,7 @@ public class CallInList
             $"OpenTime: {OpenTime}\n" +
             $"RestTimeForCall: {(RestTimeForCall.HasValue ? RestTimeForCall.Value.ToString() : "N/A")}\n" +
             $"LastVolunteerName: {LastVolunteerName ?? "N/A"}\n" +
-            $"RestTimeForTreatment: {(RestTimeForTreatment.HasValue ? RestTimeForTreatment.Value.ToString() : "N/A")}\n" +
+            $"RestTimeForTreatment: {(TreatmentCompletionTime.HasValue ? TreatmentCompletionTime.Value.ToString() : "N/A")}\n" +
             $"Status: {Status}\n" +
             $"AllocationsAmount: {AllocationsAmount}";
     }

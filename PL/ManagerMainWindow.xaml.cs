@@ -57,7 +57,7 @@ public partial class ManagerMainWindow : Window
     /// <summary>
     /// Config variables update view method
     /// </summary>
-    private void configObserver() 
+    private void configObserver()
     {
         if (_configObserverWorking)
             return;
@@ -79,7 +79,6 @@ public partial class ManagerMainWindow : Window
             }
         });
     }
-
 
     public DateTime CurrentTime
     {
@@ -133,6 +132,7 @@ public partial class ManagerMainWindow : Window
         set => SetValue(IsSimulatorRunningProperty, value);
     }
 
+    private volatile bool _callQuantitiesObserverWorking = false;
 
     public ManagerMainWindow()
     {
@@ -159,6 +159,25 @@ public partial class ManagerMainWindow : Window
     }
 
 
+    private void callQuantitiesObserver()
+    {
+        if (_callQuantitiesObserverWorking)
+            return;
+
+        _callQuantitiesObserverWorking = true;
+        _ = Dispatcher.BeginInvoke(() =>
+        {
+            try
+            {
+                LoadCallQuantities();
+            }
+            finally
+            {
+                _callQuantitiesObserverWorking = false;
+            }
+        });
+    }
+
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
         if (IsSimulatorRunning)
@@ -174,6 +193,7 @@ public partial class ManagerMainWindow : Window
         //register to be observable
         s_bl.Admin.AddClockObserver(clockObserver);
         s_bl.Admin.AddClockObserver(configObserver);
+        s_bl.Call.AddObserver(callQuantitiesObserver);
 
         LoadCallQuantities();
     }
@@ -188,32 +208,103 @@ public partial class ManagerMainWindow : Window
 
         s_bl.Admin.RemoveClockObserver(clockObserver);
         s_bl.Admin.RemoveConfigObserver(configObserver);
+        s_bl.Call.RemoveObserver(callQuantitiesObserver);
     }
 
     private void btnAddOneMinute_Click(object sender, RoutedEventArgs e)
     {
-        s_bl.Admin.ForwardClock(BO.TimeUnit.Minute);
+        try
+        {
+            s_bl.Admin.ForwardClock(BO.TimeUnit.Minute);
+        }
+        catch (BO.BlTemporaryNotAvailableException ex)
+        {
+            MessageBox.Show(ex.Message, "Temporary Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
+
     private void btnAddOneHour_Click(object sender, RoutedEventArgs e)
     {
-        s_bl.Admin.ForwardClock(BO.TimeUnit.Hour);
+        try
+        {
+            s_bl.Admin.ForwardClock(BO.TimeUnit.Hour);
+        }
+        catch (BO.BlTemporaryNotAvailableException ex)
+        {
+            MessageBox.Show(ex.Message, "Temporary Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
+
     private void btnAddOneDay_Click(object sender, RoutedEventArgs e)
     {
-        s_bl.Admin.ForwardClock(BO.TimeUnit.Day);
+        try
+        {
+            s_bl.Admin.ForwardClock(BO.TimeUnit.Day);
+        }
+        catch (BO.BlTemporaryNotAvailableException ex)
+        {
+            MessageBox.Show(ex.Message, "Temporary Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
+
     private void btnAddOneMonth_Click(object sender, RoutedEventArgs e)
     {
-        s_bl.Admin.ForwardClock(BO.TimeUnit.Month);
+        try
+        {
+            s_bl.Admin.ForwardClock(BO.TimeUnit.Month);
+        }
+        catch (BO.BlTemporaryNotAvailableException ex)
+        {
+            MessageBox.Show(ex.Message, "Temporary Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
+
     private void btnAddOneYear_Click(object sender, RoutedEventArgs e)
     {
-        s_bl.Admin.ForwardClock(BO.TimeUnit.Year);
+        try
+        {
+            s_bl.Admin.ForwardClock(BO.TimeUnit.Year);
+        }
+        catch (BO.BlTemporaryNotAvailableException ex)
+        {
+            MessageBox.Show(ex.Message, "Temporary Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     private void UpdateRiskRange_Click(object sender, RoutedEventArgs e)
     {
-        s_bl.Admin.SetRiskRange(RiskRange);
+        try
+        {
+            s_bl.Admin.SetRiskRange(RiskRange);
+        }
+        catch (BO.BlTemporaryNotAvailableException ex)
+        {
+            MessageBox.Show(ex.Message, "Temporary Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     private void btnVolunteers_Click(object sender, RoutedEventArgs e)
@@ -225,6 +316,7 @@ public partial class ManagerMainWindow : Window
     {
         new CallListWindow().Show();
     }
+
 
     /// <summary>
     /// Treament of initialize DB btn
@@ -247,22 +339,24 @@ public partial class ManagerMainWindow : Window
                 s_bl.Admin.InitializeDB();
                 MessageBox.Show("Database initialized successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            catch (BO.BlTemporaryNotAvailableException ex)
+            {
+                MessageBox.Show(ex.Message, "Temporary Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Initialization failed:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
             finally
             {
-                Mouse.OverrideCursor = null; // return to regular cursor
+                Mouse.OverrideCursor = null;
             }
         }
     }
 
-
-    /// <summary>
-    /// Treament of reset DB btn
-    /// </summary>
+    ///// <summary>
+    ///// Treament of reset DB btn
+    ///// </summary>
     private void btnResetDB_Click(object sender, RoutedEventArgs e)
     {
         if (MessageBox.Show("Are you sure you want to reset the database?", "Reset DB",
@@ -270,9 +364,8 @@ public partial class ManagerMainWindow : Window
         {
             try
             {
-                Mouse.OverrideCursor = Cursors.Wait; // change cursor to sand clock
+                Mouse.OverrideCursor = Cursors.Wait;
 
-                // close all windows despite the main window
                 foreach (Window window in Application.Current.Windows)
                 {
                     if (window != this)
@@ -280,15 +373,23 @@ public partial class ManagerMainWindow : Window
                 }
 
                 s_bl.Admin.ResetDB();
-                MessageBox.Show("Database reset was successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                MessageBox.Show("Database reset was successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (BO.BlTemporaryNotAvailableException ex)
+            {
+                MessageBox.Show(ex.Message, "Temporary Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Reset failed:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
-                Mouse.OverrideCursor = null; // return to regular cursor
+                Mouse.OverrideCursor = null;
             }
         }
     }
+
 
     private void ToggleSimulator_Click(object sender, RoutedEventArgs e)
     {

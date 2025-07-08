@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 static class XMLTools
 {
     const string s_xmlDir = @"..\xml\";
+    private static readonly object s_fileLock = new();
     static XMLTools()
     {
         if (!Directory.Exists(s_xmlDir))
@@ -20,8 +21,11 @@ static class XMLTools
 
         try
         {
-            using FileStream file = new(xmlFilePath, FileMode.Create, FileAccess.Write, FileShare.None);
-            new XmlSerializer(typeof(List<T>)).Serialize(file, list);
+            lock (s_fileLock)
+            {
+                using FileStream file = new(xmlFilePath, FileMode.Create, FileAccess.Write, FileShare.None);
+                new XmlSerializer(typeof(List<T>)).Serialize(file, list);
+            }
         }
         catch (Exception ex)
         {
@@ -34,10 +38,13 @@ static class XMLTools
 
         try
         {
-            if (!File.Exists(xmlFilePath)) return new();
-            using FileStream file = new(xmlFilePath, FileMode.Open);
-            XmlSerializer x = new(typeof(List<T>));
-            return x.Deserialize(file) as List<T> ?? new();
+            lock (s_fileLock)
+            {
+                if (!File.Exists(xmlFilePath)) return new();
+                using FileStream file = new(xmlFilePath, FileMode.Open);
+                XmlSerializer x = new(typeof(List<T>));
+                return x.Deserialize(file) as List<T> ?? new();
+            }
         }
         catch (Exception ex)
         {
@@ -53,7 +60,8 @@ static class XMLTools
 
         try
         {
-            rootElem.Save(xmlFilePath);
+            lock (s_fileLock)
+                rootElem.Save(xmlFilePath);
         }
         catch (Exception ex)
         {
@@ -66,11 +74,14 @@ static class XMLTools
 
         try
         {
-            if (File.Exists(xmlFilePath))
-                return XElement.Load(xmlFilePath);
-            XElement rootElem = new(xmlFileName);
-            rootElem.Save(xmlFilePath);
-            return rootElem;
+            lock (s_fileLock)
+            {
+                if (File.Exists(xmlFilePath))
+                    return XElement.Load(xmlFilePath);
+                XElement rootElem = new(xmlFileName);
+                rootElem.Save(xmlFilePath);
+                return rootElem;
+            }
         }
         catch (Exception ex)
         {

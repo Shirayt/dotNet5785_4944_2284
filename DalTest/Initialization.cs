@@ -94,7 +94,8 @@ public static class Initialization
             Role.Manager,                          // Role
             true,                                  // IsActive
             68,                                    // MaxDistanceForCall
-            DistanceType.Air                       // DistanceType
+            DistanceType.Air,                    // DistanceType
+            "Shira100"                           //Password
         );
 
         s_dal!.Volunteer.Create(ManagerVolunteer);
@@ -170,19 +171,19 @@ public static class Initialization
            new { Latitude = -27.598, Longitude = 116.065, FullAddress = "Western Australia (remote area)" }
         };
 
-        DateTime now = DateTime.Now;
+        DateTime now = s_dal!.Config.Clock;
 
         for (int i = 0; i < 50; i++)
         {
             // בחר מיקום אקראי מתוך המיקומים המוגדרים
             var location = locations[s_rand.Next(0, locations.Length)];
 
-            DateTime openTime = now.AddDays(s_rand.Next(1, 100));  // זמן פתיחה בטווח של 1 עד 100 ימים מעכשיו
+            DateTime openTime = now.AddDays(-s_rand.Next(1, 50)); // זמן פתיחה בטווח של 1 עד 50 ימים לפני עכשיו
             CallType type = (CallType)s_rand.Next(0, 4);  // בחר סוג קריאה אקראי מתוך 4 אפשרויות
             DateTime? closeTime = null;
 
             // קובעים אם הקריאה תהיה שלא הוקצה, שפג תוקפן או רגילה
-            if (unallocatedCalls < 15 && s_rand.NextDouble() < 0.3) // 30% סיכוי לכך שהיא לא תוקצה
+            if (unallocatedCalls < 15 && s_rand.NextDouble() < 0.4) // 30% סיכוי לכך שהיא לא תוקצה
             {
                 closeTime = null;  // לא הוקצה זמן סיום
                 unallocatedCalls++;
@@ -194,7 +195,7 @@ public static class Initialization
             }
             else
             {
-                closeTime = s_rand.NextDouble() < 0.8 ? openTime.AddHours(s_rand.Next(1, 72)) : (DateTime?)null;  // קריאות עם זמן סיום, 80% סיכוי
+                closeTime = s_rand.NextDouble() < 0.8 ? openTime.AddDays(s_rand.Next(60, 100)) : (DateTime?)null;  // קריאות עם זמן סיום, 80% סיכוי
                 allocatedCalls++;
             }
 
@@ -205,7 +206,7 @@ public static class Initialization
              location.Latitude,               // latitude
              location.Longitude,              // longitude
              openTime,                        // openTime
-             closeTime);                      // maxEndTime (עבר את הזמן הנוכחי)
+             closeTime);                      // maxEndTime 
 
             s_dal!.Call.Create(call);
         }
@@ -230,7 +231,13 @@ public static class Initialization
 
             double totalMinutes = Math.Max(1, assignmentSpan.TotalMinutes); // מבטיח שיהיה לפחות 1
             DateTime randomStartTime = call.OpenTime.AddMinutes(s_rand.Next((int)totalMinutes));
-            DateTime? randomEndTime = (s_rand.NextDouble() > 0.5) ? randomStartTime.AddMinutes(s_rand.Next((int)totalMinutes)) : null;
+            double totalDays = Math.Max(1, assignmentSpan.TotalDays);
+            int endOffsetDays = s_rand.Next(1, (int)totalDays);
+            DateTime? randomEndTime = (s_rand.NextDouble() > 0.5)
+                ? randomStartTime.AddDays(endOffsetDays)
+                : null;
+
+
 
             AssignmentStatus? status;
             if (randomEndTime != null)
@@ -244,8 +251,8 @@ public static class Initialization
                     var statuses = new[] { AssignmentStatus.SelfCancelled,
                                            AssignmentStatus.Completed,
                                            AssignmentStatus.ManagerCancelled };
-                    var random = new Random();
-                    int index = random.Next(statuses.Length);
+                    
+                    int index = s_rand.Next(statuses.Length);
                     status = statuses[index];
                 }
             }

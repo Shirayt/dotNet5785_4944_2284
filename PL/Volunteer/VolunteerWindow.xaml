@@ -4,7 +4,7 @@
         xmlns:bo="clr-namespace:BO;assembly=BL"
         xmlns:pl="clr-namespace:PL"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Volunteer Details" Height="650" Width="620"
+        Title="Volunteer Details" Height="750" Width="620"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         Loaded="VolunteerWindow_Loaded" Closed="VolunteerWindow_Closed">
 

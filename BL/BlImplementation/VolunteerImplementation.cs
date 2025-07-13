@@ -131,8 +131,7 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             lock (AdminManager.blMutex)
             {
                 _dal.Volunteer.Create(newVolunteer);
-                newVolunteer.Id = _dal.Volunteer.ReadAll().Max(c => c.Id);
-
+                newVolunteer.Id = volunteer.Id;
             }
 
             VolunteerManager.Observers.NotifyListUpdated();

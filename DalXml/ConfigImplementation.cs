@@ -6,6 +6,14 @@ using DalApi;
 /// </summary>
 internal class ConfigImplementation : IConfig
 {
+    public int NextCallId
+    {
+        get => Config.NextCallId;
+    }
+    public int NextAssignmentId
+    {
+        get => Config.NextAssignmentId;
+    }
     public DateTime Clock
     {
         get => Config.Clock;

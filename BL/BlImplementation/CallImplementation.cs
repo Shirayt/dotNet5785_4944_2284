@@ -123,6 +123,42 @@ internal class CallImplementation : ICall
         }
     }
 
+    public async Task AddCall(BO.Call call)
+    {
+        AdminManager.ThrowOnSimulatorIsRunning();
+
+        try
+        {
+            Helpers.CallManager.ValidateBOCallData(call);
+
+            var doCall = new DO.Call
+            {
+                CallType = (DO.CallType)call.CallType,
+                Description = call.Description,
+                FullAddress = call.FullAddress,
+                Latitude = 0,
+                Longitude = 0,
+                OpenTime = AdminManager.Now,
+                MaxEndTime = call.MaxEndTime,
+            };
+
+            lock (AdminManager.blMutex)
+            {
+                _dal.Call.Create(doCall);
+                doCall.Id = _dal.Call.ReadAll().Max(c => c.Id);
+            }
+
+            CallManager.Observers.NotifyListUpdated();
+           
+            _ = Task.Run(() => Tools.UpdateCoordinatesForCallAsync(doCall));
+
+        }
+        catch (DO.DalAlreadyExistsException ex)
+        {
+            throw new BO.BlAlreadyExistsException("Somthing went wrong during call addition in BL: ", ex);
+        }
+    }
+
     public async Task UpdateCallDetails(BO.Call call)
     {
         AdminManager.ThrowOnSimulatorIsRunning();
@@ -193,39 +229,7 @@ internal class CallImplementation : ICall
         }
     }
 
-    public async Task AddCall(BO.Call call)
-    {
-        AdminManager.ThrowOnSimulatorIsRunning();
-
-        try
-        {
-            Helpers.CallManager.ValidateBOCallData(call);
-
-            var doCall = new DO.Call
-            {
-                CallType = (DO.CallType)call.CallType,
-                Description = call.Description,
-                FullAddress = call.FullAddress,
-                Latitude = 0,
-                Longitude = 0,
-                OpenTime = AdminManager.Now,
-                MaxEndTime = call.MaxEndTime,
-            };
-
-            lock (AdminManager.blMutex)
-                _dal.Call.Create(doCall);
-            CallManager.Observers.NotifyListUpdated();
-
-            _ = Task.Run(() => Tools.UpdateCoordinatesForCallAsync(doCall));
-
-        }
-        catch (DO.DalAlreadyExistsException ex)
-        {
-            throw new BO.BlAlreadyExistsException("Somthing went wrong during call addition in BL: ", ex);
-        }
-    }
-
-    public IEnumerable<BO.ClosedCallInList> GetClosedCallsByVolunteer(int volunteerId, BO.FilterAndSortByFields? filterType, BO.FilterAndSortByFields? sortField)
+    public IEnumerable<BO.ClosedCallInList> GetClosedCallsByVolunteer(int volunteerId, BO.FilterAndSortByFields? filterType, object? filterValue, BO.FilterAndSortByFields? sortField)
     {
         IEnumerable<DO.Call> calls;
         IEnumerable<DO.Assignment> assignments;
@@ -240,7 +244,8 @@ internal class CallImplementation : ICall
         var closedCalls = from c in calls
                           where volunteerassignments.Select(a => a.CallId).Contains(c.Id)
                           && (Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.Closed
-                          || Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.Expired)
+                          || Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.Expired
+                          || Helpers.CallManager.GetCallStatus(c).Status == BO.CallStatus.Open)
                           select new BO.ClosedCallInList
                           {
                               Id = c.Id,
@@ -252,7 +257,7 @@ internal class CallImplementation : ICall
                               Status = (BO.AssignmentStatus)Helpers.CallManager.GetAssignmentForCall(volunteerassignments, c.Id)?.Status
                           };
 
-        closedCalls = Helpers.CallManager.ApplyFilterAndSort(closedCalls.AsQueryable(), filterType, sortField);
+        closedCalls = Helpers.CallManager.ApplyFilterAndSort(closedCalls.AsQueryable(), filterType, filterValue, sortField);
 
         return closedCalls;
     }

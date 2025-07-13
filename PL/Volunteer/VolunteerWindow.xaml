@@ -5,11 +5,9 @@
         xmlns:pl="clr-namespace:PL"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Volunteer Details" Height="750" Width="620"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-        Loaded="VolunteerWindow_Loaded" Closed="VolunteerWindow_Closed">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Window.Resources>
-        <!-- General formatting for field names -->
         <Style TargetType="Label">
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -21,6 +19,7 @@
 
         <pl:NullToCollapsedConverter x:Key="NullToCollapsedConverter"/>
         <pl:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <pl:NullableDoubleConverter x:Key="NullableDoubleConverter"/>
 
         <DataTemplate DataType="{x:Type bo:CallInProgress}">
             <GroupBox Header="Call In Progress" Margin="5">
@@ -191,7 +190,7 @@
                 <!-- MaxDistance -->
                 <!-- Editable field for max distance -->
                 <Label Content="Max Distance" Grid.Row="10" Grid.Column="0"/>
-                <TextBox Text="{Binding CurrentVolunteer.MaxDistanceForCall, Mode=TwoWay}" Grid.Row="10" Grid.Column="1"/>
+                <TextBox Text="{Binding CurrentVolunteer.MaxDistanceForCall, Mode=TwoWay, Converter={StaticResource NullableDoubleConverter}}" Grid.Row="10" Grid.Column="1"/>
 
                 <!--DistanceType 
                  Editable dropdown for distance type-->

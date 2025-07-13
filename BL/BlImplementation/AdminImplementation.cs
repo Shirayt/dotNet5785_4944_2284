@@ -42,12 +42,12 @@ internal class AdminImplementation : IAdmin
 
     public void InitializeDB()
     {
-        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
+        AdminManager.ThrowOnSimulatorIsRunning();  
         AdminManager.InitializeDB();
     }
     public void ResetDB()
     {
-        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
+        AdminManager.ThrowOnSimulatorIsRunning();  
         AdminManager.ResetDB();
     }
 

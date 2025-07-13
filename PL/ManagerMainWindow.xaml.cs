@@ -24,13 +24,13 @@ public partial class ManagerMainWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-    private volatile bool _configObserverWorking = false; // stage 7
-    private volatile bool _clockObserverWorking = false; // stage 7
+    private volatile bool _configObserverWorking = false; 
+    private volatile bool _clockObserverWorking = false; 
 
     /// <summary>
     /// Clock update view method
     /// </summary>
-    private void clockObserver() // stage 7
+    private void clockObserver() 
     {
         if (_clockObserverWorking)
             return;

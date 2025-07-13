@@ -438,8 +438,14 @@ namespace BlTest
                                     Console.WriteLine("Enter Sort Field ( CallType, OpenTime, MaxEndTime, Status) or press Enter to skip:");
                                     string? sortFieldInput = Console.ReadLine();
                                     BO.FilterAndSortByFields? sortField = Enum.TryParse(sortFieldInput, out BO.FilterAndSortByFields parsedSortField) ? parsedSortField : null;
-
-                                    var closedCalls = s_bl.Call.GetClosedCallsByVolunteer(volunteerId, FilterType, sortField);
+                                    object? filterValue = null;
+                                    if (FilterType != null)
+                                    {
+                                        Console.WriteLine($"Enter filter value for {FilterType}:");
+                                        string? filterValueInput = Console.ReadLine();
+                                        filterValue = string.IsNullOrWhiteSpace(filterValueInput) ? null : filterValueInput;
+                                    }
+                                    var closedCalls = s_bl.Call.GetClosedCallsByVolunteer(volunteerId, FilterType, filterValue, sortField);
 
                                     Console.WriteLine("\nClosed Calls Handled By Volunteer:");
                                     foreach (var call in closedCalls)

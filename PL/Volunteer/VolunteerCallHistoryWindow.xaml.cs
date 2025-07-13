@@ -20,6 +20,15 @@ public partial class VolunteerCallHistoryWindow : Window
     public static readonly DependencyProperty ClosedCallsProperty =
         DependencyProperty.Register("ClosedCalls", typeof(List<ClosedCallInList>), typeof(VolunteerCallHistoryWindow));
 
+    public string? FilterValue
+    {
+        get => (string?)GetValue(FilterValueProperty);
+        set => SetValue(FilterValueProperty, value);
+    }
+
+    public static readonly DependencyProperty FilterValueProperty =
+        DependencyProperty.Register(nameof(FilterValue), typeof(string), typeof(VolunteerCallHistoryWindow));
+
     public FilterAndSortByFields? FilterField
     {
         get => (FilterAndSortByFields?)GetValue(FilterFieldProperty);
@@ -52,6 +61,7 @@ public partial class VolunteerCallHistoryWindow : Window
     private void LoadData()
     {
         ClosedCalls = new List<ClosedCallInList>(
-            s_bl.Call.GetClosedCallsByVolunteer(_volunteerId, FilterField, SortField));
+            s_bl.Call.GetClosedCallsByVolunteer(_volunteerId, FilterField, FilterValue, SortField));
     }
+ 
 }

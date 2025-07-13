@@ -4,10 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Call"
+        xmlns:conv="clr-namespace:PL"      
         mc:Ignorable="d"
         Title="CallListWindow" Height="500" Width="850"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         Loaded="Window_Loaded" Closed="Window_Closed">
+
+    <Window.Resources>
+        <conv:CallTypeToColorConverter x:Key="CallTypeToColorConverter"/>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -30,6 +35,14 @@
 
         <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding CallList}" SelectedItem="{Binding SelectedCall}"
                   MouseDoubleClick="dgCallList_MouseDoubleClick" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background"
+                Value="{Binding CallType, Converter={StaticResource CallTypeToColorConverter}}"/>
+                </Style>
+            </DataGrid.RowStyle>
+
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="Auto"/>
                 <DataGridTextColumn Header="CallId" Binding="{Binding CallId}" Width="Auto"/>
@@ -45,8 +58,6 @@
                         <DataTemplate>
                             <Button Content="🗑 Delete" Click="DeleteCall_Click" PreviewMouseDown="Button_PreviewMouseDown" ToolTip="Delete Call"
                                     Visibility="{Binding AllocationsAmount }"/>
-                            <!--, Converter={StaticResource CanDeleteCallConverter}-->
-
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

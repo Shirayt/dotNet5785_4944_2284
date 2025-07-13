@@ -11,27 +11,6 @@ using System.Windows.Media;
 
 namespace PL
 {
-    //    class ConvertUpdateToTrueKey : IValueConverter
-    //    {
-    //        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    //        { BO.Year year = (BO.Year)value; switch (year) { case BO.Year.FirstYear: return Brushes.Yellow; case BO.Year.SecondYear: return Brushes.Orange; case BO.Year.ThirdYear: return Brushes.Green; case BO.Year.ExtraYear: return Brushes.PaleVioletRed; case BO.Year.None: return Brushes.White; default: return Brushes.White; } }
-    //        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-    //            throw new NotImplementedException(); 
-    //        }
-    //    }
-    //}
-
-    //public class UpdateToReadOnlyConverter : IValueConverter
-    //{
-    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        return value?.ToString() == "Update"; // אם הכפתור במצב Update, הפקד יהיה לקריאה בלבד
-    //    }
-
-    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
-    //        throw new NotImplementedException();
-    //}
-
     public class ConvertUpdateToCollapsedKey : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -82,6 +61,7 @@ namespace PL
             {
                 BO.AssignmentStatus.Completed => Brushes.LightGreen,
                 BO.AssignmentStatus.Expired => Brushes.LightSalmon,
+                BO.AssignmentStatus.SelfCancelled => Brushes.LightPink,
                 _ => Brushes.White
             };
         }
@@ -130,11 +110,56 @@ namespace PL
         {
             if (value is bool b)
                 return !b;
-            return true; 
+            return true;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             => throw new NotImplementedException();
     }
+    public class NullableDoubleConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value?.ToString() ?? "";
+        }
 
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var str = value as string;
+            if (string.IsNullOrWhiteSpace(str))
+                return null;
+
+            if (double.TryParse(str, out double result))
+                return result;
+
+            return Binding.DoNothing;
+        }
+    }
+
+    public class CallTypeToColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is not BO.CallType callType)
+            {
+                if (value is string str && Enum.TryParse(str, out BO.CallType parsed))
+                    callType = parsed;
+                else
+                    return Brushes.White;
+            }
+
+            return callType switch
+            {
+                BO.CallType.Emergency => (Brush)new BrushConverter().ConvertFromString("#FFB3B3")!,    
+                BO.CallType.Equipment => (Brush)new BrushConverter().ConvertFromString("#FFE5B4")!,    
+                BO.CallType.Doctor => (Brush)new BrushConverter().ConvertFromString("#B3E5FC")!,       
+                BO.CallType.Training => (Brush)new BrushConverter().ConvertFromString("#D1C4E9")!,     
+                _ => Brushes.White
+            };
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+            throw new NotImplementedException();
+    }
 }

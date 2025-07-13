@@ -14,6 +14,7 @@
         <local:CallStatusCollection x:Key="CallStatusCollectionKey"/>
         <local:SimulatorButtonTextConverter x:Key="SimulatorButtonTextConverter"/>
         <local:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <local:NullableDoubleConverter x:Key="NullableDoubleConverter"/>
     </Application.Resources>
 </Application>
 

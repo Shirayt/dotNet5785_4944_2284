@@ -58,7 +58,6 @@ namespace PL.Call
             {
                 CurrentCall = new BO.Call
                 {
-                    //Id = 0,
                     CallType = BO.CallType.Emergency,
                     Description = string.Empty,
                     FullAddress = string.Empty,
@@ -92,18 +91,18 @@ namespace PL.Call
             }
         }
 
-        private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
+        private async void btnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (ButtonText == "Add")
                 {
-                    s_bl.Call.AddCall(CurrentCall);
+                    await s_bl.Call.AddCall(CurrentCall);
                     MessageBox.Show("Call added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    s_bl.Call.UpdateCallDetails(CurrentCall);
+                    await s_bl.Call.UpdateCallDetails(CurrentCall);
                     MessageBox.Show("Call updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 Close();

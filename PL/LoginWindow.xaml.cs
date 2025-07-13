@@ -69,7 +69,6 @@ namespace PL
 
             try
             {
-                // App.CurrentUserId = parsedId;
                 var role = s_bl.Volunteer.LoginVolunteerToSystem(parsedId, Password);
 
                 switch (role)

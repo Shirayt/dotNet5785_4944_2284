@@ -14,7 +14,7 @@ internal class VolunteerImplementation : BlApi.IVolunteer
     public BO.Role LoginVolunteerToSystem(int userId, string password)
     {
         IEnumerable<DO.Volunteer>? volunteers;
-        lock (AdminManager.blMutex) //stage 7
+        lock (AdminManager.blMutex)
             volunteers = _dal.Volunteer.ReadAll();
 
         var volunteer = volunteers?.FirstOrDefault(v => v.Id == userId);
@@ -30,12 +30,13 @@ internal class VolunteerImplementation : BlApi.IVolunteer
     public IEnumerable<BO.VolunteerInList> GetVolunteersList(bool? isActive = null, BO.VolunteerSortOption? sortBy = null)
     {
         IEnumerable<DO.Volunteer>? volunteersList;
-        lock (AdminManager.blMutex) //stage 7
+        lock (AdminManager.blMutex)
             volunteersList = _dal.Volunteer.ReadAll();
 
         var volunteerList = from v in volunteersList ?? Enumerable.Empty<DO.Volunteer>()
                             let completedCalls = Helpers.VolunteerManager.GetCompletedCallsCount(v.Id)
                             let selfCancelledCalls = Helpers.VolunteerManager.GetSelfCancelledCallsCount(v.Id)
+                            let expiredCalls = Helpers.VolunteerManager.GetExpiredCallsCount(v.Id)
                             let callInTreatmentId = Helpers.VolunteerManager.GetCallInTreatment(v.Id)
                             where !isActive.HasValue || v.IsActive == isActive.Value
                             select new BO.VolunteerInList
@@ -45,6 +46,7 @@ internal class VolunteerImplementation : BlApi.IVolunteer
                                 IsActive = v.IsActive,
                                 AmountOfCompletedCalls = completedCalls,
                                 AmountOfSelfCancelledCalls = selfCancelledCalls,
+                                AmountOfExpiredCalls = expiredCalls,
                                 CallInTreatmentId = callInTreatmentId
                             };
 
@@ -66,7 +68,7 @@ internal class VolunteerImplementation : BlApi.IVolunteer
         try
         {
             DO.Volunteer volunteer;
-            lock (AdminManager.blMutex) //stage 7
+            lock (AdminManager.blMutex)
                 volunteer = _dal.Volunteer.Read(volunteerId);
 
             BO.CallInProgress? callInProgress = Helpers.VolunteerManager.GetCallInProgress(volunteerId);
@@ -101,15 +103,66 @@ internal class VolunteerImplementation : BlApi.IVolunteer
         }
     }
 
+
+    public async Task AddVolunteer(BO.Volunteer volunteer)
+    {
+        try
+        {
+            AdminManager.ThrowOnSimulatorIsRunning();
+            Helpers.VolunteerManager.ValidateBOVolunteerData(volunteer);
+
+     
+            var newVolunteer = new DO.Volunteer
+            {
+                Id = volunteer.Id,
+                FullName = volunteer.FullName,
+                PhoneNumber = volunteer.PhoneNumber,
+                Email = volunteer.Email,
+                Password = volunteer.Password,
+                CurrentFullAddress = volunteer.CurrentFullAddress,
+                Latitude = 0,
+                Longitude = 0,
+                Role = (DO.Role)volunteer.Role,
+                IsActive = volunteer.IsActive,
+                MaxDistanceForCall = volunteer.MaxDistanceForCall??0,
+                DistanceType = (DO.DistanceType)volunteer.DistanceType,
+            };
+
+            lock (AdminManager.blMutex)
+            {
+                _dal.Volunteer.Create(newVolunteer);
+                newVolunteer.Id = _dal.Volunteer.ReadAll().Max(c => c.Id);
+
+            }
+
+            VolunteerManager.Observers.NotifyListUpdated();
+
+            _ = Task.Run(() => Tools.UpdateCoordinatesForVolunteerAddressAsync(newVolunteer));
+        }
+        catch (DO.DalAlreadyExistsException ex)
+        {
+            throw new BO.BlAlreadyExistsException($"Something went wrong during volunteer addition in BL: ", ex);
+        }
+        catch (BO.BlTemporaryNotAvailableException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+
+    }
+
     public async Task UpdateVolunteerDetails(int volunteerId, BO.Volunteer volunteer)
     {
-        
+
         try
         {
             AdminManager.ThrowOnSimulatorIsRunning();
 
             DO.Volunteer existingVolunteer;
-            lock (AdminManager.blMutex) //stage 7
+            lock (AdminManager.blMutex)
                 existingVolunteer = _dal.Volunteer.Read(volunteerId);
 
             if (existingVolunteer.Role != DO.Role.Manager && volunteerId != existingVolunteer.Id)
@@ -134,20 +187,20 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             existingVolunteer.Email = volunteer.Email;
             existingVolunteer.Password = volunteer.Password;
             existingVolunteer.CurrentFullAddress = volunteer.CurrentFullAddress;
-            existingVolunteer.Latitude = null;
-            existingVolunteer.Longitude = null;
+            existingVolunteer.Latitude = 0;
+            existingVolunteer.Longitude = 0;
             existingVolunteer.IsActive = volunteer.IsActive;
             existingVolunteer.MaxDistanceForCall = volunteer.MaxDistanceForCall;
             existingVolunteer.DistanceType = (DO.DistanceType)volunteer.DistanceType;
             existingVolunteer.Role = (DO.Role)volunteer.Role;
 
-            lock (AdminManager.blMutex) //stage 7
+            lock (AdminManager.blMutex)
                 _dal.Volunteer.Update(existingVolunteer);
 
             _ = Task.Run(() => Tools.UpdateCoordinatesForVolunteerAddressAsync(existingVolunteer));
 
-            VolunteerManager.Observers.NotifyItemUpdated(existingVolunteer.Id); //stage 5
-            VolunteerManager.Observers.NotifyListUpdated(); //stage 5
+            VolunteerManager.Observers.NotifyItemUpdated(existingVolunteer.Id);
+            VolunteerManager.Observers.NotifyListUpdated();
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -171,7 +224,7 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             AdminManager.ThrowOnSimulatorIsRunning();
 
             DO.Volunteer volunteer;
-            lock (AdminManager.blMutex) //stage 7
+            lock (AdminManager.blMutex)
                 volunteer = _dal.Volunteer.Read(volunteerId);
 
             int AmountOfCompletedCalls = Helpers.VolunteerManager.GetCompletedCallsCount(volunteer.Id);
@@ -183,7 +236,7 @@ internal class VolunteerImplementation : BlApi.IVolunteer
                 throw new BlInvalidOperationException($"Volunteer with ID {volunteerId} cannot be deleted as they have handled calls.");
             }
 
-            lock (AdminManager.blMutex) //stage 7
+            lock (AdminManager.blMutex)
                 _dal.Volunteer.Delete(volunteerId);
         }
         catch (DO.DalDoesNotExistException ex)
@@ -203,74 +256,8 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             throw;
         }
 
-        VolunteerManager.Observers.NotifyListUpdated(); //stage 5
+        VolunteerManager.Observers.NotifyListUpdated();
     }
-
-    public async Task AddVolunteer(BO.Volunteer volunteer)
-    {
-
-        try
-        {
-            AdminManager.ThrowOnSimulatorIsRunning();
-            Helpers.VolunteerManager.ValidateBOVolunteerData(volunteer);
-
-            double? latitude = null, longitude = null;
-            if (!string.IsNullOrWhiteSpace(volunteer.CurrentFullAddress))
-            {
-                (latitude, longitude) = await Tools.GetCoordinatesFromAddress(volunteer.CurrentFullAddress!);
-                if (latitude == null || longitude == null)
-                {
-                    volunteer.CurrentFullAddress = null;
-                }
-            }
-            else
-            {
-                volunteer.CurrentFullAddress = null;
-            }
-
-            volunteer.Latitude = latitude;
-            volunteer.Longitude = longitude;
-
-            var newVolunteer = new DO.Volunteer
-            {
-                Id = volunteer.Id,
-                FullName = volunteer.FullName,
-                PhoneNumber = volunteer.PhoneNumber,
-                Email = volunteer.Email,
-                Password = volunteer.Password,
-                CurrentFullAddress = volunteer.CurrentFullAddress,
-                Latitude = null,
-                Longitude = null,
-                Role = (DO.Role)volunteer.Role,
-                IsActive = volunteer.IsActive,
-                MaxDistanceForCall = volunteer.MaxDistanceForCall,
-                DistanceType = (DO.DistanceType)volunteer.DistanceType,
-            };
-
-            lock (AdminManager.blMutex) //stage 7
-                _dal.Volunteer.Create(newVolunteer);
-
-
-            VolunteerManager.Observers.NotifyListUpdated(); //stage 5
-            _ = Task.Run(() => Tools.UpdateCoordinatesForVolunteerAddressAsync(newVolunteer));
-        }
-        catch (DO.DalAlreadyExistsException ex)
-        {
-            throw new BO.BlAlreadyExistsException($"Something went wrong during volunteer addition in BL: ", ex);
-        }
-        catch (BO.BlTemporaryNotAvailableException)
-        {
-            throw; 
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
-
-    }
-
-
-
     #region Stage 5
     public void AddObserver(Action listObserver) =>
     VolunteerManager.Observers.AddListObserver(listObserver); //stage 5

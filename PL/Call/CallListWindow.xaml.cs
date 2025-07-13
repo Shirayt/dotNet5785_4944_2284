@@ -13,8 +13,7 @@ namespace PL.Call
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public BO.CallInList? SelectedCall { get; set; }
 
-        private volatile bool _observerWorking = false; // stage 7
-
+        private volatile bool _observerWorking = false; 
         public IEnumerable<BO.CallInList> CallList
         {
             get { return (IEnumerable<BO.CallInList>)GetValue(CallListProperty); }

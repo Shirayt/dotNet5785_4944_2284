@@ -34,12 +34,12 @@ public static class Initialization
     private static void createVolunteer()
     {
 
-        string[] volunteerNames = { "Dani Levy", "Shira Cohen", "Tali Amar", "Yair Israelof", "Eli Klein", "Maya Shimon", "Avi Ben-David", "Liat Ron", "Yaara Berman", "Noa Sasson", "Roi Peretz", "Gal Zohar", "Dana Kfir", "Yosef Shaked", "Ruth Erez" };
-        string[] emails = { "dani@gmail.com", "shira@gmail.com", "tali@gmail.com", "yair@gmail.com", "eli@gmail.com", "maya@gmail.com", "avi@gmail.com", "liat@gmail.com", "yaara@gmail.com", "noa@gmail.com", "roi@gmail.com", "gal@gmail.com", "dana@gmail.com", "yosef@gmail.com", "ruth@gmail.com" };
-        string[] phones = { "0541111111", "0542222222", "0543333333", "0544444444", "0545555555", "0546666666", "0547777777", "0548888888", "0549999999", "0550000000", "0551111111", "0552222222", "0553333333", "0554444444", "0555555555" };
-        string[] addresses = { "29 Chinggis Avenue, Ulaanbaatar, Mongolia", "2 Tindall Street, Nelson, New Zealand", "Via Lago di Bracciano 32, 00069 Trevignano Romano, Italy", "145 Kulusuk, Greenland", "Vorshikhinskaya Street 11, Yakutsk, Russia", "Calle de los Reyes Católicos, 23, Fuerteventura, Spain", "9 Ngong Road, Nairobi, Kenya", "Bramber, West Sussex, England, United Kingdom", "Station Road, Tindivanam, Tamil Nadu, India", "Boko Haram Village, Borno State, Nigeria", "Lima Norte, Lima, Peru", "Pico de Orizaba, Veracruz, Mexico", "Desolation Sound, British Columbia, Canada", "Toraja, Sulawesi, Indonesia", "Mount Roraima, Venezuela, Brazil, Guyana" };
-        double[] latitudes = { 47.8862, -40.5170, 42.1350, 65.6233, 62.0360, 28.4320, -1.2864, 50.8610, 12.2069, 12.1776, -12.0450, 19.0299, 57.3000, 2.4769, 6.7350 };
-        double[] longitudes = { 106.9057, 173.2885, 12.2715, -37.4594, 129.7327, -13.8597, 36.8250, -0.3865, -0.2976, 13.4918, -77.2749, -97.2071, -60.8103, -60.6933, -60.7371 };
+        string[] volunteerNames = { "Dani Levy", "Shira Cohen", "Tali Amar", "Yair Israelof", "Eli Klein", "Maya Shimon", "Avi Ben-David", "Liat Ron", "Yaara Berman", "Noa Sasson", "Roi Peretz", "Gal Zohar", "Dana Kfir", "Yosef Shaked", "Ruth Erez", "Or Ben-Haim", "Noga Azulai", "Itay Levi", "Yasmin David", "Tomer Avital", "Lina Khalil", "Bar Refaeli", "Nadav Natan", "Sivan Tal", "Ron Arad", "Naomi Feldman", "Erez Dahan", "Tamar Peleg", "Yoni Azulai", "Lior Hadad", "Shani Michaeli", "Eitan Nave", "Roni Segal", "Tal Shahar", "Niv Avrahami", "Adi Mor", "Kfir Lavi", "Yael Shlush", "Itamar Dayan", "Meital Armon", "Gil Rave", "Talia Mizrahi", "Omri Shaul", "Vered Sharabi", "Alon Amram" };
+        string[] emails = { "dani@gmail.com", "shira@gmail.com", "tali@gmail.com", "yair@gmail.com", "eli@gmail.com", "maya@gmail.com", "avi@gmail.com", "liat@gmail.com", "yaara@gmail.com", "noa@gmail.com", "roi@gmail.com", "gal@gmail.com", "dana@gmail.com", "yosef@gmail.com", "ruth@gmail.com", "or@gmail.com", "noga@gmail.com", "itay@gmail.com", "yasmin@gmail.com", "tomer@gmail.com", "lina@gmail.com", "bar@gmail.com", "nadav@gmail.com", "sivan@gmail.com", "ron@gmail.com", "naomi@gmail.com", "erez@gmail.com", "tamar@gmail.com", "yoni@gmail.com", "lior@gmail.com", "shani@gmail.com", "eitan@gmail.com", "roni@gmail.com", "tal@gmail.com", "niv@gmail.com", "adi@gmail.com", "kfir@gmail.com", "yael@gmail.com", "itamar@gmail.com", "meital@gmail.com", "gil@gmail.com", "talia@gmail.com", "omri@gmail.com", "vered@gmail.com", "alon@gmail.com" };
+        string[] phones = { "0541111111", "0542222222", "0543333333", "0544444444", "0545555555", "0546666666", "0547777777", "0548888888", "0549999999", "0550000000", "0551111111", "0552222222", "0553333333", "0554444444", "0555555555", "0556666666", "0557777777", "0558888888", "0559999999", "0560000000", "0561111111", "0562222222", "0563333333", "0564444444", "0565555555", "0566666666", "0567777777", "0568888888", "0569999999", "0570000000", "0571111111", "0572222222", "0573333333", "0574444444", "0575555555", "0576666666", "0577777777", "0578888888", "0579999999", "0580000000", "0581111111", "0582222222", "0583333333", "0584444444", "0585555555" };
+        string[] addresses = { "29 Chinggis Avenue, Ulaanbaatar, Mongolia", "2 Tindall Street, Nelson, New Zealand", "Via Lago di Bracciano 32, 00069 Trevignano Romano, Italy", "145 Kulusuk, Greenland", "Vorshikhinskaya Street 11, Yakutsk, Russia", "Calle de los Reyes Católicos, 23, Fuerteventura, Spain", "9 Ngong Road, Nairobi, Kenya", "Bramber, West Sussex, England, United Kingdom", "Station Road, Tindivanam, Tamil Nadu, India", "Boko Haram Village, Borno State, Nigeria", "Lima Norte, Lima, Peru", "Pico de Orizaba, Veracruz, Mexico", "Desolation Sound, British Columbia, Canada", "Toraja, Sulawesi, Indonesia", "Mount Roraima, Venezuela, Brazil, Guyana", "HaPalmach 3, Haifa, Israel", "Bnei Dan 42, Tel Aviv, Israel", "Herzl 17, Netanya, Israel", "Harav Kook 8, Be'er Sheva, Israel", "Derech Eretz 21, Eilat, Israel", "Kedem 12, Lod, Israel", "Yefe Nof 9, Holon, Israel", "Abarbanel 15, Acre, Israel", "Hashalom 10, Kiryat Shmona, Israel", "Ein Gedi 5, Dimona, Israel", "Ben Gurion 10, Ashdod, Israel", "Hertzl 22, Petah Tikva, Israel", "Begin 5, Bat Yam, Israel", "Yavne 3, Ramat Gan, Israel", "Arlozorov 1, Rehovot, Israel", "Nahal Sorek 15, Modi'in, Israel", "Haganah 4, Ashkelon, Israel", "Rothschild 8, Beit Shemesh, Israel", "Yitzhak Rabin 20, Karmiel, Israel", "Harakevet 6, Nahariya, Israel", "Yehuda Halevi 7, Netivot, Israel", "Bar Kochva 9, Afula, Israel", "Rashi 16, Hod Hasharon, Israel", "Yigal Alon 3, Kiryat Gat, Israel", "Tamar 12, Tiberias, Israel", "Ahad Ha'am 2, Sderot, Israel", "Hazayit 13, Arad, Israel", "Habonim 14, Beit She'an, Israel", "Sokolov 5, Ma'alot, Israel", "Gan Ha’ir 11, Zikhron Ya'akov, Israel" };
+        double[] latitudes = { 47.8862, -40.5170, 42.1350, 65.6233, 62.0360, 28.4320, -1.2864, 50.8610, 12.2069, 12.1776, -12.0450, 19.0299, 57.3000, 2.4769, 6.7350, 32.7940, 32.0961, 32.3215, 31.2520, 29.5581, 31.9511, 32.0158, 32.9236, 33.2081, 31.0695, 31.8014, 32.0883, 32.0163, 32.0838, 31.8948, 31.9000, 31.6688, 31.7394, 32.9256, 33.0054, 31.4200, 32.6084, 32.1463, 31.6100, 32.7922, 31.5235, 31.2596, 32.4990, 33.0161, 32.5672 };
+        double[] longitudes = { 106.9057, 173.2885, 12.2715, -37.4594, 129.7327, -13.8597, 36.8250, -0.3865, -0.2976, 13.4918, -77.2749, -97.2071, -60.8103, -60.6933, -60.7371, 34.9896, 34.7980, 34.8532, 34.7913, 34.9519, 34.8881, 34.7722, 35.0717, 35.5681, 35.0326, 34.6435, 34.8864, 34.7451, 34.8205, 34.8080, 35.0104, 34.5745, 34.9941, 35.3066, 35.0945, 34.5881, 35.2905, 34.8891, 34.7680, 35.5281, 34.5910, 35.2137, 35.5001, 35.2640, 34.9565 };
         try
         {
             for (int i = 0; i < volunteerNames.Length; i++)
@@ -55,24 +55,24 @@ public static class Initialization
                     return n > 9 ? n - 9 : n;
                 }).Sum() % 10 != 0);
 
-                // הגרלת המרחק המרבי לקבלת קריאה בטווח של 5 עד 100
+                // Randomly generate the maximum distance for receiving a signal in the range of 5 to 100
                 double maxDistanceForCall = s_rand.Next(5, 101);
 
-                // יצירת המתנדב
+                // create volunteer object
                 Volunteer volunteer = new Volunteer(
-                    id,                                // ערך עבור Id
-                    volunteerNames[i],                 // ערך עבור FullName
-                    phones[i],                         // ערך עבור PhoneNumber
-                    emails[i],                         // ערך עבור Email
-                    addresses[i],                      // ערך עבור CurrentFullAddress
-                    latitudes[i],                      // ערך עבור Latitude
-                    longitudes[i],                     // ערך עבור Longitude
-                    Role.Volunteer,                    // ערך עבור Role
-                    true,                              // ערך עבור IsActive
-                    maxDistanceForCall,                // ערך עבור MaxDistanceForCall
-                    DistanceType.Air                   // ערך עבור DistanceType
+                    id,                                // Id
+                    volunteerNames[i],                 // FullName
+                    phones[i],                         // PhoneNumber
+                    emails[i],                         // Email
+                    addresses[i],                      // CurrentFullAddress
+                    latitudes[i],                      // Latitude
+                    longitudes[i],                     // Longitude
+                    Role.Volunteer,                    // Role
+                    true,                              // IsActive
+                    maxDistanceForCall,                // MaxDistanceForCall
+                    DistanceType.Air                   // DistanceType
                 );
-                // הוספת המתנדב למערכת
+                // Adding the volunteer to the system
                 s_dal!.Volunteer.Create(volunteer);
             }
         }
@@ -82,30 +82,30 @@ public static class Initialization
         }
 
 
-        // יצירת מתנדבת מיוחדת מסוג Manager
+        // Creating a special volunteer of type Manager
         Volunteer ManagerVolunteer = new Volunteer(
             215042284,                             // Id
             "Shira Taviv!",                        // FullName
             "0534164314",                          // PhoneNumber
-            "shirayt100@gmail.com",               // Email
-            "Pinchas Kehati 12, Jerusalem, Israel", // CurrentFullAddress
+            "shirayt100@gmail.com",                // Email
+            "Pinchas Kehati 12, Jerusalem, Israel",// CurrentFullAddress
             31.7995,                               // Latitude
             35.2115,                               // Longitude
             Role.Manager,                          // Role
             true,                                  // IsActive
             68,                                    // MaxDistanceForCall
-            DistanceType.Air,                    // DistanceType
-            "Shira100"                           //Password
+            DistanceType.Air,                      // DistanceType
+            "Shira100"                             //Password
         );
 
         s_dal!.Volunteer.Create(ManagerVolunteer);
     }
     private static void createCall()
     {
-        // יצירת לפחות 50 קריאות
-        int allocatedCalls = 0;  // סופר קריאות שהוקצו
-        int unallocatedCalls = 0;  // סופר קריאות שלא הוקצו
-        int expiredCalls = 0;  // סופר קריאות שפג תוקפן
+        // Generate at least 50 calls
+        int allocatedCalls = 0;     // Counts calls that were allocated
+        int unallocatedCalls = 0;   // Counts calls that were not allocated
+        int expiredCalls = 0;       // Counts calls that expired
 
         string[] descriptions =
         {
@@ -175,27 +175,28 @@ public static class Initialization
 
         for (int i = 0; i < 50; i++)
         {
-            // בחר מיקום אקראי מתוך המיקומים המוגדרים
+            // Select a random location from the predefined locations
             var location = locations[s_rand.Next(0, locations.Length)];
 
-            DateTime openTime = now.AddDays(-s_rand.Next(1, 50)); // זמן פתיחה בטווח של 1 עד 50 ימים לפני עכשיו
-            CallType type = (CallType)s_rand.Next(0, 4);  // בחר סוג קריאה אקראי מתוך 4 אפשרויות
+            DateTime openTime = now.AddDays(-s_rand.Next(1, 50)); // Open time between 1 and 50 days ago
+            CallType type = (CallType)s_rand.Next(0, 4);          // Randomly select a call type from 4 options
             DateTime? closeTime = null;
 
-            // קובעים אם הקריאה תהיה שלא הוקצה, שפג תוקפן או רגילה
-            if (unallocatedCalls < 15 && s_rand.NextDouble() < 0.4) // 30% סיכוי לכך שהיא לא תוקצה
+            // Determine if the call will be unallocated, expired, or regular
+            if (unallocatedCalls < 15 && s_rand.NextDouble() < 0.4) // 40% chance for unallocated, up to 15
             {
-                closeTime = null;  // לא הוקצה זמן סיום
+                closeTime = null;  // No close time set (unallocated)
                 unallocatedCalls++;
             }
-            else if (expiredCalls < 5 && s_rand.NextDouble() < 0.1) // 10% סיכוי לכך שהיא תיפג תוקפן
+            else if (expiredCalls < 5 && s_rand.NextDouble() < 0.1) // 10% chance for expired, up to 5
             {
-                closeTime = now.AddDays(s_rand.Next(-10, -1));  // זמן סיום בתאריך עבר
+                closeTime = now.AddDays(s_rand.Next(-10, -1));  // Close time in the past
                 expiredCalls++;
             }
             else
             {
-                closeTime = s_rand.NextDouble() < 0.8 ? openTime.AddDays(s_rand.Next(60, 100)) : (DateTime?)null;  // קריאות עם זמן סיום, 80% סיכוי
+                // 80% chance to have a close time between 60 and 100 days after open time
+                closeTime = s_rand.NextDouble() < 0.8 ? openTime.AddDays(s_rand.Next(60, 100)) : (DateTime?)null;
                 allocatedCalls++;
             }
 
@@ -215,13 +216,22 @@ public static class Initialization
     {
         var calls = s_dal!.Call.ReadAll();
         var volunteers = s_dal!.Volunteer.ReadAll();
-        var callsToAllocate = calls.Skip((int)(calls.Count() * 0.2)).ToList(); // 80% מהקריאות
-        var unassignedCalls = calls.Take((int)(calls.Count() * 0.2)).ToList(); // 20% מהקריאות שלא טופלו
+
+        var assignedVolunteerIds = new HashSet<int>();
+        var callsToAllocate = calls.Skip((int)(calls.Count() * 0.2)).ToList(); // 80% of the calls
+        var unassignedCalls = calls.Take((int)(calls.Count() * 0.2)).ToList(); // 20% of the calls left unassigned
 
         foreach (Call call in callsToAllocate)
         {
-            Volunteer randomVolunteer;  // מגרילים מתנדב באופן אקראי
-            randomVolunteer = volunteers.ElementAt(s_rand.Next(volunteers.Count()));
+            var availableVolunteers = volunteers
+                .Where(v => !assignedVolunteerIds.Contains(v.Id))
+                .ToList();
+
+            if (!availableVolunteers.Any())
+                break;
+
+            Volunteer randomVolunteer = availableVolunteers[s_rand.Next(availableVolunteers.Count)];
+            assignedVolunteerIds.Add(randomVolunteer.Id);
 
             TimeSpan assignmentSpan;
             if (call.MaxEndTime.HasValue)
@@ -229,20 +239,24 @@ public static class Initialization
             else
                 assignmentSpan = TimeSpan.Zero;
 
-            double totalMinutes = Math.Max(1, assignmentSpan.TotalMinutes); // מבטיח שיהיה לפחות 1
+            double totalMinutes = Math.Max(1, assignmentSpan.TotalMinutes); // Ensure at least 1 minute
             DateTime randomStartTime = call.OpenTime.AddMinutes(s_rand.Next((int)totalMinutes));
             double totalDays = Math.Max(1, assignmentSpan.TotalDays);
             int endOffsetDays = s_rand.Next(1, (int)totalDays);
             DateTime? randomEndTime = (s_rand.NextDouble() > 0.5)
-                ? randomStartTime.AddDays(endOffsetDays)
-                : null;
+? (call.MaxEndTime.HasValue && randomStartTime.AddDays(endOffsetDays) > call.MaxEndTime.Value
+       ? call.MaxEndTime
+       : randomStartTime.AddDays(endOffsetDays))
+: null;
 
+
+            DateTime now = s_dal!.Config.Clock;
 
 
             AssignmentStatus? status;
             if (randomEndTime != null)
             {
-                if (call.MaxEndTime != null && randomEndTime > call.MaxEndTime) //if  randomEndTime > MaxEndTime ->Expired
+                if (randomEndTime == null && now > call.MaxEndTime) //if now > call.MaxEndTime ->Expired
                 {
                     status = AssignmentStatus.Expired;
                 }
@@ -251,7 +265,7 @@ public static class Initialization
                     var statuses = new[] { AssignmentStatus.SelfCancelled,
                                            AssignmentStatus.Completed,
                                            AssignmentStatus.ManagerCancelled };
-                    
+
                     int index = s_rand.Next(statuses.Length);
                     status = statuses[index];
                 }
@@ -270,19 +284,26 @@ public static class Initialization
        ));
         }
 
-        // הוספת משימות שלא טופלו
         foreach (Call call in unassignedCalls)
         {
-            Volunteer randomVolunteer;  // מגרילים מתנדב באופן אקראי
-            randomVolunteer = volunteers.ElementAt(s_rand.Next(volunteers.Count()));
+            var availableVolunteers = volunteers
+                .Where(v => !assignedVolunteerIds.Contains(v.Id))
+                .ToList();
+
+            if (!availableVolunteers.Any())
+                break;
+
+            Volunteer randomVolunteer = availableVolunteers[s_rand.Next(availableVolunteers.Count)];
+            assignedVolunteerIds.Add(randomVolunteer.Id);
 
             s_dal!.Assignment.Create(new Assignment(
-            call.Id,
-            randomVolunteer.Id,
-            DateTime.MinValue, // לא תהיה תאריך התחלה
-            null, // לא יהיה זמן סיום
-            null));// לא יהיה סטטוס סיום 
+                call.Id,
+                randomVolunteer.Id,
+                DateTime.MinValue, // No start time
+                null,              // No end time
+                null));            // No completion status 
         }
+
     }
 }
 

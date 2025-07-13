@@ -147,7 +147,7 @@ internal class Program
     {
         bool inputValid = false;
 
-        while (!inputValid) // הלולאה תמשיך עד שהקלט יהיה תקין
+        while (!inputValid) //the loop will continue until the input is valid
             try
             {
                 Console.Write("Enter Call Type (Emergency,Equipment,Doctor,Training): ");
@@ -221,7 +221,7 @@ internal class Program
     {
         bool inputValid = false;
 
-        while (!inputValid) // הלולאה תמשיך עד שהקלט יהיה תקין
+        while (!inputValid) 
             try
             {
                 Console.Write("Enter Call ID to update: ");
@@ -338,7 +338,7 @@ internal class Program
     {
         bool inputValid = false;
 
-        while (!inputValid) // הלולאה תמשיך עד שהקלט יהיה תקין
+        while (!inputValid) 
             try
             {
                 Console.Write("Enter Volunteer ID: ");
@@ -460,7 +460,7 @@ internal class Program
     {
         bool inputValid = false;
 
-        while (!inputValid) // הלולאה תמשיך עד שהקלט יהיה תקין
+        while (!inputValid) 
             try
             {
                 Console.Write("Enter Volunteer ID to update: ");
@@ -587,7 +587,7 @@ internal class Program
     {
         bool inputValid = false;
 
-        while (!inputValid) // הלולאה תמשיך עד שהקלט יהיה תקין
+        while (!inputValid) 
             try
             {
                 Console.WriteLine("Enter Volunteer ID: ");
@@ -643,7 +643,7 @@ internal class Program
     {
         bool inputValid = false;
 
-        while (!inputValid) // הלולאה תמשיך עד שהקלט יהיה תקין
+        while (!inputValid)  
             try
             {
                 Console.Write("Enter Assignment ID to update: ");
@@ -760,7 +760,7 @@ internal class Program
     {
         bool inputValid = false;
 
-        while (!inputValid) // הלולאה תמשיך עד שהקלט יהיה תקין
+        while (!inputValid)  
             try
             {
                 Console.WriteLine("Enter C/R for to choose Clock or RiskRange: ");
@@ -800,7 +800,7 @@ internal class Program
     {
         bool inputValid = false;
 
-        while (!inputValid) // הלולאה תמשיך עד שהקלט יהיה תקין
+        while (!inputValid)  
             try
             {
                 Console.WriteLine("Enter C/R for to choose Clock or RiskRange: ");

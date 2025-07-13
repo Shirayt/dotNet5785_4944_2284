@@ -124,14 +124,7 @@
             <Button Content="Choose Call for Treatment" Click="ChooseCall_Click" Width="200"
                     Visibility="{Binding ShowChooseCallButton, Converter={StaticResource BoolToVisibility}}" Margin="0 0 0 20"/>
 
-            <!-- Map Placeholder -->
-            <!--<GroupBox Header="Map View" Margin="0 0 0 20" Height="300">
-                <Grid>
-                    <wv2:WebView2 x:Name="GoogleMapWebView" Height="300" Margin="10"/>
-                </Grid>
-            </GroupBox>-->
-
-            <!-- Navigation Buttons -->
+                   <!-- Navigation Buttons -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
                 <Button Content="Update My Details" Click="UpdateVolunteer_Click" Width="150" Margin="10"/>
                 <Button Content="My Call History" Click="btnShowVolunteerCallsHistory_Click" Width="150" Margin="10"/>

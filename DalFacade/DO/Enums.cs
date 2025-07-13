@@ -7,8 +7,6 @@ public enum AssignmentStatus
     SelfCancelled,    
     ManagerCancelled, 
     Expired
-    //OpenAtRisk,
-    //Open
 }
 public enum CallType
 {

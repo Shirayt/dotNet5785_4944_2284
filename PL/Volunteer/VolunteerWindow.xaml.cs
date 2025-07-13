@@ -16,25 +16,20 @@ using System.Windows.Shapes;
 
 namespace PL.Volunteer
 {
-    /// <summary>
-    /// Interaction logic for VolunteerWindow.xaml
-    /// </summary>
     public partial class VolunteerWindow : Window, INotifyPropertyChanged
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-        private volatile bool _observerWorking = false; // stage 7
-
         public BO.Volunteer CurrentVolunteer
         {
-            get { return (BO.Volunteer?)GetValue(CurrentVolunteerProperty); }
+            get { return (BO.Volunteer)GetValue(CurrentVolunteerProperty); }
             set { SetValue(CurrentVolunteerProperty, value); }
         }
 
         public static readonly DependencyProperty CurrentVolunteerProperty =
-            DependencyProperty.Register("CurrentVolunteer", typeof(BO.Volunteer), typeof(VolunteerWindow), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(CurrentVolunteer), typeof(BO.Volunteer), typeof(VolunteerWindow), new PropertyMetadata(null));
 
-        private int VolunteerId { get; set; } = 0;
+        private int VolunteerId { get; set; }
 
         private string _buttonText = "Add";
         public string ButtonText
@@ -49,121 +44,72 @@ namespace PL.Volunteer
                 }
             }
         }
+
         public VolunteerWindow(int volunteerId = 0)
         {
             InitializeComponent();
-
             VolunteerId = volunteerId;
-            ButtonText = VolunteerId == 0 ? "Add" : "Update";
+            ButtonText = volunteerId == 0 ? "Add" : "Update";
 
-            try
+            if (volunteerId == 0)
             {
-                if (VolunteerId != 0)
+                CurrentVolunteer = new BO.Volunteer()
                 {
-                    var volunteer = s_bl.Volunteer.GetVolunteerDetails(VolunteerId);
+                    Id = 0,
+                    FullName = string.Empty,
+                    PhoneNumber = string.Empty,
+                    Email = string.Empty,
+                    Password = null,
+                    CurrentFullAddress = null,
+                    Latitude = null,
+                    Longitude = null,
+                    Role = BO.Role.Volunteer,
+                    IsActive = false,
+                    MaxDistanceForCall = null,
+                    DistanceType = BO.DistanceType.Air,
+                    AmountOfCompletedCalls = 0,
+                    AmountOfSelfCancelledCalls = 0,
+                    AmountOfExpiredCalls = 0,
+                    callInProgress = null
+                };
+            }
+            else
+            {
+                try
+                {
+                    var volunteer = s_bl.Volunteer.GetVolunteerDetails(volunteerId);
                     if (volunteer == null)
                     {
                         MessageBox.Show("Volunteer not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         Close();
                         return;
                     }
-
                     CurrentVolunteer = volunteer;
-                }
-                else
-                {
-                    CurrentVolunteer = new BO.Volunteer()
-                    {
-                        Id = 0,
-                        FullName = string.Empty,
-                        PhoneNumber = string.Empty,
-                        Email = string.Empty,
-                        Password = null,
-                        CurrentFullAddress = null,
-                        Latitude = null,
-                        Longitude = null,
-                        Role = BO.Role.Volunteer,
-                        IsActive = false,
-                        MaxDistanceForCall = null,
-                        DistanceType = BO.DistanceType.Air,
-                        AmountOfCompletedCalls = 0,
-                        AmountOfSelfCancelledCalls = 0,
-                        AmountOfExpiredCalls = 0,
-                        callInProgress = null
-                    };
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading volunteer: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Close();
-            }
-        }
-
-        private void volunteerObserver() 
-        {
-            if (_observerWorking)
-                return;
-
-            _observerWorking = true;
-            _ = Dispatcher.BeginInvoke(() =>
-            {
-                try
-                {
-                    int id = CurrentVolunteer!.Id;
-                    CurrentVolunteer = null;
-                    CurrentVolunteer = s_bl.Volunteer.GetVolunteerDetails(id);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Observer error:\n{ex.Message}", "Observer Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Error loading volunteer details: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Close();
                 }
-                finally
-                {
-                    _observerWorking = false;
-                }
-            });
-        }
-        private void VolunteerWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (CurrentVolunteer != null && CurrentVolunteer.Id != 0)
-            {
-                s_bl.Volunteer.AddObserver(CurrentVolunteer.Id, volunteerObserver);
-                volunteerObserver();
-            }
-        }
-        private void VolunteerWindow_Closed(object? sender, EventArgs e)
-        {
-            if (CurrentVolunteer != null && CurrentVolunteer.Id != 0)
-            {
-                s_bl.Volunteer.RemoveObserver(CurrentVolunteer.Id, volunteerObserver);
             }
         }
 
-        private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
+        private async void btnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (ButtonText == "Add")
                 {
-                    s_bl.Volunteer.AddVolunteer(CurrentVolunteer);
+                    await s_bl.Volunteer.AddVolunteer(CurrentVolunteer);
                     MessageBox.Show("Volunteer added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    s_bl.Volunteer.UpdateVolunteerDetails(CurrentVolunteer.Id, CurrentVolunteer);
+                    await s_bl.Volunteer.UpdateVolunteerDetails(CurrentVolunteer.Id, CurrentVolunteer);
                     MessageBox.Show("Volunteer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
                 Close();
-            }
-            catch (BO.BlTemporaryNotAvailableException ex)
-            {
-                MessageBox.Show(ex.Message, "Temporary Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            catch (BO.BlInvalidOperationException ex)
-            {
-                MessageBox.Show(ex.Message, "Cannot Delete Volunteer", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {

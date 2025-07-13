@@ -48,9 +48,14 @@ internal static class CallManager
             assignmentStatus == DO.AssignmentStatus.SelfCancelled ||
              assignmentStatus == DO.AssignmentStatus.ManagerCancelled)
         {
-            if (call.MaxEndTime.HasValue && (call.MaxEndTime.Value - AdminManager.Now).TotalHours <= riskRange.Value.TotalHours)
+            if (call.MaxEndTime.HasValue && (call.MaxEndTime.Value - AdminManager.Now).TotalHours <= riskRange.Value.TotalHours
+                && call.MaxEndTime.Value >= AdminManager.Now)
             {
                 return (call.Id, CallStatus.OpenAtRisk);
+            }
+            else if(call.MaxEndTime.HasValue && call.MaxEndTime.Value < AdminManager.Now)
+            {
+                return (call.Id, CallStatus.Expired);
             }
             return (call.Id, CallStatus.Open);
         }
@@ -70,11 +75,11 @@ internal static class CallManager
 
     public static TimeSpan? CalculateRestTimeForCall(DO.Call call)
     {
-        if (call.MaxEndTime == null)
+        if (call.MaxEndTime == null || GetCallStatus(call).Status == BO.CallStatus.Closed)
             return null;
 
         var currentTime = AdminManager.Now;
-        return call.MaxEndTime > currentTime ? call.MaxEndTime - currentTime  : null;
+        return call.MaxEndTime > currentTime ? call.MaxEndTime - currentTime : null;
     }
 
     public static string? GetLastVolunteerName(DO.Call call)
@@ -168,29 +173,40 @@ internal static class CallManager
         return volunteerassignments.FirstOrDefault(a => a.CallId == callId);
     }
 
-    public static IEnumerable<T> ApplyFilterAndSort<T>(IQueryable<T> calls, BO.FilterAndSortByFields? filterType, BO.FilterAndSortByFields? sortField)
+    public static IEnumerable<T> ApplyFilterAndSort<T>(IQueryable<T> calls, BO.FilterAndSortByFields? filterType, object? filterValue, BO.FilterAndSortByFields? sortField)
     {
-        if (filterType != null)
+        var list = calls.ToList();
+
+        if (filterType != null && filterValue != null)
         {
             var propertyInfo = typeof(T).GetProperty(filterType.ToString());
             if (propertyInfo != null)
-                calls = calls.Where(c => propertyInfo.GetValue(c) != null);
+            {
+                string filterStr = filterValue.ToString() ?? string.Empty;
+
+                list = list.Where(c =>
+                {
+                    var value = propertyInfo.GetValue(c);
+                    return value != null &&
+                           value.ToString()!.Contains(filterStr, StringComparison.OrdinalIgnoreCase);
+                }).ToList();
+            }
         }
 
         if (sortField != null)
         {
             var propertyInfo = typeof(T).GetProperty(sortField.ToString());
             if (propertyInfo != null)
-                calls = calls.OrderBy(c => propertyInfo.GetValue(c));
+                list = list.OrderBy(c => propertyInfo.GetValue(c)).ToList();
         }
         else
         {
             var propertyInfo = typeof(T).GetProperty("Id");
             if (propertyInfo != null)
-                calls = calls.OrderBy(c => propertyInfo.GetValue(c));
+                list = list.OrderBy(c => propertyInfo.GetValue(c)).ToList();
         }
 
-        return calls;
+        return list;
     }
 
     public static double GetDistanceFromVolunteer(int volunteerId, DO.Call call)

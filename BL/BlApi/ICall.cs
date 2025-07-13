@@ -56,7 +56,7 @@ public interface ICall : IObservable
     /// <param name="filterType">Filter by a specific field. Nullable.</param>
     /// <param name="sortField">Sort by a specific field. Nullable.</param>
     /// <returns>A collection of closed calls handled by the volunteer.</returns>
-    IEnumerable<BO.ClosedCallInList> GetClosedCallsByVolunteer(int volunteerId, BO.FilterAndSortByFields? filterType, BO.FilterAndSortByFields? sortField);
+    IEnumerable<BO.ClosedCallInList> GetClosedCallsByVolunteer(int volunteerId, BO.FilterAndSortByFields? filterType, object? filterValue, BO.FilterAndSortByFields? sortField);
 
     /// <summary>
     /// Requests a list of open calls available for a specific volunteer to handle.

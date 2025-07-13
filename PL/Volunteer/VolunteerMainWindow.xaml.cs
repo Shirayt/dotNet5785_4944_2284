@@ -11,7 +11,7 @@ public partial class VolunteerMainWindow : Window, INotifyPropertyChanged
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-    private volatile bool _observerWorking = false; // stage 7
+    private volatile bool _observerWorking = false;
 
     public BO.Volunteer Volunteer
     {

@@ -23,8 +23,7 @@ namespace PL.Volunteer
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public BO.VolunteerInList? SelectedVolunteer { get; set; }
 
-        private volatile bool _observerWorking = false; // stage 7
-
+        private volatile bool _observerWorking = false; 
         public IEnumerable<BO.VolunteerInList> VolunteerList
         {
             get { return (IEnumerable<BO.VolunteerInList>)GetValue(VolunteerListProperty); }
